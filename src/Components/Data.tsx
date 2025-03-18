@@ -4,15 +4,14 @@ import ava from "./../Img/avatar.png"
 import leadava from "./../Img/avatarlead.png"
 
 export const Frend: FrendID[] = [
-    // {
-    //     id: 1,
-    //     img: ava,
-    //     title: "Alexy",
-    //     coins: 599740,
-    //     bonus: +1500,
-    //     ton: 124,
-    // },
-
+    {
+        id: 1,
+        img: ava,
+        title: "Alexy",
+        coins: 599740,
+        bonus: +1500,
+        ton: 124,
+    },
 ]
 
 export const leader: LeaderID[] = [
@@ -141,5 +140,33 @@ export const leader: LeaderID[] = [
         bonus: +2500,
         ton: 134,
     },
+
+    {
+        id: 15,
+        img: leadava,
+        title: "Shun",
+        coins: 99740,
+        bonus: +2500,
+        ton: 134,
+    },
+
+    {
+        id: 16,
+        img: leadava,
+        title: "Shun",
+        coins: 99740,
+        bonus: +2500,
+        ton: 134,
+    },
+
+    {
+        id: 17,
+        img: leadava,
+        title: "Shun",
+        coins: 99740,
+        bonus: +2500,
+        ton: 134,
+    },
 ]
+
 

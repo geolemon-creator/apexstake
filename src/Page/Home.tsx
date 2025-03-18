@@ -3,6 +3,7 @@ import box from "./../Img/box.png"
 import coin from "./../Img/coin.png"
 
 export default function Home() {
+
   return (
     <div className="home-countainer">
 

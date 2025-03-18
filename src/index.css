@@ -16,7 +16,7 @@ body {
 html {
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow: auto;
 }
 
 .home-user {
@@ -42,8 +42,8 @@ html {
   text-align: center;
   align-items: center;
   display: flex;
-  justify-content: center;
-  font-size: 14px
+  justify-content: flex-start;
+  font-size: 14px;
 }
 
 .home-top-catlog {
@@ -230,6 +230,13 @@ html {
 
 .footer-li {
   cursor: pointer;
+  transition: all 0.3s ease; 
+}
+
+.footer-li.active img {
+  filter: 
+    brightness(10.2)
+    drop-shadow(0 0 8px rgba(255, 222, 69, 0.8));
 }
 
 .user-icon {
@@ -491,7 +498,7 @@ html {
   gap: 8px;
   padding: 10px;
   overflow-y: auto;
-  
+  padding-bottom: 80px
 }
 
 .img-frend {
@@ -558,6 +565,12 @@ html {
 .current-user-place {
   color: #DEDEDE;
   margin-left: 11px;
+}
+
+.contest-countainer {
+  min-height: 100vh; 
+  overflow-y: auto;
+  padding-bottom: 80px
 }
 
 .contest-h1 {
@@ -658,4 +671,204 @@ html {
   display: block;
   margin: 0 auto;
   margin-top: 8px;
+}
+
+.top-text-dubai {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.paty-img {
+  width: 334px;
+  height: 188px;
+  margin-top: 8px;
+}
+
+.arrow {
+  font-size: 22px; /* Размер стрелки */
+  color: #ffffff; /* Цвет стрелки */
+  transition: transform 0.3s ease; /* Анимация для стрелки */
+}
+
+.arrow:active {
+  transform: rotate(90deg);
+}
+
+.level-p {
+  width: 125px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный чёрный фон */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Убедись, что окно поверх других элементов */
+}
+
+/* Само модальное окно */
+.modal {
+    position: fixed;
+    top: -18px;
+    bottom: 328px;
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 77%);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Список уровней */
+.levels-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Элемент уровня */
+.level-item {
+  display: flex;
+  justify-content: space-between;
+  background-color: #282D33;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 335px;
+  height: 60px;
+  border-radius: 12px;
+  flex-direction: column;
+}
+
+.header-list-item {
+  display: flex;
+  width: 319px;
+  margin-left: 8px;
+  /* margin-top: 8px; */
+  margin-right: 8px;
+}
+
+.level-p-header {
+  display: flex;
+  font-size: 14px;
+  font-weight: 600;
+  width: 165px;
+  margin-top: 8px;
+}
+
+.diamond-div {
+  display: flex;
+  gap: 8px;
+}
+
+.level-img {
+  width: 24px;
+  height: 24px;
+  margin-top: 8px;
+}
+
+.expert {
+  width: 90px;
+  margin-top: 8px;
+  height: 22px;
+  font-weight: 700;
+  color: #AC5FFF;
+}
+
+.adv {
+  width: 90px;
+  margin-top: 8px;
+  height: 22px;
+  font-weight: 700;
+  color: #0C9AFF;
+  margin-right: 4px;
+}
+
+.mid {
+  width: 90px;
+  margin-top: 8px;
+  height: 22px;
+  font-weight: 700;
+  color: #FFDE45;
+}
+
+.level-percent {
+  font-size: 12px;
+  font-weight: 600;
+  width: 319px;
+  height: 16px;
+  margin-bottom: 8px;
+  margin-left: 8px;
+  margin-right: 8px;
+  display: flex;
+}
+
+.level-item:hover {
+  background-color: #FFDE45;
+  color: #111118;
+
+  .mid {
+    color: #111118;
+  }
+  .adv {
+    color: #111118;
+  }
+  .expert {
+    color: #111118;
+  }
+  
+}
+
+.level-title {
+  width: 90px;
+  margin-top: 8px;
+  height: 22px;
+  font-weight: 700;
+}
+
+/* Выбранный уровень */
+.selected-level {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.level-arrow {
+  margin-left: 8px;
+  font-size: 23px;
+  font-weight: 200;
+}
+
+.level-btn-win {
+  font-family: "Manrope", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 335px;
+  height: 42px;
+  color: white;
+  background-color: #232425;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  padding-left: 12px;
+  padding-right: 9px;
+}
+
+.level-btn-win-arrow {
+  font-size: 27px;
+  font-weight: 200;
+  height: 38px;
+  transform: rotate(90deg);
+  transition: transform 0.3s ease;
+}
+
+.level-btn-win-arrow:active {
+  transform: rotate(1deg);
 }
