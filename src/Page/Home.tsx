@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom"
 import box from "./../Img/box.png"
 import coin from "./../Img/coin.png"
 
@@ -56,7 +57,10 @@ export default function Home() {
         </div>
 
         <button className="btn-more">Узнать больше</button>
-        <button className="btn-staking">Открыть staking</button>
+        <NavLink to="/staking">
+            <button className="btn-staking">Открыть стейкинг</button>
+        </NavLink>
+        
         
 
     </div>
