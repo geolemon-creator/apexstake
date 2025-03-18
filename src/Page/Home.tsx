@@ -8,6 +8,7 @@ export default function Home() {
         <div className="home-top-catlog">
 
             <div className="home-user">
+                <div className="user-icon"></div>
                 <p className="home-user-p">UserName</p>
             </div>
 

@@ -8,6 +8,15 @@
 body {
   background-color: rgb(17, 17, 24);
   font-family: "Manrope", sans-serif;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .home-user {
@@ -20,7 +29,8 @@ body {
   display: flex;
   justify-content: center;
   color: white;
-  font-size: 14px
+  font-size: 14px;
+  gap: 7.5px;
 }
 
 .home-level {
@@ -189,23 +199,42 @@ body {
   text-align: center;
   margin: 0 auto;
   display: block;
-  margin-top: 44px;
+  margin-top: 32px;
+  margin-bottom: 19px;
 }
 
-/* .footer-countainer {
+.footer-countainer {
   display: flex;
   justify-content: center;
-  align-items: center;
-  width: 343px;
-  height: 64px;
-} */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 10px;
+  z-index: 100;
+} 
 
 .footer-ul {
   background-color: #282D33;
   display: flex;
   list-style: none;
   gap: 23px;
-  width: 343px;
-  height: 64px;
+  width: 319px;
+  height: 42px;
   border-radius: 12px;
+  justify-content: center;
+  align-items: center;
+  padding: 11px 12px;
+}
+
+.footer-li {
+  cursor: pointer;
+}
+
+.user-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgb(0, 89, 255);
 }
