@@ -7,7 +7,9 @@ import Leader from "../Components/Leader";
 
 export default function Referal() {
     const [activeTab, setActiveTab] = useState<'friends' | 'leaders'>('friends');
-  const [friends] = useState(Frend);
+    const [friends] = useState(Frend);
+    const currentUserId = 2; 
+    const topN = 104;
 
   const handleClick = (tab: 'friends' | 'leaders') => {
     setActiveTab(tab);
@@ -15,6 +17,12 @@ export default function Referal() {
 
   const sortedFriends = [...friends].sort((a, b) => b.coins - a.coins);
   const sortedLeader = [...leader].sort((a, b) => b.coins - a.coins);
+
+  const currentUser = leader.find(l => l.id === currentUserId);
+
+  
+  const currentUserIndex = sortedLeader.findIndex(l => l.id === currentUserId);
+  const currentUserPlace = currentUserIndex + 1;
 
   return (
     <div className='ref-countainer'>
@@ -30,7 +38,7 @@ export default function Referal() {
             </div>
 
             <div className="ref-btn-leader-div">
-            <p className={`ref-swith-btn ${activeTab as 'friends' | 'leaders' === 'leaders' ? 'active' : ''}`} 
+            <p className={`ref-swith-btn ${activeTab as "leaders" === 'leaders' ? 'active' : ''}`} 
             onClick={() => handleClick('leaders')}>Лидеры</p>
             </div>
 
@@ -78,11 +86,32 @@ export default function Referal() {
         <div>
             <h1 className="leader-h1">Лидеры</h1>
             <div className="leader-array">
-                {sortedLeader.map((leader, index) => (
-                    <Leader key={leader.id} data={leader} position={index + 1} />
-                ))}
+              
+            {currentUser && currentUserPlace > topN && (
+               <div className="current-user-header">
+               <Leader data={currentUser} position={currentUserPlace} isCurrentUser={true} />
+             </div>
+            )}
+
+              {sortedLeader.map((leader, index) => {
+                const position = index + 1;
+                if (leader.id === currentUserId) {
+                  // Если это текущий пользователь
+                  if (currentUserPlace <= topN) {
+                    // И он входит в топ, отображаем его как обычного участника
+                    return <Leader key={leader.id} data={leader} position={position} />;
+                  } else {
+                    // И если он крч НЕ входит в топ, то пропускаем его, так как он уже отображен
+                    return null;
+                  }
+                } else {
+                  // Если это не текущий пользователь, отображаем как обычно
+                  return <Leader key={leader.id} data={leader} position={position} />;
+                }
+              })}
             </div>
         </div>
       )}
     </div>
-  );}
+  );
+}

@@ -20,7 +20,10 @@ export default function Footer() {
           <NavLink to="/referal">
             <li className='footer-li'><img src={store} alt="store" /></li>
           </NavLink>
+
+          <NavLink to="/contest">
             <li className='footer-li'><img src={competitions} alt="competitions" /></li>
+          </NavLink>
 
             <li className='footer-li'><img src={frens} alt="frens" /></li>
         </ul>

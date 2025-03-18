@@ -3,6 +3,7 @@ import Footer from "./Components/Footer"
 import Home from "./Page/Home"
 import Staking from "./Page/Staking";
 import Referal from "./Page/Referal";
+import Contest from "./Page/Contest";
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/staking" element={<Staking />} />
           <Route path="/referal" element={<Referal />} />
+          <Route path="/contest" element={<Contest />} />
         </Routes>
         <Footer />
       </Router>

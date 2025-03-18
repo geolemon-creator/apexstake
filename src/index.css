@@ -332,6 +332,10 @@ html {
   margin-top: 10px;
 }
 
+.ref-countainer {
+  height: 100vh;
+}
+
 .ref-swith-btn {
   font-size: 14px;
   font-weight: 800;
@@ -485,6 +489,9 @@ html {
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  padding: 10px;
+  overflow-y: auto;
+  
 }
 
 .img-frend {
@@ -540,4 +547,115 @@ html {
   font-weight: 600;
   margin-bottom: 12px;
   color: white;
+}
+
+
+.frend-countainer.current-user {
+  background-color: #111118;
+  border: 1px solid #FFDE45;
+}
+
+.current-user-place {
+  color: #DEDEDE;
+  margin-left: 11px;
+}
+
+.contest-h1 {
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.contest-div {
+  margin: 0 auto;
+  margin-top: 12px;
+  width: 335px;
+  height: 325px;
+  background-color: #FFDE45;
+  border-radius: 16px;
+}
+
+.top-text-contest {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.top-text-one {
+  font-size: 16px;
+  font-weight: 700;
+  background-color: #111118;
+  color: #FFDE45;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.top-text-two {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111118;
+  margin-left: 2px;
+}
+
+.contest-img {
+  width: 335px;
+  height: 159px;
+  margin-top: 8px;
+}
+
+.contest-text-div {
+  width: 311px;
+  height: 18px;
+  margin-left: 12px;
+}
+
+.contest-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #282D33;
+}
+
+.contest-timer {
+  display: flex;
+  justify-content: center;
+  height: 24px;
+  margin-top: 8px;
+  align-items: center;
+  gap: 8.62px;
+}
+
+.num-timer {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  color: #111118;
+  text-align: center;
+  align-items: center;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.contest-num {
+  font-size: 10.89px;
+  font-weight: 600;
+  color: #282D33;
+}
+
+.contest-btn-about {
+  font-family: "Manrope", sans-serif;
+  width: 311px;
+  height: 48px;
+  text-align: center;
+  background-color: #111118;
+  color: white;
+  font-size: 16px;
+  font-weight: 800;
+  border-radius: 12px;
+  border: none;
+  display: block;
+  margin: 0 auto;
+  margin-top: 8px;
 }
