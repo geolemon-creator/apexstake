@@ -6,12 +6,14 @@ import Level from "../Components/Level";
 import { levelID } from "./../Components/Type";
 import schedule from "./../Img/schedule.svg"
 
+
 export default function Staking() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
+
   const [isLevelSelected, setIsLevelSelected] = useState(false);
   const [selectedLevelData, setSelectedLevelData] = useState<levelID | null>(null);
-
+    
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -44,7 +46,7 @@ export default function Staking() {
           <p className="level-p">Выбор уровня</p> <span onClick={handleOpenModal} className="arrow">&gt;</span>
         </div>
       </div>
-
+      
       {isModalOpen && (
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
