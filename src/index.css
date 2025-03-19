@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
 
 * {
   margin: 0px;
   padding: 0px;
+  user-select: none;
 }
 
 body {
@@ -34,7 +35,7 @@ html {
 }
 
 .home-level {
-  color: #FFDE45;
+  color: #ffde45;
   background-color: rgb(40, 45, 51);
   width: 163px;
   height: 42px;
@@ -62,13 +63,13 @@ html {
 .home-reward {
   width: 320px;
   height: 100px;
-  background-color: #282D33;
+  background-color: #282d33;
   border-radius: 16px;
   display: flex;
 }
 
 .reward-h1 {
-  color: #FFDE45;
+  color: #ffde45;
   font-size: 16px;
   width: 700;
   margin-top: 22px;
@@ -121,7 +122,7 @@ html {
 .current-balance-p {
   font-size: 14px;
   font-weight: 500;
-  color: #ADA9A9;
+  color: #ada9a9;
   margin-left: 12px;
 }
 
@@ -137,7 +138,7 @@ html {
 }
 
 .home-bonus-p {
-  color: #FFDE45;
+  color: #ffde45;
   font-size: 14px;
   margin-left: 12px;
   margin-top: 12px;
@@ -160,7 +161,7 @@ html {
   height: 46px;
   text-align: center;
   font-size: 18px;
-  color: #FFDE45;
+  color: #ffde45;
   font-weight: 400;
 }
 
@@ -171,34 +172,41 @@ html {
 }
 
 .btn-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   font-family: "Manrope", sans-serif;
   width: 335px;
   height: 48px;
   background-color: rgb(17, 17, 24);
-  border-color: #FFDE45;
+  border: 1px solid #ffde45;
   color: white;
   font-size: 16px;
   border-radius: 12px;
   font-weight: 800;
-  text-align: center;
   margin: 0 auto;
-  display: block;
   margin-top: 93px;
+}
+.btn-more img {
+  margin-left: 5px;
 }
 
 .btn-staking {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   font-family: "Manrope", sans-serif;
   width: 335px;
   height: 48px;
-  background-color: #FFDE45;
-  border-color: #FFDE45;
+  background-color: #ffde45;
+  border-color: #ffde45;
   color: rgb(17, 17, 24);
   font-size: 16px;
   border-radius: 12px;
   font-weight: 800;
-  text-align: center;
   margin: 0 auto;
-  display: block;
   margin-top: 28px;
   margin-bottom: 19.17px;
 }
@@ -213,10 +221,10 @@ html {
   text-align: center;
   padding: 10px;
   z-index: 100;
-} 
+}
 
 .footer-ul {
-  background-color: #282D33;
+  background-color: #282d33;
   display: flex;
   list-style: none;
   gap: 23px;
@@ -232,14 +240,12 @@ html {
 .footer-li {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition: all 0.3s ease; 
+  transition: all 0.3s ease;
 }
 
 .footer-li.active img {
   -webkit-tap-highlight-color: transparent;
-  filter: 
-    brightness(10.2)
-    drop-shadow(0 0 8px rgba(255, 222, 69, 0.8));
+  filter: brightness(10.2) drop-shadow(0 0 8px rgba(255, 222, 69, 0.8));
 }
 
 .user-icon {
@@ -249,14 +255,10 @@ html {
   background-color: rgb(0, 89, 255);
 }
 
-
-
-
-
 .stak-balance {
   width: 335px;
   height: 206px;
-  background-color: #282D33;
+  background-color: #282d33;
   margin: 0 auto;
   margin-top: 30px;
   border-radius: 16px;
@@ -284,7 +286,7 @@ html {
 .stak-balance-line {
   width: 303px;
   height: 12px;
-  background-color: #FFFFFF33;
+  background-color: #ffffff33;
   display: flex;
   margin: 0 auto;
   border-radius: 96.33px;
@@ -317,7 +319,7 @@ html {
 
 .stak-info-p {
   text-align: center;
-  color: #ADA9A9;
+  color: #ada9a9;
   font-size: 14px;
   font-weight: 500;
   margin-top: 149px;
@@ -333,7 +335,7 @@ html {
 .ref-swith-div {
   width: 335px;
   height: 48px;
-  background-color:#282D33;
+  background-color: #282d33;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -358,12 +360,14 @@ html {
   padding: 6px 8px;
   border-radius: 12px;
   color: white;
-  transition: color 0.3s ease, background-color 0.3s ease;
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .ref-swith-btn:active {
   color: #111118;
-  background-color: #FFDE45;
+  background-color: #ffde45;
 }
 
 .ref-h1 {
@@ -378,7 +382,7 @@ html {
   text-align: center;
   font-size: 16px;
   font-weight: 400;
-  color: #FFDE45;
+  color: #ffde45;
   margin-top: 24px;
 }
 
@@ -421,7 +425,7 @@ html {
   height: 48px;
   text-align: center;
   align-items: center;
-  background-color: #FFDE45;
+  background-color: #ffde45;
   color: #111118;
   border-radius: 12px;
   border: none;
@@ -433,7 +437,7 @@ html {
   width: 48px;
   height: 48px;
   border-radius: 16px;
-  background-color: #FFDE45;
+  background-color: #ffde45;
 }
 
 .ref-copy-img {
@@ -449,7 +453,7 @@ html {
 
 .frend-countainer {
   display: flex;
-  background-color: #282D33;
+  background-color: #282d33;
   width: 335px;
   height: 40px;
   border-radius: 12px;
@@ -458,7 +462,7 @@ html {
 
 .frend-countainer-first {
   display: flex;
-  background: linear-gradient(90deg, #343434 4.48%, #FFA319 100%);
+  background: linear-gradient(90deg, #343434 4.48%, #ffa319 100%);
   width: 335px;
   height: 40px;
   border-radius: 12px;
@@ -501,7 +505,7 @@ html {
   gap: 8px;
   padding: 10px;
   overflow-y: auto;
-  padding-bottom: 80px
+  padding-bottom: 80px;
 }
 
 .img-frend {
@@ -526,13 +530,13 @@ html {
 .coin-frend {
   font-size: 16px;
   font-weight: 400;
-  color: #DEDEDE;
+  color: #dedede;
   margin-left: 4px;
   margin-right: 4px;
 }
 
 .bonus-frend {
-  color: #FFDE45;
+  color: #ffde45;
   font-size: 16px;
   font-weight: 600;
   margin-right: 4px;
@@ -547,7 +551,7 @@ html {
   font-size: 16px;
   font-weight: 400;
   margin-right: 4px;
-  color: #DEDEDE;
+  color: #dedede;
   margin-left: 4px;
 }
 
@@ -559,21 +563,20 @@ html {
   color: white;
 }
 
-
 .frend-countainer.current-user {
   background-color: #111118;
-  border: 1px solid #FFDE45;
+  border: 1px solid #ffde45;
 }
 
 .current-user-place {
-  color: #DEDEDE;
+  color: #dedede;
   margin-left: 11px;
 }
 
 .contest-countainer {
-  min-height: 100vh; 
+  min-height: 100vh;
   overflow-y: auto;
-  padding-bottom: 80px
+  padding-bottom: 80px;
 }
 
 .contest-h1 {
@@ -588,7 +591,7 @@ html {
   margin-top: 12px;
   width: 335px;
   height: 325px;
-  background-color: #FFDE45;
+  background-color: #ffde45;
   border-radius: 16px;
 }
 
@@ -603,7 +606,7 @@ html {
   font-size: 16px;
   font-weight: 700;
   background-color: #111118;
-  color: #FFDE45;
+  color: #ffde45;
   padding: 5px;
   border-radius: 8px;
 }
@@ -630,7 +633,7 @@ html {
 .contest-text {
   font-size: 14px;
   font-weight: 700;
-  color: #282D33;
+  color: #282d33;
 }
 
 .contest-timer {
@@ -657,7 +660,7 @@ html {
 .contest-num {
   font-size: 10.89px;
   font-weight: 600;
-  color: #282D33;
+  color: #282d33;
 }
 
 .contest-btn-about {
@@ -717,16 +720,16 @@ html {
 
 /* Само модальное окно */
 .modal {
-    position: fixed;
-    top: -18px;
-    bottom: 328px;
-    padding: 20px;
-    border-radius: 8px;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 77%);
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
+  position: fixed;
+  top: -18px;
+  bottom: 328px;
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 77%);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
 }
 
 /* Список уровней */
@@ -741,7 +744,7 @@ html {
 .level-item {
   display: flex;
   justify-content: space-between;
-  background-color: #282D33;
+  background-color: #282d33;
   border-radius: 8px;
   cursor: pointer;
   width: 335px;
@@ -753,7 +756,7 @@ html {
 }
 
 .level-item.selected {
-  background-color: #FFDE45;
+  background-color: #ffde45;
   color: #111118;
   -webkit-tap-highlight-color: transparent;
 }
@@ -782,6 +785,7 @@ html {
   width: 24px;
   height: 24px;
   margin-top: 8px;
+  background: transparent;
 }
 
 .expert {
@@ -789,7 +793,7 @@ html {
   margin-top: 8px;
   height: 22px;
   font-weight: 700;
-  color: #AC5FFF;
+  color: #ac5fff;
 }
 
 .adv {
@@ -797,7 +801,7 @@ html {
   margin-top: 8px;
   height: 22px;
   font-weight: 700;
-  color: #0C9AFF;
+  color: #0c9aff;
   margin-right: 4px;
 }
 
@@ -806,7 +810,7 @@ html {
   margin-top: 8px;
   height: 22px;
   font-weight: 700;
-  color: #FFDE45;
+  color: #ffde45;
 }
 
 .level-percent {
@@ -821,7 +825,7 @@ html {
 }
 
 .level-item:hover {
-  background-color: #FFDE45;
+  background-color: #ffde45;
   color: #111118;
 
   .mid {
@@ -833,7 +837,6 @@ html {
   .expert {
     color: #111118;
   }
-  
 }
 
 .level-title {
@@ -896,60 +899,4 @@ html {
   height: 22px;
   font-weight: 700;
   margin-right: 16px;
-}
-
-.modal-overlay-check {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #111118; /* Полупрозрачный чёрный фон */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.basic-lvl-div {
-  position: absolute;
-  top: 0px;
-  background-color: #282D33;
-  width: 335px;
-  height: 426px;
-  border-radius: 16px;
-}
-
-.basic-lvl-p {
-  display: flex;
-  font-size: 14px;
-  font-weight: 600;
-  margin-left: 16px;
-  margin-top: 16px;
-}
-
-.title-lvl-div {
-  display: flex;
-  align-items: center;
-  margin-left: 16px;
-  margin-top: 8px;
-  gap: 8px;
-  height: 13px;
-}
-
-.lvl-img {
-  margin-top: 5px;
-}
-
-.lvl-p {
-  margin-top: 3px;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.schedule-img {
-  width: 138.5px;
-  height: 139px;
-  margin-top: 56px;
-  margin-left: 18px;
 }
