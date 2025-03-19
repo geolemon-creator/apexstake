@@ -22,6 +22,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'staking.apps.StakingConfig',
+    'tasks.apps.TasksConfig',
+    'transactions.apps.TransactionsConfig',
+    'users.apps.UsersConfig',
     # 'rest_framework_simplejwt',
 ]
 
