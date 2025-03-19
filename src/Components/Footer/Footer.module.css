@@ -1,0 +1,9 @@
+.link {
+  user-select: none;
+  color: #ada9a9;
+  text-decoration: none;
+}
+
+.link p {
+  font-size: 10px;
+}
