@@ -1,21 +1,25 @@
-import { FrendID, levelID } from "./Type";
+import { FrendID, levelID, TermsID } from "./Type";
 import { LeaderID } from "./Type";
-import ava from "./../Img/avatar.png";
 import leadava from "./../Img/avatarlead.png";
 import primaryDiamond from "./../Img/diamonds/diamond-primary.svg";
 import mediumDiamond from "./../Img/diamonds/diamond-medium.svg";
 import advancedDiamond from "./../Img/diamonds/diamond-advanced.svg";
 import expertDiamond from "./../Img/diamonds/diamond-expert.svg";
+import inSchedule from "./../Img/inSchedule.svg"
+import midlSchedule from "./../Img/midSchedule.svg"
+import advSchedule from "./../Img/advSchedule.svg"
+import expSchedule from "./../Img/expSchedule.svg"
+import ava from "./../Img/avatar.png";
 
 export const Frend: FrendID[] = [
-  {
-    id: 1,
-    img: ava,
-    title: "Alexy",
-    coins: 599740,
-    bonus: +1500,
-    ton: 124,
-  },
+  // {
+  //   id: 1,
+  //   img: ava,
+  //   title: "Alexy",
+  //   coins: 599740,
+  //   bonus: +1500,
+  //   ton: 124,
+  // },
 ];
 
 export const leader: LeaderID[] = [
@@ -179,6 +183,8 @@ export const level: levelID[] = [
     title: "Начальный",
     percent: 5,
     img: primaryDiamond,
+    schedule: inSchedule,
+    ton: 50
   },
 
   {
@@ -186,6 +192,8 @@ export const level: levelID[] = [
     title: "Средний",
     percent: 44,
     img: mediumDiamond,
+    schedule: midlSchedule,
+    ton: 100
   },
 
   {
@@ -193,6 +201,8 @@ export const level: levelID[] = [
     title: "Продвинутый",
     percent: 10,
     img: advancedDiamond,
+    schedule: advSchedule,
+    ton: 250
   },
 
   {
@@ -200,5 +210,20 @@ export const level: levelID[] = [
     title: "Эксперт",
     percent: 140,
     img: expertDiamond,
+    schedule: expSchedule,
+    ton: 300
   },
 ];
+
+export const Terms: TermsID[] = [
+  {
+    id: 1,
+    date: 15_03_2025,
+    period: "1 день",
+    ending: 15_03_2025,
+    repayment: 15_03_2025,
+    dateRepayment: "1 день",
+    bid: 140,
+    ton: "1,49959500 TON"
+  }
+]
