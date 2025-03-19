@@ -1,11 +1,26 @@
 import { NavLink } from "react-router-dom";
 import box from "./../Img/present.svg";
 import arrowRight from "./../Img/arrow-right.svg";
-import arrowDown from "./../Img/arrow-down.svg";
-
+import { level } from "../Components/Data";
 import coin from "./../Img/coin.png";
+import LevelModal from "../Components/LevelModal";
+import { useState } from "react";
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSelect = (id: number) => {
+    setSelectedLevel(id);
+  };
   return (
     <div className="home-countainer">
       <div className="home-top-catlog">
@@ -14,10 +29,18 @@ export default function Home() {
           <p className="home-user-p">UserName</p>
         </div>
 
-        <div className="home-level">
+        <div onClick={handleOpenModal} className="home-level">
           <p className="level-p">Выбор уровня</p>
           <span className="arrow">&gt;</span>
         </div>
+
+        <LevelModal
+          isModalOpen={isModalOpen}
+          handleCloseModal={handleCloseModal}
+          level={level}
+          selectedLevel={selectedLevel}
+          handleSelect={handleSelect}
+        />
       </div>
 
       <div className="home-lower-catalog">

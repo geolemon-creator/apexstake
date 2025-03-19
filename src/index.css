@@ -3,6 +3,7 @@
 * {
   margin: 0px;
   padding: 0px;
+  user-select: none;
 }
 
 body {
@@ -784,6 +785,7 @@ html {
   width: 24px;
   height: 24px;
   margin-top: 8px;
+  background: transparent;
 }
 
 .expert {

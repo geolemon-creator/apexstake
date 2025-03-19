@@ -1,8 +1,8 @@
 import { useState } from "react";
-import deposit from "./../Img/Deposit.png";
-import withdraw from "./../Img/Withdraw.png";
+import deposit from "./../Img/deposit.svg";
+import withdraw from "./../Img/withdraw.svg";
 import { level } from "../Components/Data";
-import Level from "../Components/Level";
+import LevelModal from "../Components/LevelModal";
 
 export default function Staking() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -28,40 +28,19 @@ export default function Staking() {
           <p className="home-user-p">UserName</p>
         </div>
 
-        <div className="home-level">
+        <div onClick={handleOpenModal} className="home-level">
           <p className="level-p">Выбор уровня</p>
-          <span onClick={handleOpenModal} className="arrow">
-            &gt;
-          </span>
+          <span className="arrow">&gt;</span>
         </div>
       </div>
 
-      {isModalOpen && (
-        <div className="modal-overlay" onClick={handleCloseModal}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <div className="levels-list">
-              <button className="level-btn-win">
-                Выбор уровня{" "}
-                <span
-                  onClick={handleCloseModal}
-                  className="level-btn-win-arrow"
-                >
-                  &gt;
-                </span>
-              </button>
-
-              {level.map((level) => (
-                <Level
-                  selectedLevel={selectedLevel}
-                  onSelect={handleSelect}
-                  key={level.id}
-                  data={level}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      <LevelModal
+        isModalOpen={isModalOpen}
+        handleCloseModal={handleCloseModal}
+        level={level}
+        selectedLevel={selectedLevel}
+        handleSelect={handleSelect}
+      />
 
       <div className="stak-balance">
         <div className="stak-balance-price">
