@@ -15,3 +15,10 @@ export interface LeaderID {
     bonus: number,
     ton: number
 }
+
+export interface levelID {
+    id: number,
+    title: string,
+    percent: number,
+    img: string
+}

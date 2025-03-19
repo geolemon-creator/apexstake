@@ -1,23 +1,25 @@
 import { useState } from "react";
 import deposit from "./../Img/Deposit.png"
 import withdraw from "./../Img/Withdraw.png"
-import firstdiamond from "./../Img/first-diamond.png"
-import middlediamond from "./../Img/middle-diamond.png"
-import advanced from "./../Img/advanced-diamond.png"
-import expert from "./../Img/expert-diamond.png"
+import { level } from "../Components/Data";
+import Level from "../Components/Level";
+
 
 export default function Staking() {
-    const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для модального окна
-    const [selectedLevel, setSelectedLevel] = useState(null); // Состояние для выбранного уровня
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false); 
+    const [selectedLevel, setSelectedLevel] = useState<number | null>(null); 
 
   const handleOpenModal = () => {
-    setIsModalOpen(true); // Открываем модальное окно
+    setIsModalOpen(true); 
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false); // Закрываем модальное окно
+    setIsModalOpen(false); 
   };
 
+  const handleSelect = (id: number) => {
+    setSelectedLevel(id); 
+  };  
 
   return (
     <div className='staking-countainer'>
@@ -41,53 +43,9 @@ export default function Staking() {
 
              <button className="level-btn-win">Выбор уровня <span onClick={handleCloseModal} className="level-btn-win-arrow">&gt;</span></button>
 
-              <div className="level-item">
-                <div className="header-list-item">
-                    <p className="level-p-header">Уровень</p>
-                    <div className="diamond-div">
-                        <img className="level-img" src={firstdiamond} alt="dimond" />
-                        <p className="level-title">Начальный</p>
-                        <span className="level-arrow">&gt;</span>
-                    </div>
-                </div>
-                <p className="level-percent">Процентная ставка: 44%</p>
-              </div>
-
-              <div className="level-item">
-                <div className="header-list-item">
-                    <p className="level-p-header">Уровень</p>
-                    <div className="diamond-div">
-                        <img className="level-img" src={middlediamond} alt="dimond" />
-                        <p className="mid">Средний</p>
-                        <span className="level-arrow">&gt;</span>
-                    </div>
-                </div>
-                <p className="level-percent">Процентная ставка: 68%</p>
-              </div>
-
-              <div className="level-item">
-                <div className="header-list-item">
-                    <p className="level-p-header">Уровень</p>
-                    <div className="diamond-div">
-                        <img className="level-img" src={advanced} alt="dimond" />
-                        <p className="adv">Продвинутый</p>
-                        <span className="level-arrow">&gt;</span>
-                    </div>
-                </div>
-                <p className="level-percent">Процентная ставка: 104%</p>
-              </div>
-
-              <div className="level-item">
-                <div className="header-list-item">
-                    <p className="level-p-header">Уровень</p>
-                    <div className="diamond-div">
-                        <img className="level-img" src={expert} alt="dimond" />
-                        <p className="expert">Эксперт</p>
-                        <span className="level-arrow">&gt;</span>
-                    </div>
-                </div>
-                <p className="level-percent">Процентная ставка: 140%</p>
-              </div>
+             {level.map((level) => (
+              <Level selectedLevel={selectedLevel} onSelect={handleSelect} key={level.id} data={level} />
+             ))}
 
             </div>
           </div>

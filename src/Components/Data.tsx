@@ -1,7 +1,11 @@
-import { FrendID } from "./Type";
+import { FrendID, levelID } from "./Type";
 import { LeaderID } from "./Type";
 import ava from "./../Img/avatar.png"
 import leadava from "./../Img/avatarlead.png"
+import firstdiamond from "./../Img/first-diamond.png"
+import middlediamond from "./../Img/middle-diamond.png"
+import advanced from "./../Img/advanced-diamond.png"
+import expert from "./../Img/expert-diamond.png"
 
 export const Frend: FrendID[] = [
     {
@@ -169,4 +173,32 @@ export const leader: LeaderID[] = [
     },
 ]
 
+export const level: levelID[] = [
+    {
+        id: 1,
+        title: "Начальный",
+        percent: 5,
+        img: firstdiamond
+    },
 
+    {
+        id: 2,
+        title: "Средний",
+        percent: 44,
+        img: middlediamond
+    },
+
+    {
+        id: 3,
+        title: "Продвинутый",
+        percent: 10,
+        img: advanced
+    },
+
+    {
+        id: 4,
+        title: "Эксперт",
+        percent: 140,
+        img: expert
+    },
+]
