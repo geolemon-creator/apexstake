@@ -20,5 +20,5 @@ export interface levelID {
     id: number,
     title: string,
     percent: number,
-    img: string
+    img: string,
 }
