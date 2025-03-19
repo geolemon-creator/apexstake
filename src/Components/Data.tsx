@@ -1,6 +1,5 @@
 import { FrendID, levelID, TermsID } from "./Type";
 import { LeaderID } from "./Type";
-import ava from "./../Img/avatar.png";
 import leadava from "./../Img/avatarlead.png";
 import primaryDiamond from "./../Img/diamonds/diamond-primary.svg";
 import mediumDiamond from "./../Img/diamonds/diamond-medium.svg";
@@ -10,7 +9,7 @@ import inSchedule from "./../Img/inSchedule.svg"
 import midlSchedule from "./../Img/midSchedule.svg"
 import advSchedule from "./../Img/advSchedule.svg"
 import expSchedule from "./../Img/expSchedule.svg"
-
+import ava from "./../Img/avatar.png";
 
 export const Frend: FrendID[] = [
   // {
