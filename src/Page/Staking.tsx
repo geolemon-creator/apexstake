@@ -13,6 +13,7 @@ import faled from "./../Img/faled.svg"
 export default function Staking() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
+
   const [isLevelSelected, setIsLevelSelected] = useState(false);
   const [selectedLevelData, setSelectedLevelData] = useState<levelID | null>(null);
   const [isThirdModalOpen, setIsThirdModalOpen] = useState(false);
@@ -92,7 +93,7 @@ export default function Staking() {
           <p className="level-p">Выбор уровня</p> <span onClick={handleOpenModal} className="arrow">&gt;</span>
         </div>
       </div>
-
+      
       {isModalOpen && (
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
