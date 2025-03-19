@@ -19,7 +19,6 @@ export default function Referal() {
   const sortedLeader = [...leader].sort((a, b) => b.coins - a.coins);
 
   const currentUser = leader.find(l => l.id === currentUserId);
-
   
   const currentUserIndex = sortedLeader.findIndex(l => l.id === currentUserId);
   const currentUserPlace = currentUserIndex + 1;

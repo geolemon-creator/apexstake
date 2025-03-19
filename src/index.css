@@ -900,3 +900,59 @@ html {
   font-weight: 700;
   margin-right: 16px;
 }
+
+.modal-overlay-check {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #111118; /* Полупрозрачный чёрный фон */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.basic-lvl-div {
+  position: absolute;
+  top: 0px;
+  background-color: #282D33;
+  width: 335px;
+  height: 426px;
+  border-radius: 16px;
+}
+
+.basic-lvl-p {
+  display: flex;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 16px;
+  margin-top: 16px;
+}
+
+.title-lvl-div {
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+  margin-top: 8px;
+  gap: 8px;
+  height: 13px;
+}
+
+.lvl-img {
+  margin-top: 5px;
+}
+
+.lvl-p {
+  margin-top: 3px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.schedule-img {
+  width: 138.5px;
+  height: 139px;
+  margin-top: 56px;
+  margin-left: 18px;
+}
