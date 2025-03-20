@@ -23,11 +23,11 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'rest_framework',
+    'rest_framework_simplejwt',
     'staking.apps.StakingConfig',
     'tasks.apps.TasksConfig',
     'transactions.apps.TransactionsConfig',
     'users.apps.UsersConfig',
-    # 'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -84,6 +84,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}
+
 SWAGGER_USE_COMPAT_RENDERERS = False
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
@@ -92,6 +101,8 @@ SWAGGER_SETTINGS = {
         }
     }
 }
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 LANGUAGE_CODE = 'en-us'
 

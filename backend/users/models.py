@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Group, Permission
+from decimal import Decimal
 
 from .managers import CustomUserManager
 from .utils import generate_referral_code, generate_custom_id
@@ -13,8 +14,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     avatar = models.ImageField(default="users/avatar/default-avatar.png", upload_to='users/avatar/')
     wallet = models.CharField(max_length=30, null=True, blank=True)
     staking_stage = models.ForeignKey(StakingStage, null=True, blank=True, on_delete=models.CASCADE)
-    telegram_id = models.CharField(max_length=50)
+    telegram_id = models.IntegerField()
     balance = models.DecimalField(default=0, max_digits=10, decimal_places=2)
+    blocked_balance = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     tokens = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     referred_by = models.ForeignKey('CustomUser', on_delete=models.CASCADE, null=True, blank=True)
     referral_code = models.CharField(max_length=8)
@@ -30,7 +32,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['username', 'avatar', 'telegram_id']
+    REQUIRED_FIELDS = ['avatar', 'telegram_id']
 
     def save(self, *args, **kwargs):
         if not self.id:  # Generate custom ID if it doesn't already exist
@@ -69,4 +71,31 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         if self.tokens < amount:
             raise ValueError("Insufficient tokens.")
         self.tokens -= amount
+        self.save()
+
+    def open_staking(self, amount):
+        """
+        Открыть стейкинг с блокировкой части баланса.
+        """
+        if amount <= 0:
+            raise ValueError("Amount must be positive.")
+
+        if self.balance < Decimal(amount):
+            raise ValueError("Insufficient balance.")
+
+        self.balance -= Decimal(amount)
+        self.blocked_balance += Decimal(amount)
+
+        self.save()
+
+    def close_staking(self):
+        """
+        Закрыть стейкинг и вернуть заблокированные средства.
+        """
+        if self.blocked_balance <= 0:
+            raise ValueError("No blocked balance to release.")
+
+        self.balance += self.blocked_balance
+        self.blocked_balance = 0
+
         self.save()
