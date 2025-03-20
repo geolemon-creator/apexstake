@@ -1153,6 +1153,19 @@ html {
   font-weight: 700;
 }
 
+.input-thrid-num {
+  background-color: #111118;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid #767777;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  width: 83px;
+  outline: none;
+}
+
 .thrid-main-button {
   width: 303px;
   height: 48px;
@@ -1523,4 +1536,104 @@ html {
 
 .hist-btn-p {
   color: #ADA9A9;
+}
+
+.farming-h1 {
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.farming-list-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.media-div {
+  display: flex;
+  width: 335px;
+  min-height: 55px;
+  height: auto;
+  border-radius: 12px;
+  background-color: #282D33;
+  padding-bottom: 1px;
+}
+
+.exam-good {
+  border: 1px solid #0AC843;
+  padding-right: 3px;
+}
+
+.media-img-div {
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.media-img {
+  margin-top: 11.5px;
+  margin-bottom: 11.5px;
+  margin-left: 16px;
+  width: 32px;
+  height: 32px;
+}
+.media-coin-div {
+  display: flex;
+  align-items: center;
+  width: 43px;
+  height: 17px;
+}
+
+.media-title-div {
+  margin-top: 8px;
+  width: 231px;
+  min-height: 39px;
+  margin-left: 8px;
+
+  flex-grow: 1; /* Позволяет этому блоку расширяться */
+  margin-left: 8px;
+}
+
+.media-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 4px;
+  white-space: normal; /* Разрешаем перенос строк */
+  word-break: break-word; /* Разрываем длинные слова */
+}
+
+.media-coin-img {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.5px;
+}
+
+.coin-media-p {
+  color: #DEDEDE;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.media-arrow-div {
+  margin-top: -0.5px;
+  margin-bottom: 15.5px;
+  margin-left: 8px;
+  width: 24px;
+  height: 24px;
+  color: #ADA9A9;
+}
+
+.arrow-media {
+  font-size: 38px;
+}
+
+.chek-media {
+  width: 20px;
+  height: 20px;
+  margin-top: 20.5px;
 }

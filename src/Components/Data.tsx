@@ -1,4 +1,4 @@
-import { FrendID, levelID, TansactionsID, TermsID } from "./Type";
+import { FrendID, levelID, MediaID, TansactionsID, TermsID } from "./Type";
 import { LeaderID } from "./Type";
 import leadava from "./../Img/avatarlead.png";
 import primaryDiamond from "./../Img/diamonds/diamond-primary.svg";
@@ -11,6 +11,9 @@ import advSchedule from "./../Img/advSchedule.svg"
 import expSchedule from "./../Img/expSchedule.svg"
 import transWallet from "./../Img/transWallet.svg"
 import ava from "./../Img/avatar.png";
+import telegram from "./../Img/telegram.svg"
+import x from "./../Img/X.svg"
+import youtube from "./../Img/youtube.svg"
 
 export const Frend: FrendID[] = [
   {
@@ -203,7 +206,7 @@ export const level: levelID[] = [
     percent: 10,
     img: advancedDiamond,
     schedule: advSchedule,
-    ton: 250
+    ton: 150
   },
 
   {
@@ -212,7 +215,7 @@ export const level: levelID[] = [
     percent: 140,
     img: expertDiamond,
     schedule: expSchedule,
-    ton: 300
+    ton: 250
   },
 ];
 
@@ -237,157 +240,34 @@ export const tansactions: TansactionsID[]  = [
     price: 12,
     img: transWallet,
   },
+]
+
+export const media: MediaID[] = [
+  {
+    id: 1,
+    title: "Подпишитесь на канал в Telegram",
+    coin: 10,
+    img: telegram
+  },
 
   {
     id: 2,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
+    title: "Подпишитесь на канал в X",
+    coin: 10,
+    img: x
   },
 
   {
     id: 3,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
+    title: "Поделитесь кампанией в своей истории в X",
+    coin: 10,
+    img: x
   },
 
   {
     id: 4,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
+    title: "Подпишитесь на канал в  You Tube",
+    coin: 10,
+    img: youtube
   },
-
-  {
-    id: 5,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 6,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 7,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 8,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 9,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 10,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 11,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 12,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 13,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 14,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 15,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 16,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 17,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 18,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 19,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-
-  {
-    id: 20,
-    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-    date: "Сегодня, 18:09",
-    price: 12,
-    img: transWallet,
-  },
-  
 ]

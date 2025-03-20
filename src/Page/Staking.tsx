@@ -13,11 +13,11 @@ import { tansactions } from "../Components/Data";
 import Tansactions from "../Components/Tansactions";
 import calendar from "./../Img/calendar.svg"
 import { Select } from 'antd';
+import { useTransactions } from "../Components/TransactionsContext";
 
 export default function Staking() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
-
   const [isLevelSelected, setIsLevelSelected] = useState(false);
   const [selectedLevelData, setSelectedLevelData] = useState<levelID | null>(null);
   const [isThirdModalOpen, setIsThirdModalOpen] = useState(false);
@@ -29,6 +29,12 @@ export default function Staking() {
   const [isHistoryTrans, setIsHistoryTrans] = useState<boolean>(false)
   const [openDateBtn, setOpenDateBtn] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [levels, setLevels] = useState(level); 
+  const { setTransactions } = useTransactions();
+
+    useEffect(() => {
+      setTransactions(tansactions);
+    }, [setTransactions]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -137,6 +143,7 @@ export default function Staking() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [openDateBtn]);
+
 
   return (
     <div className="staking-countainer">
@@ -311,12 +318,25 @@ export default function Staking() {
                     </div>
                   </>
               )}
-               
                 {dopWord && (<p className="sum">Сумма</p>)}
 
                 <div className="thrid-main-div">
                   <img className="thrid-almaz" src={almaz} alt="almaz" />
-                  <p className="thrid-num">{thirdModalData.ton}</p>
+
+                    {isLoading ? (
+                      <p className="thrid-num">{thirdModalData.ton}</p>
+                    ) : isSuccess ? (<p className="thrid-num">{thirdModalData.ton}</p>) : !isSuccess ? (
+
+                      <input className="input-thrid-num" value={thirdModalData.ton} type="number" 
+                        onChange={(e) => {
+                        const updatedTon = Number(e.target.value);
+                      const updatedLevels = levels.map((lvl) =>
+                      lvl.id === thirdModalData.id ? { ...lvl, ton: updatedTon } : lvl
+                    );
+                    setLevels(updatedLevels);
+                    setThirdModalData({ ...thirdModalData, ton: updatedTon });
+                  }}/>
+                    ) : (<></>) }
                 </div>
 
                 {isLoading ? (
@@ -446,6 +466,7 @@ export default function Staking() {
       </div>
 
       {tansactions.length === 0 ? (
+        // Вот тут массив и состояние от которое должно взаимодействовать с главным 
         <>
         <p className="stak-info-p">Пока нет транзакций</p>
         </>

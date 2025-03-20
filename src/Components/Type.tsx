@@ -44,3 +44,10 @@ export interface TansactionsID {
     img: string,
 }
 
+export interface MediaID {
+    id: number,
+    title: string,
+    coin: number,
+    img: string
+}
+

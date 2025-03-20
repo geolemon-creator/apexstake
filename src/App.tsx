@@ -4,19 +4,24 @@ import Home from "./Page/Home";
 import Staking from "./Page/Staking";
 import Referal from "./Page/Referal";
 import Contest from "./Page/Contest";
+import { TransactionsProvider } from "./Components/TransactionsContext";
+import Farming from "./Page/Farming";
 
 function App() {
   return (
     <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/staking" element={<Staking />} />
-          <Route path="/referrals" element={<Referal />} />
-          <Route path="/contest" element={<Contest />} />
-        </Routes>
-        <Footer />
-      </Router>
+      <TransactionsProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/staking" element={<Staking />} />
+            <Route path="/referrals" element={<Referal />} />
+            <Route path="/contest" element={<Contest />} />
+            <Route path="/farming" element={<Farming />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </TransactionsProvider>
     </div>
   );
 }

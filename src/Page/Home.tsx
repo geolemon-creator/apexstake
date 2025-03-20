@@ -5,10 +5,12 @@ import { level } from "../Components/Data";
 import coin from "./../Img/coin.png";
 import LevelModal from "../Components/LevelModal";
 import { useState } from "react";
+import { useTransactions } from "../Components/TransactionsContext";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
+  const { transactions } = useTransactions();
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -73,7 +75,11 @@ export default function Home() {
       </div>
 
       <div className="home-info-div">
-        <p className="home-info">Данные появятся после начала стейкинга</p>
+         {transactions.length > 0 ? (
+            <p className="home-info">НУЖЕН ГРАФИК</p>
+         ) : (
+          <p className="home-info">Данные появятся после начала стейкинга</p>
+         )}
       </div>
 
       <div className="btn-more">
