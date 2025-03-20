@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import deposit from "./../Img/Deposit.png";
 import withdraw from "./../Img/Withdraw.png";
 import { level } from "../Components/Data";
@@ -9,6 +9,10 @@ import close from "./../Img/close.svg";
 import loading from "./../Img/loading.svg"
 import success from "./../Img/success.svg"
 import faled from "./../Img/faled.svg"
+import { tansactions } from "../Components/Data";
+import Tansactions from "../Components/Tansactions";
+import calendar from "./../Img/calendar.svg"
+import { Select } from 'antd';
 
 export default function Staking() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -18,9 +22,13 @@ export default function Staking() {
   const [selectedLevelData, setSelectedLevelData] = useState<levelID | null>(null);
   const [isThirdModalOpen, setIsThirdModalOpen] = useState(false);
   const [thirdModalData, setThirdModalData] = useState<levelID | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false); // Состояние загрузки
-  const [isSelectionComplete, setIsSelectionComplete] = useState<boolean>(false); // Состояние завершения выбора
-  const [isSuccess, setIsSuccess] = useState<boolean | null>(null); // Состояние успешности загрузки
+  const [isLoading, setIsLoading] = useState<boolean>(false); 
+  const [isSelectionComplete, setIsSelectionComplete] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
+  const [dopWord, setDopWord] = useState<boolean>(false)
+  const [isHistoryTrans, setIsHistoryTrans] = useState<boolean>(false)
+  const [openDateBtn, setOpenDateBtn] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -48,6 +56,7 @@ export default function Staking() {
     setThirdModalData(selectedLevelData);
     setIsModalOpen(false);
     setIsLevelSelected(false);
+    setDopWord(false)
   };
 
   const handleCloseThirdModal = () => {
@@ -57,33 +66,139 @@ export default function Staking() {
   };
 
   const handleSelectLevel = () => {
-    setIsLoading(true); // Начинаем загрузку
-
-    // Имитируем загрузку с помощью Promise
+    setIsLoading(true);
+    setDopWord(true)
+    
     new Promise<void>((resolve, reject) => {
       setTimeout(() => {
-        const isSuccess = Math.random() > 0.5; // 50% шанс успеха
+        const isSuccess = Math.random() > 0.5;
         if (isSuccess) {
           resolve();
         } else {
           reject();
         }
-      }, 2000); // Загрузка длится 2 секунды
+      }, 2000);
     })
       .then(() => {
-        setIsSuccess(true); // Успешная загрузка
+        setIsSuccess(true);
       })
       .catch(() => {
-        setIsSuccess(false); // Ошибка загрузки
+        setIsSuccess(false);
       })
       .finally(() => {
-        setIsLoading(false); // Загрузка завершена
-        setIsSelectionComplete(true); // Показываем новую разметку
+        setIsLoading(false);
+        setIsSelectionComplete(true);
       });
   };
 
+  const parseCustomDate = (dateString: string): Date => {
+    const now = new Date();
+    const [dayPart, timePart] = dateString.split(', ');
+
+    let date = new Date(now);
+
+    if (dayPart === 'Вчера') {
+      date.setDate(now.getDate() - 1);
+    }
+
+    const [hours, minutes] = timePart.split(':').map(Number);
+    date.setHours(hours, minutes, 0, 0);
+
+    return date;
+  };
+  const sortedTransactions = [...tansactions].sort((a, b) => {
+    const dateA = parseCustomDate(a.date);
+    const dateB = parseCustomDate(b.date);
+    return dateB.getTime() - dateA.getTime(); 
+  });
+
+  const openHistory = () => {
+    setIsHistoryTrans(true)
+  }
+
+  const openBtnHist = () => {
+    setOpenDateBtn(!openDateBtn)
+  }
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setOpenDateBtn(false);
+    }
+  };
+
+  useEffect(() => {
+    if (openDateBtn) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [openDateBtn]);
+
   return (
     <div className="staking-countainer">
+
+      {isHistoryTrans ? (
+        
+          <div className="hist-countainer">
+
+            <div className="hist-p-div">
+              <p className="hist-p">История транзакций</p>
+              </div>
+
+            <div className="hist-btn-main-div" >
+              <div className="hist-btn-div">
+              <Select defaultValue="Все" popupClassName="custom-dropdown" className="custom-select"
+                options={[
+                  { value: 'Все', label: <span>Все</span> },
+                  { value: 'Пополнения', label: <span>Пополнения</span> },
+                  { value: 'Начисления', label: <span>Начисления</span> },
+                  { value: 'Прибыли', label: <span>Прибыли</span> },
+                  { value: 'Выводы', label: <span>Выводы</span> },
+                ]}
+                />
+                  <div className="his-date-btn-div" ref={dropdownRef}>
+                    <button className="his-date-btn"><img onClick={openBtnHist} className="his-date-btn-img" src={calendar} alt="" /></button>
+                    {openDateBtn && (
+                      <div className="dropdown-menu">
+
+                        <div className="hist-btn-day-div">
+                          <div className="hist-btn-day-flex-div">
+                            <button className="hist-btn-day">1 день</button>
+                            <button className="hist-btn-day">1 неделя</button>
+                            <button className="hist-btn-day">1 месяц</button>
+                          </div>
+                        </div>
+
+                        <div className="hist-btn-date-div">
+                          <div className="hist-btn-day-flex-div">
+                            <button className="hist-btn-day">15-01-2025</button>
+                              <p className="hist-btn-p">По</p>
+                            <button className="hist-btn-day">15-01-2025</button>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      )}
+                  </div>
+                    
+              </div>
+            </div>
+
+
+            <div className="hist-trans-main-div">
+              <div className="hist-trans-list-div">
+                {sortedTransactions.map((tansactions) => (
+                  <Tansactions key={tansactions.id} data={tansactions} />
+                ))}
+              </div>
+            </div>
+          </div>
+      ) : (
+        <>
       <div className="home-top-catlog">
         <div className="home-user">
           <div className="user-icon"></div>
@@ -186,10 +301,18 @@ export default function Staking() {
             <div className="third-modal-content">
               <img className="close-modal-thrid" onClick={handleCloseThirdModal} src={close} alt="close" />
               <div className="main-block-thrid">
-                <div className="third-header">
-                  <img className="thrid-modal-img" src={thirdModalData.img} alt="img" />
-                  <h2 className="thrid-modal-title">{thirdModalData.title}</h2>
-                </div>
+
+              {dopWord ? (
+                <p className="dettrans">Детали транзакции</p>) : (
+                  <>
+                    <div className="third-header">
+                      <img className="thrid-modal-img" src={thirdModalData.img} alt="img" />
+                      <h2 className="thrid-modal-title">{thirdModalData.title}</h2>
+                    </div>
+                  </>
+              )}
+               
+                {dopWord && (<p className="sum">Сумма</p>)}
 
                 <div className="thrid-main-div">
                   <img className="thrid-almaz" src={almaz} alt="almaz" />
@@ -312,12 +435,34 @@ export default function Staking() {
           </div>
         </div>
       </div>
+      
 
-      <div>
-        <p className="stak-hist-title">История транзакций</p>
+      <div className="transactions-div">
+        <div className="stak-hist-div">
+          <p className="stak-hist-title">История транзакций</p>
+
+          {tansactions.length === 0 ? (<></>) : (<p onClick={openHistory} className="stak-hist-all">Все</p>)}
+        </div>
       </div>
 
-      <p className="stak-info-p">Пока нет транзакций</p>
+      {tansactions.length === 0 ? (
+        <>
+        <p className="stak-info-p">Пока нет транзакций</p>
+        </>
+      ) : (
+        <>
+        <div className="transactions-main-div">
+          <div className="transactions-list-div">
+          {sortedTransactions.map((tansactions) => (
+            <Tansactions key={tansactions.id} data={tansactions} />
+          ))}
+          </div>
+        </div>
+        </>
+      )}
+      </>
+    )}
+      
     </div>
   );
 }

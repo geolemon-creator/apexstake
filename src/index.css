@@ -4,6 +4,8 @@
   margin: 0px;
   padding: 0px;
   user-select: none;
+  font-family: "Manrope", sans-serif;
+
 }
 
 body {
@@ -313,8 +315,8 @@ html {
   color: white;
   font-size: 18px;
   font-weight: 700;
-  margin-left: 20px;
   margin-top: 16px;
+  margin-bottom: 12px;
 }
 
 .stak-info-p {
@@ -692,9 +694,9 @@ html {
 }
 
 .arrow {
-  font-size: 22px; /* Размер стрелки */
-  color: #ffffff; /* Цвет стрелки */
-  transition: transform 0.3s ease; /* Анимация для стрелки */
+  font-size: 22px;
+  color: #ffffff; 
+  transition: transform 0.3s ease; 
 }
 
 .arrow:active {
@@ -711,14 +713,14 @@ html {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный чёрный фон */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Убедись, что окно поверх других элементов */
+  z-index: 1000;
 }
 
-/* Само модальное окно */
+
 .modal {
   position: fixed;
   top: -18px;
@@ -846,7 +848,6 @@ html {
   font-weight: 700;
 }
 
-/* Выбранный уровень */
 .selected-level {
   margin-top: 20px;
   text-align: center;
@@ -907,7 +908,7 @@ html {
   left: 0;
   right: 0;
   bottom: -56px;
-  background-color: #111118; /* Полупрозрачный чёрный фон */
+  background-color: #111118; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -936,13 +937,6 @@ html {
 }
 
 .title-lvl-div {
-  /* display: flex;
-  align-items: center;
-  margin-left: 16px;
-  margin-top: 8px;
-  gap: 8px;
-  height: 13px; */
-
   display: flex;
   width: 99px;
   height: 51px;
@@ -1023,10 +1017,6 @@ html {
  }
  
  .custom-checkbox input[type="checkbox"] {
-  /* position: absolute;
-  opacity: 0;
-  cursor: pointer; */
-
   position: absolute;
   width: 1px;
   height: 1px;
@@ -1097,28 +1087,32 @@ html {
 
 .main-block-thrid {
   display: flex;
-  width: 303px;
-  height: 157px;
+  width: 100%; 
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 16px;
+
 }
 
 .third-modal-content {
   display: flex;
   width: 335px;
-  height: 261px;
+  min-height: 261px;
+  max-height: 500px;
   border-radius: 16px;
   background-color: #111118;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  flex-direction: column; 
+  align-items: center; 
   justify-content: flex-start;
+  border: 1px solid #785D06;
+  padding: 16px; 
+  box-sizing: border-box;
 }
 
 .third-header {
   display: flex;
-  margin-bottom: 24px;
+  align-items: center;
+  gap: 8px;
 }
 
 .thrid-almaz {
@@ -1151,6 +1145,7 @@ html {
 .thrid-main-div {
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
 .thrid-num {
@@ -1228,10 +1223,304 @@ html {
 }
 
 .thrid-repeat-btn {
-  background-color: #FFDE45;
-  width: 303px;
+  width: 100%;
   height: 48px;
+  background-color: #FFDE45;
+  color: #111118;
+  border: none;
   font-size: 16px;
   font-weight: 800;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+.dettrans {
+  font-size: 18px;
+  font-weight: 700;
+  color: #FFDE45;
+}
+
+.sum {
+  font-size: 12px;
+  font-weight: 500;
+  color: #DEDEDE;
+}
+
+.transactions-div {
+  display: block;
+  margin: 0 auto;
+  width: 335px;
+  height: 100%;
+}
+
+.stak-hist-div {
+  width: 335px;
+  height: 18px;
+  display: flex;
+  width: 335px;
+  height: 18px;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  margin-top: 16px;
+  margin-bottom: 12px;
+}
+
+.stak-hist-all {
+  font-size: 14px;
+  font-weight: 500px;
+  color: #FFDE45;
+}
+
+.transactions-list-div {
+  display: flex;
+  background-color: #282D33;
+  width: 335px;
+  min-height: 288px;
   margin-top: 12px;
+  border-radius: 16px;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  gap: 20px;
+  margin-bottom: 80px;
+  padding-bottom: 20px;
+}
+
+.hist-countainer {
+  height: 100vh;
+}
+
+.hist-trans-list-div {
+  display: flex;
+  background-color: #282D33;
+  width: 335px;
+  /* min-height: 100vh; */
+  margin-top: 12px;
+  border-radius: 16px;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  gap: 20px;
+  margin-bottom: 80px;
+  padding-bottom: 20px;
+}
+
+.trans-div {
+  display: flex;
+  justify-content: space-between;
+  width: 303px;
+  gap: 12px;
+  height: 44px;
+}
+
+.trans-img {
+  width: 36px;
+  height: 36px;
+}
+
+.trans-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ADA9A9;
+  margin-bottom: 8px;
+}
+
+.trans-data {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ADA9A9;
+}
+
+.trans-price-p {
+  font-size: 14px;
+  font-weight: 500;
+  color: green;
+  text-align: end;
+  margin-bottom: 12px;
+}
+
+.trans-status {
+  text-align: center;
+  background-color: #09D84E;
+  width: 63px;
+  height: 18px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.transactions-main-div {
+  display: flex;
+  justify-content: center;
+}
+
+.hist-trans-main-div {
+  display: flex;
+  justify-content: center;
+
+}
+
+.hist-p-div {
+  display: flex;
+  justify-content: center;
+}
+
+.hist-p {
+  text-align: center;
+  color: #FFFFFF;
+  width: 335px;
+  height: 20px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+ .custom-select .ant-select-selector {
+  width: 150px !important;
+  height: 40px !important;
+  background-color: #232425 !important;
+  color: #FFDE45;
+  border: none !important;
+  border-radius: 12px;
+} 
+
+/* Изменение цвета стрелки */
+.custom-select .ant-select-arrow {
+  color: white;
+}
+
+/* Настройки фона для выпадающего списка */
+.custom-dropdown.ant-select-dropdown {
+  background-color: #232425 !important; /* Принудительно применяем тёмный фон */
+}
+
+.custom-select .ant-select-selection-item {
+  color: #FFDE45 !important;
+}
+
+/* Цвет текста элементов списка */
+.custom-dropdown .ant-select-item {
+  color: white;
+}
+
+/* Цвет фона при наведении на элемент списка */
+.custom-dropdown .ant-select-item-option-active {
+  background-color: #232425 !important;
+  color: white !important; 
+}
+
+.hist-btn-main-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.hist-btn-div {
+  display: flex;
+  justify-content: space-between;
+  width: 335px;
+  height: 40px;
+} 
+
+.his-date-btn-img {
+  width: 24px;
+  height: 24px;
+}
+
+.his-date-btn-div {
+  position: relative;
+  display: inline-block;
+}
+
+.his-date-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background-color: #232425;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative; 
+  display: inline-block;
+}
+
+.dropdown-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  background-color: rgb(17, 17, 24);
+  border: 1px solid #444;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  top: 0;
+  right: 0;
+  width: 238px;
+  height: 114px; 
+}
+
+.dropdown-menu a {
+  color: white;
+  text-decoration: none;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.dropdown-menu a:hover {
+  background-color: #ddd;
+}
+
+.hist-btn-day-div {
+  width: 214px;
+  height: 27px;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.hist-btn-date-div {
+  width: 214px;
+  height: 27px;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.hist-btn-day {
+  min-width: 57px;
+  padding: 4px 8px;
+  height: 27px;
+  background-color: rgb(17, 17, 24);
+  border: 1px solid #ADA9A9; /* Граница по умолчанию */
+  font-size: 14px;
+  font-weight: 400;
+  color: #DEDEDE;
+  border-radius: 8px;
+  text-align: center;
+  transition: border-color 0.3s ease; /* Плавное изменение цвета границы */
+}
+
+.hist-btn-day:active {
+  border-color: #FFDE45; /* Цвет границы при нажатии */
+}
+
+.hist-btn-day-flex-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hist-btn-p {
+  color: #ADA9A9;
 }

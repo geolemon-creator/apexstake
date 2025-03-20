@@ -1,4 +1,4 @@
-import { FrendID, levelID, TermsID } from "./Type";
+import { FrendID, levelID, TansactionsID, TermsID } from "./Type";
 import { LeaderID } from "./Type";
 import leadava from "./../Img/avatarlead.png";
 import primaryDiamond from "./../Img/diamonds/diamond-primary.svg";
@@ -9,17 +9,18 @@ import inSchedule from "./../Img/inSchedule.svg"
 import midlSchedule from "./../Img/midSchedule.svg"
 import advSchedule from "./../Img/advSchedule.svg"
 import expSchedule from "./../Img/expSchedule.svg"
+import transWallet from "./../Img/transWallet.svg"
 import ava from "./../Img/avatar.png";
 
 export const Frend: FrendID[] = [
-  // {
-  //   id: 1,
-  //   img: ava,
-  //   title: "Alexy",
-  //   coins: 599740,
-  //   bonus: +1500,
-  //   ton: 124,
-  // },
+  {
+    id: 1,
+    img: ava,
+    title: "Alexy",
+    coins: 599740,
+    bonus: +1500,
+    ton: 124,
+  },
 ];
 
 export const leader: LeaderID[] = [
@@ -226,4 +227,167 @@ export const Terms: TermsID[] = [
     bid: 140,
     ton: "1,49959500 TON"
   }
+]
+
+export const tansactions: TansactionsID[]  = [
+  {
+    id: 1,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 16:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 2,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 3,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 4,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 5,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 6,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 7,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 8,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 9,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 10,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 11,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 12,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 13,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 14,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 15,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 16,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 17,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 18,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 19,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+
+  {
+    id: 20,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 18:09",
+    price: 12,
+    img: transWallet,
+  },
+  
 ]
