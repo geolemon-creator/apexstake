@@ -1,8 +1,8 @@
-import time
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Group, Permission
 
 from .managers import CustomUserManager
+from .utils import generate_referral_code, generate_custom_id
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -15,7 +15,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     staking_stage = models.ForeignKey(StakingStage, null=True, blank=True, on_delete=models.CASCADE)
     telegram_id = models.CharField(max_length=50)
     balance = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    referred_by = models.ForeignKey('CustomUser', on_delete=models.CASCADE)
+    tokens = models.DecimalField(default=0, max_digits=10, decimal_places=2)
+    referred_by = models.ForeignKey('CustomUser', on_delete=models.CASCADE, null=True, blank=True)
     referral_code = models.CharField(max_length=8)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -33,14 +34,39 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def save(self, *args, **kwargs):
         if not self.id:  # Generate custom ID if it doesn't already exist
-            self.id = self.generate_custom_id()
+            self.id = generate_custom_id()
+        if not self.referral_code:
+            self.referral_code = generate_referral_code()
         super().save(*args, **kwargs)
-
-    def generate_custom_id(self):
-        """
-        Generate a custom ID in the format of a 13-digit number.
-        """
-        return str(int(time.time() * 1000))
 
     def __str__(self):
         return f'{self.username} | {self.balance}'
+    
+
+    def increase_balance(self, amount):
+        if amount <= 0:
+            raise ValueError("Amount must be positive.")
+        self.balance += amount
+        self.save()
+
+    def decrease_balance(self, amount):
+        if amount <= 0:
+            raise ValueError("Amount must be positive.")
+        if self.balance < amount:
+            raise ValueError("Insufficient balance.")
+        self.balance -= amount
+        self.save()
+
+    def increase_tokens(self, amount):
+        if amount <= 0:
+            raise ValueError("Amount must be positive.")
+        self.tokens += amount
+        self.save()
+
+    def decrease_tokens(self, amount):
+        if amount <= 0:
+            raise ValueError("Amount must be positive.")
+        if self.tokens < amount:
+            raise ValueError("Insufficient tokens.")
+        self.tokens -= amount
+        self.save()

@@ -11,8 +11,13 @@ class StakingLevel(models.Model):
     def __str__(self):
         return f'Level: {self.level} | Stage: {self.stage}'
 
-class StakingStage(models.Model):    
-    stage = models.IntegerField()
+class StakingStage(models.Model):
+    STAGE_CHOICES = [
+        (1, 'Stage 1'),
+        (2, 'Stage 2'),
+        (3, 'Stage 3'),
+    ]
+    stage = models.IntegerField(choices=STAGE_CHOICES)
     staking_time = models.IntegerField()
 
     def __str__(self):

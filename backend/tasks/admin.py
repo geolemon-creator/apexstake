@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import FarmingTask, UserFarmingTask
+
+
+admin.site.register(FarmingTask)
+admin.site.register(UserFarmingTask)
