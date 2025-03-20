@@ -14,6 +14,7 @@ import Tansactions from "../Components/Tansactions";
 import calendar from "./../Img/calendar.svg"
 import { Select } from 'antd';
 import { useTransactions } from "../Components/TransactionsContext";
+import { NavLink } from "react-router-dom";
 
 export default function Staking() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -207,10 +208,14 @@ export default function Staking() {
       ) : (
         <>
       <div className="home-top-catlog">
+
+      <NavLink to="/profile">
         <div className="home-user">
           <div className="user-icon"></div>
           <p className="home-user-p">UserName</p>
         </div>
+      </NavLink>
+      
         <div className="home-level">
           <p className="level-p">Выбор уровня</p> <span onClick={handleOpenModal} className="arrow">&gt;</span>
         </div>

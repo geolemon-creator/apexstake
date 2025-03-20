@@ -1637,3 +1637,205 @@ html {
   height: 20px;
   margin-top: 20.5px;
 }
+
+.data-user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.user-ava {
+  width: 48px;
+  height: 48px;
+}
+
+.user-name {
+  font-size: 18px;
+  font-weight: 400;
+  color: white;
+}
+
+.user-wallet-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.user-wallet {
+  width: 336px;
+  /* height: 192px; */
+  height: 207px;
+  border-radius: 16px;
+  background-color: #282D33;
+}
+
+.connect-wallet {
+  font-size: 20px;
+  color: white;
+  text-align: center;
+  font-weight: 700;
+  margin-top: 24px;
+}
+
+.about-connect-p-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+ 
+.about-connect-p {
+  color: #FFDE45;
+  width: 284px;
+  font-size: 16px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.user-wallet-btn {
+  display: block;
+  margin: 0 auto;
+  width: 312px;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 800;
+  background-color: #FFDE45;
+  color: #111118;
+  border-radius: 12px;
+  border: none;
+  margin-top: 12px;
+}
+
+.review-user-div {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-div {
+  display: flex;
+  justify-content: space-around;
+  width: 335px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #282D33;
+}
+
+.review-p-div {
+  width: 239px;
+  height: 19px;
+}
+
+.review-img {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.review-p {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+
+.review-arrow {
+  color: white;
+  font-size: 32px;
+}
+
+.main-open-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.open-wallet-header {
+  display: flex;
+  align-items: center;
+  width: 288px;
+  height: 44px;
+}
+
+.open-wallet-text {
+  width: 240px;
+  height: 44px;
+}
+
+.open-p-wallet-flex {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.open-wallet-p-first {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+}
+
+.open-wallet-p-second {
+  color: #11B254;
+  font-weight: 500;
+}
+
+.open-wall-img {
+  width: 36px;
+  height: 36px;
+}
+
+.open-p-img {
+  width: 16px;
+  height: 16px;
+}
+
+.wallet-adres-div {
+  width: 312px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: #111118;
+  color: #AEBEE0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.afres-copy-img {
+  width: 16px;
+  height: 16px;
+}
+
+.adres-main-block {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.adres-p {
+  font-size: 14px;
+  font-weight: 457px;
+}
+
+.untie-wallet {
+  width: 312px;
+  height: 48px;
+  background-color: transparent;
+  border: 1px solid #FFDE45;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 16px;
+}
+
+.untie-wallet-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}

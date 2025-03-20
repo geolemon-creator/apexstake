@@ -6,6 +6,7 @@ import Referal from "./Page/Referal";
 import Contest from "./Page/Contest";
 import { TransactionsProvider } from "./Components/TransactionsContext";
 import Farming from "./Page/Farming";
+import Profile from "./Page/Profile";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/referrals" element={<Referal />} />
             <Route path="/contest" element={<Contest />} />
             <Route path="/farming" element={<Farming />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
           <Footer />
         </Router>

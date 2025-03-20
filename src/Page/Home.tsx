@@ -26,10 +26,12 @@ export default function Home() {
   return (
     <div className="home-countainer">
       <div className="home-top-catlog">
-        <div className="home-user">
-          <div className="user-icon"></div>
-          <p className="home-user-p">UserName</p>
-        </div>
+        <NavLink to="/profile">
+          <div className="home-user">
+            <div className="user-icon"></div>
+            <p className="home-user-p">UserName</p>
+          </div>
+        </NavLink>
 
         <div onClick={handleOpenModal} className="home-level">
           <p className="level-p">Выбор уровня</p>

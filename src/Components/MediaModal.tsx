@@ -30,7 +30,8 @@ export default function MediaModal(props: MediaProps) {
                 </div>
                 
                 <div className='media-arrow-div'>
-                  {exam ? (<div className='chek-media-div'><img className='chek-media' src={check} /></div>) : (<span className="arrow-media">&gt;</span>)}
+                  {exam ? (<div className='chek-media-div'><img className='chek-media' src={check} /></div>) 
+                  : (<span className="arrow-media">&gt;</span>)}
                     
                 </div>
             </div>
