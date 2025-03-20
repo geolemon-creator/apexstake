@@ -35,3 +35,12 @@ export interface TermsID {
     bid: number,
     ton: string
 }
+
+export interface TansactionsID {
+    id: number,
+    title: string,
+    date: string,
+    price: number,
+    img: string,
+}
+
