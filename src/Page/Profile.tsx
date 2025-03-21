@@ -57,7 +57,7 @@ export default function Profile() {
                     </div>
 
                     <div className="untie-wallet-div">
-                        <button className="untie-wallet">Отвязать кошелек</button>
+                        <button onClick={handleOpenWallet} className="untie-wallet">Отвязать кошелек</button>
                     </div>
                     </>)}
 

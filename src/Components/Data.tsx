@@ -233,13 +233,13 @@ export const Terms: TermsID[] = [
 ]
 
 export const tansactions: TansactionsID[]  = [
-  // {
-  //   id: 1,
-  //   title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
-  //   date: "Сегодня, 16:09",
-  //   price: 12,
-  //   img: transWallet,
-  // },
+  {
+    id: 1,
+    title: "EQDRgEeQULqqwau_9Tbe98Uss5SSI",
+    date: "Сегодня, 16:09",
+    price: 12,
+    img: transWallet,
+  },
 ]
 
 export const media: MediaID[] = [

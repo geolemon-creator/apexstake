@@ -7,6 +7,8 @@ import Contest from "./Page/Contest";
 import { TransactionsProvider } from "./Components/TransactionsContext";
 import Farming from "./Page/Farming";
 import Profile from "./Page/Profile";
+import Conclusioin from "././Page/Conclusion"
+import Transfers from "./Page/Transfers";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
             <Route path="/contest" element={<Contest />} />
             <Route path="/farming" element={<Farming />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/conclusioin" element={<Conclusioin />} />
+            <Route path="/transfers" element={<Transfers />} />
           </Routes>
           <Footer />
         </Router>

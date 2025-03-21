@@ -29,6 +29,7 @@ export default function Staking() {
   const [dopWord, setDopWord] = useState<boolean>(false)
   const [isHistoryTrans, setIsHistoryTrans] = useState<boolean>(false)
   const [openDateBtn, setOpenDateBtn] = useState(false);
+  const [tonModulOpen, setTonModulOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [levels, setLevels] = useState(level); 
   const { setTransactions } = useTransactions();
@@ -146,6 +147,8 @@ export default function Staking() {
   }, [openDateBtn]);
 
 
+
+
   return (
     <div className="staking-countainer">
 
@@ -221,6 +224,7 @@ export default function Staking() {
         </div>
       </div>
       
+    <>
       {isModalOpen && (
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -306,7 +310,10 @@ export default function Staking() {
           </div>
         </div>
       )}
+    </>
 
+
+    <>
       {isThirdModalOpen && thirdModalData && (
         <div className="modal-overlay" onClick={handleCloseThirdModal}>
           <div className="modal-thrid" onClick={(e) => e.stopPropagation()}>
@@ -442,13 +449,15 @@ export default function Staking() {
           </div>
         </div>
       )}
+    </>
+      
+      <>
 
-      <div className="stak-balance">
+      <div onClick={() => setTonModulOpen(true)} className="stak-balance">
         <div className="stak-balance-price">
           <p className="stak-balance-title">Current Balance</p>
           <p className="stak-balance-num">$00.00</p>
         </div>
-        <div className="stak-balance-line"></div>
         <div className="stak-btn-div">
           <div className="stak-first-div">
             <img src={deposit} alt="desposit" />
@@ -458,10 +467,36 @@ export default function Staking() {
             <img src={withdraw} alt="withdraw" />
             <p className="deposit-p">Вывод</p>
           </div>
-        </div>
+        </div> 
       </div>
-      
 
+      
+    
+
+      {tonModulOpen && (
+        <div className="modal-overlay">
+          <div className="connect-wallet-div">
+
+          <div className="connect-w-img-div">
+            <img className="connect-w-close-img" onClick={() => setTonModulOpen(false)} src={close} />
+          </div>
+
+            <div className="connect-wallet-text">
+              <p className="connect-w-p">Подключите ваш кошелек</p>
+              <p className="connect-w-conect-p">Для ввода/вывода средств подключайте свой TON кошелек</p>
+
+              <NavLink to="/profile">
+                <button className="connect-w-btn">Подключить кошелек TON</button>
+              </NavLink>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      </>
+
+
+      <>
       <div className="transactions-div">
         <div className="stak-hist-div">
           <p className="stak-hist-title">История транзакций</p>
@@ -486,9 +521,14 @@ export default function Staking() {
         </div>
         </>
       )}
+      </> 
+      
+
+
+
       </>
     )}
-      
+     
     </div>
   );
 }
