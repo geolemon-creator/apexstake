@@ -73,6 +73,18 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         self.tokens -= amount
         self.save()
 
+    def decrease_blocked_balance(self, amount):
+        if amount <= 0:
+            raise ValueError("Amount must be positive.")
+        if self.blocked_balance < amount:
+            raise ValueError(f"Insufficient blocked balance. Available balance: {self.blocked_balance}")
+        
+        self.blocked_balance -= amount
+        if self.blocked_balance < 0:
+            raise ValueError("Final blocked balance cannot be negative.")  # Если это необходимо по бизнес-логике
+        
+        self.save()
+
     def open_staking(self, amount):
         """
         Открыть стейкинг с блокировкой части баланса.
@@ -85,17 +97,5 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
         self.balance -= Decimal(amount)
         self.blocked_balance += Decimal(amount)
-
-        self.save()
-
-    def close_staking(self):
-        """
-        Закрыть стейкинг и вернуть заблокированные средства.
-        """
-        if self.blocked_balance <= 0:
-            raise ValueError("No blocked balance to release.")
-
-        self.balance += self.blocked_balance
-        self.blocked_balance = 0
 
         self.save()

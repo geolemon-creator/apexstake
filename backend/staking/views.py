@@ -45,7 +45,7 @@ class OpenStakingAPIView(APIView):
         user = request.user
 
         # Проверяем, есть ли у пользователя уже открытый стейкинг
-        if UserStaking.objects.filter(user=user).exists():
+        if UserStaking.objects.filter(user=user, status='in_progress').exists():
             return Response({'error': 'You already have an active staking.'}, 
                             status=status.HTTP_400_BAD_REQUEST)
 
@@ -70,7 +70,6 @@ class OpenStakingAPIView(APIView):
                     user=user,
                     amount=amount,
                     staking_level=staking,
-                    end_date=timezone.now() + timezone.timedelta(days=staking.stage.staking_time)
                 )
 
                 return Response(

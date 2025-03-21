@@ -84,6 +84,22 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Logging config
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",
+    },
+}
+
+# DRF config
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -93,6 +109,7 @@ REST_FRAMEWORK = {
     ],
 }
 
+# Swagger config
 SWAGGER_USE_COMPAT_RENDERERS = False
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
@@ -102,14 +119,18 @@ SWAGGER_SETTINGS = {
     }
 }
 
+# Celery config
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_TIMEZONE = 'UTC'
+
 AUTH_USER_MODEL = 'users.CustomUser'
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
