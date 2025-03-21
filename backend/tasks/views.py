@@ -2,12 +2,15 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from .models import FarmingTask, UserFarmingTask
 from .serializers import FarmingTaskSerializer
 
 
 class TasksAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         """
         Исключает выполненые задачи и отдает актуальный список  
@@ -26,10 +29,12 @@ class TasksAPIView(APIView):
 
 
 class CompleteTaskAPIView(APIView):
-    """
-    Принимает task_id, создает объект UserFarmingTask и начисляет пользователю награду
-    """
+    permission_classes = [IsAuthenticated]
+
     def post(self, request, task_id):
+        """
+        Принимает task_id, создает объект UserFarmingTask и начисляет пользователю награду
+        """
         user = request.user
         
         # Проверка, не выполнил ли пользователь задачу
