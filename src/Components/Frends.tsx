@@ -2,7 +2,6 @@ import { FrendID } from "../Components/Type"
 import almaz from "./../Img/almaz.png"
 import coin from "./../Img/coin.png"
 
-
 interface FrendProps {
     data: FrendID
 }

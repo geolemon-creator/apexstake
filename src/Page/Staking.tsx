@@ -13,11 +13,12 @@ import { tansactions } from "../Components/Data";
 import Tansactions from "../Components/Tansactions";
 import calendar from "./../Img/calendar.svg"
 import { Select } from 'antd';
+import { useTransactions } from "../Components/TransactionsContext";
+import { NavLink } from "react-router-dom";
 
 export default function Staking() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
-
   const [isLevelSelected, setIsLevelSelected] = useState(false);
   const [selectedLevelData, setSelectedLevelData] = useState<levelID | null>(null);
   const [isThirdModalOpen, setIsThirdModalOpen] = useState(false);
@@ -28,7 +29,14 @@ export default function Staking() {
   const [dopWord, setDopWord] = useState<boolean>(false)
   const [isHistoryTrans, setIsHistoryTrans] = useState<boolean>(false)
   const [openDateBtn, setOpenDateBtn] = useState(false);
+  const [tonModulOpen, setTonModulOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [levels, setLevels] = useState(level); 
+  const { setTransactions } = useTransactions();
+
+    useEffect(() => {
+      setTransactions(tansactions);
+    }, [setTransactions]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -138,6 +146,9 @@ export default function Staking() {
     };
   }, [openDateBtn]);
 
+
+
+
   return (
     <div className="staking-countainer">
 
@@ -200,15 +211,20 @@ export default function Staking() {
       ) : (
         <>
       <div className="home-top-catlog">
+
+      <NavLink to="/profile">
         <div className="home-user">
           <div className="user-icon"></div>
           <p className="home-user-p">UserName</p>
         </div>
+      </NavLink>
+      
         <div className="home-level">
           <p className="level-p">Выбор уровня</p> <span onClick={handleOpenModal} className="arrow">&gt;</span>
         </div>
       </div>
       
+    <>
       {isModalOpen && (
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -294,7 +310,10 @@ export default function Staking() {
           </div>
         </div>
       )}
+    </>
 
+
+    <>
       {isThirdModalOpen && thirdModalData && (
         <div className="modal-overlay" onClick={handleCloseThirdModal}>
           <div className="modal-thrid" onClick={(e) => e.stopPropagation()}>
@@ -311,12 +330,25 @@ export default function Staking() {
                     </div>
                   </>
               )}
-               
                 {dopWord && (<p className="sum">Сумма</p>)}
 
                 <div className="thrid-main-div">
                   <img className="thrid-almaz" src={almaz} alt="almaz" />
-                  <p className="thrid-num">{thirdModalData.ton}</p>
+
+                    {isLoading ? (
+                      <p className="thrid-num">{thirdModalData.ton}</p>
+                    ) : isSuccess ? (<p className="thrid-num">{thirdModalData.ton}</p>) : !isSuccess ? (
+
+                      <input className="input-thrid-num" value={thirdModalData.ton} type="number" 
+                        onChange={(e) => {
+                        const updatedTon = Number(e.target.value);
+                      const updatedLevels = levels.map((lvl) =>
+                      lvl.id === thirdModalData.id ? { ...lvl, ton: updatedTon } : lvl
+                    );
+                    setLevels(updatedLevels);
+                    setThirdModalData({ ...thirdModalData, ton: updatedTon });
+                  }}/>
+                    ) : (<></>) }
                 </div>
 
                 {isLoading ? (
@@ -417,13 +449,15 @@ export default function Staking() {
           </div>
         </div>
       )}
+    </>
+      
+      <>
 
-      <div className="stak-balance">
+      <div onClick={() => setTonModulOpen(true)} className="stak-balance">
         <div className="stak-balance-price">
           <p className="stak-balance-title">Current Balance</p>
           <p className="stak-balance-num">$00.00</p>
         </div>
-        <div className="stak-balance-line"></div>
         <div className="stak-btn-div">
           <div className="stak-first-div">
             <img src={deposit} alt="desposit" />
@@ -433,10 +467,36 @@ export default function Staking() {
             <img src={withdraw} alt="withdraw" />
             <p className="deposit-p">Вывод</p>
           </div>
-        </div>
+        </div> 
       </div>
-      
 
+      
+    
+
+      {tonModulOpen && (
+        <div className="modal-overlay">
+          <div className="connect-wallet-div">
+
+          <div className="connect-w-img-div">
+            <img className="connect-w-close-img" onClick={() => setTonModulOpen(false)} src={close} />
+          </div>
+
+            <div className="connect-wallet-text">
+              <p className="connect-w-p">Подключите ваш кошелек</p>
+              <p className="connect-w-conect-p">Для ввода/вывода средств подключайте свой TON кошелек</p>
+
+              <NavLink to="/profile">
+                <button className="connect-w-btn">Подключить кошелек TON</button>
+              </NavLink>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      </>
+
+
+      <>
       <div className="transactions-div">
         <div className="stak-hist-div">
           <p className="stak-hist-title">История транзакций</p>
@@ -446,6 +506,7 @@ export default function Staking() {
       </div>
 
       {tansactions.length === 0 ? (
+        // Вот тут массив и состояние от которое должно взаимодействовать с главным 
         <>
         <p className="stak-info-p">Пока нет транзакций</p>
         </>
@@ -460,9 +521,14 @@ export default function Staking() {
         </div>
         </>
       )}
+      </> 
+      
+
+
+
       </>
     )}
-      
+     
     </div>
   );
 }
