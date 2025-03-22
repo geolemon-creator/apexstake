@@ -28,9 +28,9 @@ export default function Leader({ data, position, isCurrentUser = false }: Leader
         <span className="current-user-place">{position}</span>
       ) : (
         <>
-          {position === 1 && <img src={vector} alt="Золотая медалька" className="leader-medal" />}
-          {position === 2 && <img src={second} alt="Серебряная медалька" className="leader-medal" />}
-          {position === 3 && <img src={third} alt="Бронзовая медалька" className="leader-medal" />}
+          {position === 1 && <img src={vector} className="leader-medal" />}
+          {position === 2 && <img src={second} className="leader-medal" />}
+          {position === 3 && <img src={third} className="leader-medal" />}
         </>
       )}
       <img className='img-frend' src={data.img} alt="img" />

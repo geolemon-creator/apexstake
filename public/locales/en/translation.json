@@ -1,0 +1,155 @@
+{
+  "footer": {
+    "Main": "Main",
+    "staking": "Staking",
+    "referrals": "Referrals",
+    "contests": "Contests",
+    "farming": "Farming"
+  },
+  "level": {
+    "level": "Level",
+    "interestRate": "Interest rate"
+  },
+  "transactions": {
+    "completed": "Completed"
+  },
+  "withdraw": {
+    "withdrawal": "Withdrawal",
+    "activeBalance": "Active balance",
+    "blocked": "Blocked",
+    "address": "Address",
+    "paste": "Paste",
+    "all": "ALL",
+    "fee": "Fee 10%=30 USDT",
+    "confirmWithdrawal": "Confirm withdrawal"
+  },
+  "contest": {
+    "contests": "Contests",
+    "bonuses": "20 BONUSES",
+    "forEachReferral": "FOR EACH REFERRAL",
+    "endsIn": "Ends in",
+    "days": "days",
+    "hours": "hours",
+    "minutes": "minutes",
+    "seconds": "seconds",
+    "details": "Details",
+    "partyInDubai": "PARTY IN DUBAI"
+  },
+  "farming": {
+    "farming": "Farming"
+  },
+  "home": {
+    "levelSelection": "Level selection",
+    "dailyReward": "Daily reward",
+    "hurryUpToClaim": "Hurry up to claim",
+    "deposit": "Deposit",
+    "withdraw": "Withdraw",
+    "graphNeeded": "GRAPH NEEDED",
+    "dataAfterStaking": "Data will appear after staking starts",
+    "learnMore": "Learn more",
+    "openStaking": "Open staking"
+  },
+  "profile": {
+    "connectWallet": "Connect your wallet",
+    "connectTONWalletDescription": "To deposit/withdraw funds, connect your TON wallet",
+    "connectTONWallet": "Connect TON wallet",
+    "tonWallet": "TON Wallet",
+    "walletConnected": "Your wallet is connected",
+    "disconnectWallet": "Disconnect wallet",
+    "telegramSupport": "Telegram support chat",
+    "howItWorks": "How does it work?",
+    "feedback": "Feedback and suggestions"
+  },
+  "referral": {
+    "referrals": "Referrals",
+    "invitedFriends": "Invited friends",
+    "leaders": "Leaders",
+    "inviteFriends": "Invite friends!",
+    "bonusMessage": "You and your friend will receive bonuses",
+    "invitedFriendsCount": "Invited friends: 0",
+    "friendsListDescription": "Here you will see the list of friends and can receive rewards.",
+    "inviteFriend": "Invite a friend"
+  },
+  "staking": {
+    "levelSelection": "Level selection",
+    "level": "Level:",
+    "stakeDate": "Stake date:",
+    "interestAccrualPeriod": "Interest accrual period:",
+    "endDateOfInterest": "End date of interest accrual:",
+    "maturityDate": "Maturity date:",
+    "repaymentDate": "Repayment date:",
+    "interestRate": "Interest rate:",
+    "expectedInterest": "Expected interest:",
+    "agreement": "I have read and agree to the Agreement on the provision of staking services",
+    "select": "Select",
+    "transactionDetails": "Transaction details",
+    "amount": "Amount",
+    "inProgress": "In progress",
+    "wallet": "Wallet",
+    "date": "Date",
+    "transactionId": "Transaction ID",
+    "success": "Success",
+    "error": "Error",
+    "retry": "Retry",
+    "deposit": "Deposit",
+    "withdraw": "Withdraw",
+    "connectWallet": "Connect your wallet",
+    "connectTONWalletDescription": "To deposit/withdraw funds, connect your TON wallet",
+    "connectTONWallet": "Connect TON wallet",
+    "transactionHistory": "Transaction history",
+    "all": "All",
+    "noTransactions": "No transactions yet",
+    "deposits": "Deposits",
+    "accruals": "Accruals",
+    "profits": "Profits",
+    "withdrawals": "Withdrawals",
+    "oneDay": "1 day",
+    "oneWeek": "1 week",
+    "oneMonth": "1 month",
+    "to": "To"
+  }, 
+    "dataLevel": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "expert": "Expert"
+    },
+    "dataMedia": {
+      "subscribeTelegram": "Subscribe to the Telegram channel",
+      "subscribeX": "Subscribe to the X channel",
+      "shareCampaignX": "Share the campaign in your X story",
+      "subscribeYouTube": "Subscribe to the YouTube channel"
+    },
+    "frend": {
+      "alexy": "Alexy"
+    },
+    "leader": {
+      "shun": "Shun"
+    },
+    "terms": {
+      "period": "1 day",
+      "ending": "Ending",
+      "repayment": "Repayment",
+      "dateRepayment": "1 day",
+      "bid": "Bid",
+      "ton": "TON"
+    },
+    "dataTransactions": {
+      "wallet": "Wallet",
+      "date": "Date",
+      "price": "Price"
+    }, 
+      "dateTranslations": {
+        "today": "Today",
+        "yesterday": "Yesterday"
+      },
+      "transactionStatus": {
+        "completed": "Completed"
+      },
+        "termsContest": {
+          "prizeFund": "Prize Fund",
+          "terms": "Contest Terms",
+          "entryFee": "Entry Fee",
+          "participate": "Participate"
+        }
+    }

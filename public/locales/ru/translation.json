@@ -1,0 +1,155 @@
+{
+  "footer": {
+    "Main": "Главная",
+    "staking": "Стейкинг",
+    "referrals": "Рефералы",
+    "contests": "Конкурсы",
+    "farming": "Фарминг"
+  },
+  "level": {
+    "level": "Уровень",
+    "interestRate": "Процентная ставка"
+  },
+  "transactions": {
+    "completed": "Завершено"
+  },
+  "withdraw": {
+    "withdrawal": "Вывод",
+    "activeBalance": "Активный баланс",
+    "blocked": "Заблокировано",
+    "address": "Адрес",
+    "paste": "Вставить",
+    "all": "ВСЕ",
+    "fee": "Комиссия 10%=30 USDT",
+    "confirmWithdrawal": "Подтвердить вывод"
+  },
+  "contest": {
+    "contests": "Конкурсы",
+    "bonuses": "20 БОНУСОВ",
+    "forEachReferral": "ЗА КАЖДОГО РЕФЕРАЛА",
+    "endsIn": "Закончится через",
+    "days": "дня",
+    "hours": "часов",
+    "minutes": "минут",
+    "seconds": "секунд",
+    "details": "Подробнее",
+    "partyInDubai": "УЧАСТИЕ В ВЕЧЕРИНКЕ В ДУБАЕ"
+  },
+  "farming": {
+    "farming": "Фарминг"
+  },
+  "home": {
+    "levelSelection": "Выбор уровня",
+    "dailyReward": "Ежедневная награда",
+    "hurryUpToClaim": "Успей забрать",
+    "deposit": "Пополнить",
+    "withdraw": "Вывод",
+    "graphNeeded": "НУЖЕН ГРАФИК",
+    "dataAfterStaking": "Данные появятся после начала стейкинга",
+    "learnMore": "Узнать больше",
+    "openStaking": "Открыть стейкинг"
+  },
+  "profile": {
+    "connectWallet": "Подключите ваш кошелек",
+    "connectTONWalletDescription": "Для ввода/вывода средств подключайте свой TON кошелек",
+    "connectTONWallet": "Подключить кошелек TON",
+    "tonWallet": "ТОН Кошелек",
+    "walletConnected": "Ваш кошелек подключен",
+    "disconnectWallet": "Отвязать кошелек",
+    "telegramSupport": "Telegram чат поддержки",
+    "howItWorks": "Как это работает?",
+    "feedback": "Отзыв и предложения"
+  },
+  "referral": {
+    "referrals": "Рефералы",
+    "invitedFriends": "Приглашенные друзья",
+    "leaders": "Лидеры",
+    "inviteFriends": "Пригласите друзей!",
+    "bonusMessage": "Вы и ваш друг получите бонусы",
+    "invitedFriendsCount": "Приглашенные друзья: 0",
+    "friendsListDescription": "Здесь вы увидите список друзей и сможете получить награды.",
+    "inviteFriend": "Пригласи друга"
+  },
+  "staking": {
+    "levelSelection": "Выбор уровня",
+    "level": "Уровень:",
+    "stakeDate": "Дата ставки:",
+    "interestAccrualPeriod": "Период начисления процентов:",
+    "endDateOfInterest": "Дата окончания начисления процентов:",
+    "maturityDate": "Срок погашения:",
+    "repaymentDate": "Дата погашения:",
+    "interestRate": "Процентная ставка:",
+    "expectedInterest": "Предполагаемые проценты:",
+    "agreement": "Я ознакомился с Соглашением об оказании услуг по размещению ставок и согласен с ним",
+    "select": "Выбрать",
+    "transactionDetails": "Детали транзакции",
+    "amount": "Сумма",
+    "inProgress": "В прогрессе",
+    "wallet": "Кошелёк",
+    "date": "Дата",
+    "transactionId": "Номер транзакции",
+    "success": "Успешно",
+    "error": "Ошибка",
+    "retry": "Повторить",
+    "deposit": "Пополнить",
+    "withdraw": "Вывод",
+    "connectWallet": "Подключите ваш кошелек",
+    "connectTONWalletDescription": "Для ввода/вывода средств подключайте свой TON кошелек",
+    "connectTONWallet": "Подключить кошелек TON",
+    "transactionHistory": "История транзакций",
+    "all": "Все",
+    "noTransactions": "Пока нет транзакций",
+    "deposits": "Пополнения",
+    "accruals": "Начисления",
+    "profits": "Прибыли",
+    "withdrawals": "Выводы",
+    "oneDay": "1 день",
+    "oneWeek": "1 неделя",
+    "oneMonth": "1 месяц",
+    "to": "До"
+  },
+    "dataLevel": {
+      "beginner": "Начальный",
+      "intermediate": "Средний",
+      "advanced": "Продвинутый",
+      "expert": "Эксперт"
+    },
+    "dataMedia": {
+      "subscribeTelegram": "Подпишитесь на канал в Telegram",
+      "subscribeX": "Подпишитесь на канал в X",
+      "shareCampaignX": "Поделитесь кампанией в своей истории в X",
+      "subscribeYouTube": "Подпишитесь на канал в YouTube"
+    },
+    "frend": {
+      "alexy": "Alexy"
+    },
+    "leader": {
+      "shun": "Shun"
+    },
+    "terms": {
+      "period": "1 день",
+      "ending": "Окончание",
+      "repayment": "Погашение",
+      "dateRepayment": "1 день",
+      "bid": "Ставка",
+      "ton": "TON"
+    },
+    "dataTransactions": {
+      "wallet": "Кошелек",
+      "date": "Дата",
+      "price": "Цена"
+    }, 
+      "dateTranslations": {
+        "today": "Сегодня",
+        "yesterday": "Вчера"
+      },
+      "transactionStatus": {
+        "completed": "Завершено"
+      },
+        "termsContest": {
+          "prizeFund": "Призовой фонд",
+          "terms": "Условия конкурса",
+          "entryFee": "Стоимость входа",
+          "participate": "Принять участие"
+        }
+    }

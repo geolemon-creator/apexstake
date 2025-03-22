@@ -4,61 +4,67 @@ import { useState } from "react";
 import { Frend, leader } from "../Components/Data";
 import Frends from "../Components/Frends";
 import Leader from "../Components/Leader";
+import { useTranslation } from "react-i18next";
 
 export default function Referal() {
-    const [activeTab, setActiveTab] = useState<'friends' | 'leaders'>('friends');
-    const [friends] = useState(Frend);
-    const currentUserId = 2; 
-    const topN = 104;
+  const [activeTab, setActiveTab] = useState<"friends" | "leaders">("friends");
+  const [friends] = useState(Frend);
+  const currentUserId = 2;
+  const topN = 104;
+  const { t } = useTranslation();
 
-  const handleClick = (tab: 'friends' | 'leaders') => {
+  const handleClick = (tab: "friends" | "leaders") => {
     setActiveTab(tab);
   };
 
   const sortedFriends = [...friends].sort((a, b) => b.coins - a.coins);
   const sortedLeader = [...leader].sort((a, b) => b.coins - a.coins);
 
-  const currentUser = leader.find(l => l.id === currentUserId);
-  
-  const currentUserIndex = sortedLeader.findIndex(l => l.id === currentUserId);
+  const currentUser = leader.find((l) => l.id === currentUserId);
+
+  const currentUserIndex = sortedLeader.findIndex((l) => l.id === currentUserId);
   const currentUserPlace = currentUserIndex + 1;
 
   return (
-    <div className='ref-countainer'>
-      {activeTab === 'friends' ? (
+    <div className="ref-countainer">
+      {activeTab === "friends" ? (
         <>
-          <p className='main-title'>Рефералы</p>
+          <p className="main-title">{t("referral.referrals")}</p> 
           <div className="ref-swith-div">
-
             <div className="ref-btn-frend-div">
-              <p className={`ref-swith-btn ${activeTab === 'friends' ? 'active' : ''}`} onClick={() => handleClick('friends')} >
-                Приглашенные друзья
-              </p>
+              <p
+                className={`ref-swith-btn ${activeTab === "friends" ? "active" : ""}`}
+                onClick={() => handleClick("friends")}
+              >
+                {t("referral.invitedFriends")}</p> 
             </div>
 
             <div className="ref-btn-leader-div">
-            <p className={`ref-swith-btn ${activeTab as "leaders" === 'leaders' ? 'active' : ''}`} 
-            onClick={() => handleClick('leaders')}>Лидеры</p>
+              <p
+                className={`ref-swith-btn ${activeTab as "leaders" === "leaders" ? "active" : ""}`}
+                onClick={() => handleClick("leaders")}
+              >
+                {t("referral.leaders")}</p> 
             </div>
-
           </div>
 
           {sortedFriends.length === 0 ? (
             <>
               <div>
-                <h1 className="ref-h1">Пригласите друзей!</h1>
-                <h2 className="ref-h2">Вы и ваш друг получите бонусы</h2>
+                <h1 className="ref-h1">{t("referral.inviteFriends")}</h1> 
+                <h2 className="ref-h2">{t("referral.bonusMessage")}</h2> 
                 <img className="ref-img" src={megafon} alt="img" />
                 <div className="ref-p-div">
                   <p className="ref-p">
-                    Приглашенные друзья: 0 <br />
-                    Здесь вы увидите список друзей и сможете получить награды.
+                    {t("referral.invitedFriendsCount")} <br /> 
+                    {t("referral.friendsListDescription")} 
                   </p>
                 </div>
               </div>
 
               <div className="ref-button">
-                <button className="ref-btn-invit">Пригласи друга</button>
+                <button className="ref-btn-invit">
+                  {t("referral.inviteFriend")}</button> 
                 <div className="ref-copy-btn">
                   <img className="ref-copy-img" src={copy} alt="copy" />
                 </div>
@@ -73,7 +79,8 @@ export default function Referal() {
               </div>
 
               <div className="ref-button">
-                <button className="ref-btn-invit">Пригласи друга</button>
+                <button className="ref-btn-invit">
+                  {t("referral.inviteFriend")}</button> 
                 <div className="ref-copy-btn">
                   <img className="ref-copy-img" src={copy} alt="copy" />
                 </div>
@@ -81,34 +88,29 @@ export default function Referal() {
             </>
           )}
         </>
-      ) : ( 
+      ) : (
         <div>
-            <h1 className="leader-h1">Лидеры</h1>
-            <div className="leader-array">
-              
+          <h1 className="leader-h1">{t("referral.leaders")}</h1> 
+          <div className="leader-array">
             {currentUser && currentUserPlace > topN && (
-               <div className="current-user-header">
-               <Leader data={currentUser} position={currentUserPlace} isCurrentUser={true} />
-             </div>
+              <div className="current-user-header">
+                <Leader data={currentUser} position={currentUserPlace} isCurrentUser={true} />
+              </div>
             )}
 
-              {sortedLeader.map((leader, index) => {
-                const position = index + 1;
-                if (leader.id === currentUserId) {
-                  // Если это текущий пользователь
-                  if (currentUserPlace <= topN) {
-                    // И он входит в топ, отображаем его как обычного участника
-                    return <Leader key={leader.id} data={leader} position={position} />;
-                  } else {
-                    // И если он крч НЕ входит в топ, то пропускаем его, так как он уже отображен
-                    return null;
-                  }
-                } else {
-                  // Если это не текущий пользователь, отображаем как обычно
+            {sortedLeader.map((leader, index) => {
+              const position = index + 1;
+              if (leader.id === currentUserId) {
+                if (currentUserPlace <= topN) {
                   return <Leader key={leader.id} data={leader} position={position} />;
+                } else {
+                  return null;
                 }
-              })}
-            </div>
+              } else {
+                return <Leader key={leader.id} data={leader} position={position} />;
+              }
+            })}
+          </div>
         </div>
       )}
     </div>

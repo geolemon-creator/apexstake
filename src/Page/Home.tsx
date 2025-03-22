@@ -4,18 +4,24 @@ import arrowRight from "./../Img/arrow-right.svg";
 import { level } from "../Components/Data";
 import coin from "./../Img/coin.png";
 import LevelModal from "../Components/LevelModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTransactions } from "../Components/TransactionsContext";
 import deposit from "./../Img/Deposit.png";
 import withdraw from "./../Img/Withdraw.png";
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from 'react-slick';
+import Slider from "react-slick";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
   const { transactions } = useTransactions();
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    // Логика, которая должна выполняться при смене языка
+  }, [i18n.language]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -27,8 +33,6 @@ export default function Home() {
 
   const handleSelect = (id: number) => {
     setSelectedLevel(id);
-
-
   };
 
   const settings = {
@@ -38,10 +42,10 @@ export default function Home() {
     slidesToShow: 1.05,
     slidesToScroll: 1,
     centerMode: true,
-    centerPadding: '10px',
+    centerPadding: "10px",
     swipeToSlide: true,
     focusOnSelect: true,
- };
+  };
 
   return (
     <div className="home-countainer">
@@ -54,7 +58,7 @@ export default function Home() {
         </NavLink>
 
         <div onClick={handleOpenModal} className="home-level">
-          <p className="level-p">Выбор уровня</p>
+          <p className="level-p">{t("home.levelSelection")}</p> 
           <span className="arrow">&gt;</span>
         </div>
 
@@ -67,17 +71,15 @@ export default function Home() {
         />
       </div>
 
-      
-
       <div className="home-lower-catalog">
         <Slider {...settings}>
           <div>
             <div className="home-reward">
               <div className="rewad-text">
-                <h1 className="reward-h1">Ежедневная награда</h1>
-                <p className="reward-p">Успей забрать</p>
+                <h1 className="reward-h1">{t("home.dailyReward")}</h1> 
+                <p className="reward-p">{t("home.hurryUpToClaim")}</p> 
               </div>
-              
+
               <img className="reward-img" src={box} alt="img" />
             </div>
           </div>
@@ -85,10 +87,10 @@ export default function Home() {
           <div>
             <div className="home-reward">
               <div className="rewad-text">
-                <h1 className="reward-h1">Ежедневная награда</h1>
-                <p className="reward-p">Успей забрать</p>
+                <h1 className="reward-h1">{t("home.dailyReward")}</h1> 
+                <p className="reward-p">{t("home.hurryUpToClaim")}</p> 
               </div>
-              
+
               <img className="reward-img" src={box} alt="img" />
             </div>
           </div>
@@ -103,44 +105,43 @@ export default function Home() {
           </div>
 
           <div className="balance-bonus">
-              <p className="balance-bonus-title">Bonus</p>
-              <img className="balance-bonus-img" src={coin}/>
-              <p className="bonus-num">000</p>
+            <p className="balance-bonus-title">Bonus</p>
+            <img className="balance-bonus-img" src={coin} />
+            <p className="bonus-num">000</p>
           </div>
 
           <div className="stak-balance-line"></div>
 
           <div className="stak-btn-div">
-          <div className="stak-first-div">
-            <img src={deposit} alt="desposit" />
-            <p className="deposit-p">Пополнить</p>
+            <div className="stak-first-div">
+              <img src={deposit} alt="desposit" />
+              <p className="deposit-p">{t("home.deposit")}</p> 
+            </div>
+            <div className="stak-first-div">
+            <NavLink to="/Conclusioin">
+              <img src={withdraw} alt="withdraw" />
+            </NavLink>
+              <p className="deposit-p">{t("home.withdraw")}</p> 
+            </div>
           </div>
-          <div className="stak-first-div">
-            <img src={withdraw} alt="withdraw" />
-            <p className="deposit-p">Вывод</p>
-          </div>
-        </div>
-
         </div>
       </div>
 
       <div className="home-info-div">
-         {transactions.length > 0 ? (
-            <p className="home-info">НУЖЕН ГРАФИК</p>
-         ) : (
-          <p className="home-info">Данные появятся после начала стейкинга</p>
-         )}
+        {transactions.length > 0 ? (
+          <p className="home-info">{t("home.graphNeeded")}</p>
+        ) : (
+          <p className="home-info">{t("home.dataAfterStaking")}</p>
+        )}
       </div>
 
-      <NavLink to="/Conclusioin">
-      <div className="btn-more">
-        <p>Узнать больше</p>
-        <img src={arrowRight} alt="arrow" />
-      </div>
-      </NavLink>
+        <div className="btn-more">
+          <p>{t("home.learnMore")}</p> 
+          <img src={arrowRight} alt="arrow" />
+        </div>
 
       <NavLink style={{ textDecoration: "none" }} to="/staking">
-        <div className="btn-staking">Открыть стейкинг</div>
+        <div className="btn-staking">{t("home.openStaking")}</div>
       </NavLink>
     </div>
   );

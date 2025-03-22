@@ -2369,134 +2369,153 @@ html {
   margin-top: 12px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.stacking-container {
-  width: 300px;
-  background: #1b1b1b;
-  border-radius: 20px;
-  padding: 20px;
-  color: white;
-  text-align: center;
-  font-family: Arial, sans-serif;
-}
-
-.progress-ring {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  margin: auto;
-}
-
-.circle-bg {
-  fill: none;
-  stroke: #333;
-  stroke-width: 10;
-}
-
-.circle-progress {
-  fill: none;
-  stroke: url(#grad1);
-  stroke-width: 10;
-  stroke-dasharray: 251;
-  stroke-dashoffset: 62;
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-}
-
-.progress-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.stack-balance {
-  font-size: 24px;
-  margin-top: 10px;
-  cursor: pointer;
-}
-
-.balance-amount {
-  font-size: 32px;
-  font-weight: bold;
-}
-
-.change {
-  color: #00ff00;
-}
-
-.button-group {
-  display: flex;
-  justify-content: space-between;
+.language-button-div {
   margin-top: 20px;
+  display: flex;
+  gap: 10px;
 }
 
-.button {
-  background: yellow;
-  padding: 10px 20px;
-  border-radius: 50px;
+.language-btn-countainer {
+  margin-top: 10px;
+}
+
+.select-language-btn {
+  background-color: transparent;
+  color: #ffcc00;
+  border: 1px solid #ffcc00;
+  border-radius: 12px;
+  padding: 5px;
+}
+
+.select-language-btn:active {
+  background-color: #ffcc00;
+  color: rgb(17, 17, 24);
+}
+
+.terms-countainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.terms-header {
+  width: 335px;
+  height: 94px;
+  background-color: #FFDE45;
+  border-radius: 16px;
+}
+
+.terms-prize {
+  background-color: #282D33;
+  display: flex;
+  width: 335px;
+  height: 50px;
+  border-radius: 16px;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.prize-coin-div {
   display: flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-weight: bold;
 }
 
-.button img {
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
+.prize-cup {
+  width: 26px;
+  height: 26px;
 }
 
+.prize-p {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
 
+.prize-coin-img {
+  width: 16px;
+  height: 16px;
+}
 
+.prize-coin-p {
+  font-size: 16px;
+  font-weight: 800;
+  color: #FFDE45;
+}
 
+.terms-competition-p {
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
 
+.level-terms {
+  display: flex;
+  background-color: #282D33;
+  width: 335px;
+  height: 122px;
+  border-radius: 16px;
+  flex-direction: column;
+  gap: 4px;
+}
 
+.level-terms-p-first {
+  font-size: 16px;
+  color: white;
+  font-weight: 700;
+  margin-left: 16px;
+  margin-top: 8px;
+}
 
+.terms-text {
+  font-size: 14px;
+  font-weight: 500;
+  width: 298px;
+  height: 57px;
+  color: white;
+  margin-left: 16px;
+}
 
+.terms-lvl-price-div {
+  width: 194px;
+  height: 19px;
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+}
 
+.terms-lvl-price-p {
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+}
 
+.terms-lvl-price-num {
+  font-size: 14px;
+  font-weight: 700;
+  color: #FFDE45;
+  margin-left: 12px;
+}
 
+.level-terms-div {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.accept-terms {
+  bottom: 83px;
+  width: 335px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: #FFDE45;
+  color: #111118;
+  font-size: 16px;
+  font-weight: 800;
+  border: none;
+  position: fixed;
+}
