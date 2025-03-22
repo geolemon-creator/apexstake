@@ -1,15 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
 * {
   margin: 0px;
   padding: 0px;
   user-select: none;
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 
 body {
   background-color: rgb(17, 17, 24);
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
@@ -19,6 +19,12 @@ html {
   width: 100%;
   max-width: 100%;
   overflow: auto;
+}
+
+.app-container {
+  max-width: 420px; /* Максимальная ширина */
+  margin: 0 auto; /* Центрирование по горизонтали */
+  padding: 0 16px; /* Отступы по бокам */
 }
 
 .home-user {
@@ -99,7 +105,7 @@ html {
 }
 
 .slick-slider .slick-initialized {
- width: 412px;
+  width: 412px;
 }
 
 .home-balance {
@@ -191,7 +197,7 @@ html {
   align-items: center;
   justify-content: center;
 
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
   width: 335px;
   height: 48px;
   background-color: rgb(17, 17, 24);
@@ -212,7 +218,7 @@ html {
   align-items: center;
   justify-content: center;
 
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
   width: 335px;
   height: 48px;
   background-color: #ffde45;
@@ -268,15 +274,6 @@ html {
   height: 32px;
   border-radius: 50%;
   background-color: rgb(0, 89, 255);
-}
-
-.stak-balance {
-  width: 335px;
-  height: 206px;
-  background-color: #282d33;
-  margin: 0 auto;
-  margin-top: 30px;
-  border-radius: 16px;
 }
 
 .stak-balance-price {
@@ -380,9 +377,7 @@ html {
   padding: 6px 8px;
   border-radius: 12px;
   color: white;
-  transition:
-    color 0.3s ease,
-    background-color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 .ref-swith-btn:active {
@@ -684,7 +679,7 @@ html {
 }
 
 .contest-btn-about {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
   width: 311px;
   height: 48px;
   text-align: center;
@@ -713,8 +708,8 @@ html {
 
 .arrow {
   font-size: 22px;
-  color: #ffffff; 
-  transition: transform 0.3s ease; 
+  color: #ffffff;
+  transition: transform 0.3s ease;
 }
 
 .arrow:active {
@@ -737,7 +732,6 @@ html {
   align-items: center;
   z-index: 1000;
 }
-
 
 .modal {
   position: fixed;
@@ -878,7 +872,7 @@ html {
 }
 
 .level-btn-win {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -926,7 +920,7 @@ html {
   left: 0;
   right: 0;
   bottom: -56px;
-  background-color: #111118; 
+  background-color: #111118;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -937,7 +931,7 @@ html {
 .basic-lvl-div {
   position: absolute;
   top: 0px;
-  background-color: #282D33;
+  background-color: #282d33;
   width: 335px;
   height: 426px;
   border-radius: 16px;
@@ -1005,7 +999,7 @@ html {
   width: 194px;
   font-size: 14px;
   font-weight: 400;
-  color: #DEDEDE;
+  color: #dedede;
 }
 
 .big-p {
@@ -1026,23 +1020,22 @@ html {
   justify-content: space-between;
 }
 
-
 .custom-checkbox {
   display: inline-block;
   position: relative;
   padding-left: 25px;
   cursor: pointer;
- }
- 
- .custom-checkbox input[type="checkbox"] {
+}
+
+.custom-checkbox input[type='checkbox'] {
   position: absolute;
   width: 1px;
   height: 1px;
   overflow: hidden;
   clip: rect(0 0 0 0);
- }
- 
- .custom-checkbox .checkmark {
+}
+
+.custom-checkbox .checkmark {
   position: absolute;
   top: -13px;
   bottom: 0;
@@ -1050,21 +1043,21 @@ html {
   height: 12px;
   width: 12px;
   background-color: transparent;
-  border: 1px solid #ADA9A9;
+  border: 1px solid #ada9a9;
   border-radius: 3px;
- }
- 
- .custom-checkbox input[type="checkbox"]:checked + .checkmark {
-  border: 2px #ADA9A9 solid;
 }
- 
- .custom-checkbox input[type="checkbox"]:checked + .checkmark::before {
+
+.custom-checkbox input[type='checkbox']:checked + .checkmark {
+  border: 2px #ada9a9 solid;
+}
+
+.custom-checkbox input[type='checkbox']:checked + .checkmark::before {
   content: '';
   position: absolute;
   left: 2px;
   width: 10px;
   height: 5px;
-  border: 2px solid #ADA9A9;
+  border: 2px solid #ada9a9;
   border-left: none;
   border-bottom: none;
   transform: rotate(498deg);
@@ -1085,7 +1078,7 @@ html {
 .agreement-a {
   width: 314px;
   height: 32px;
-  color: #DEDEDE;
+  color: #dedede;
   font-size: 12px;
   font-weight: 300;
   text-align: justify;
@@ -1096,7 +1089,7 @@ html {
   width: 335px;
   height: 48px;
   border-radius: 12px;
-  background-color: #FFDE45;
+  background-color: #ffde45;
   color: #111118;
   font-size: 16px;
   font-weight: 800;
@@ -1105,11 +1098,10 @@ html {
 
 .main-block-thrid {
   display: flex;
-  width: 100%; 
+  width: 100%;
   flex-direction: column;
   align-items: center;
   gap: 16px;
-
 }
 
 .third-modal-content {
@@ -1119,11 +1111,11 @@ html {
   max-height: 500px;
   border-radius: 16px;
   background-color: #111118;
-  flex-direction: column; 
-  align-items: center; 
+  flex-direction: column;
+  align-items: center;
   justify-content: flex-start;
-  border: 1px solid #785D06;
-  padding: 16px; 
+  border: 1px solid #785d06;
+  padding: 16px;
   box-sizing: border-box;
 }
 
@@ -1187,7 +1179,7 @@ html {
 .thrid-main-button {
   width: 303px;
   height: 48px;
-  background-color: #FFDE45;
+  background-color: #ffde45;
   color: #111118;
   border: none;
   font-size: 16px;
@@ -1222,26 +1214,26 @@ html {
 }
 
 .load-color {
-  color: #FFDE45;
+  color: #ffde45;
 }
 
 .green-color {
-  color: #09D84E;
+  color: #09d84e;
 }
 
 .red-color {
-  color: #FF0000;
+  color: #ff0000;
 }
 
 .data-wallet {
-  width: 100%; 
+  width: 100%;
 }
 
 .wallet-div {
-  display: flex; 
+  display: flex;
   justify-content: space-between;
-  align-items: center; 
-  width: 100%; 
+  align-items: center;
+  width: 100%;
   margin-top: 12px;
 }
 
@@ -1256,7 +1248,7 @@ html {
 .thrid-repeat-btn {
   width: 100%;
   height: 48px;
-  background-color: #FFDE45;
+  background-color: #ffde45;
   color: #111118;
   border: none;
   font-size: 16px;
@@ -1269,13 +1261,13 @@ html {
 .dettrans {
   font-size: 18px;
   font-weight: 700;
-  color: #FFDE45;
+  color: #ffde45;
 }
 
 .sum {
   font-size: 12px;
   font-weight: 500;
-  color: #DEDEDE;
+  color: #dedede;
 }
 
 .transactions-div {
@@ -1301,12 +1293,12 @@ html {
 .stak-hist-all {
   font-size: 14px;
   font-weight: 500px;
-  color: #FFDE45;
+  color: #ffde45;
 }
 
 .transactions-list-div {
   display: flex;
-  background-color: #282D33;
+  background-color: #282d33;
   width: 335px;
   min-height: 288px;
   margin-top: 12px;
@@ -1325,7 +1317,7 @@ html {
 
 .hist-trans-list-div {
   display: flex;
-  background-color: #282D33;
+  background-color: #282d33;
   width: 335px;
   /* min-height: 100vh; */
   margin-top: 12px;
@@ -1354,14 +1346,14 @@ html {
 .trans-title {
   font-size: 14px;
   font-weight: 500;
-  color: #ADA9A9;
+  color: #ada9a9;
   margin-bottom: 8px;
 }
 
 .trans-data {
   font-size: 14px;
   font-weight: 500;
-  color: #ADA9A9;
+  color: #ada9a9;
 }
 
 .trans-price-p {
@@ -1374,7 +1366,7 @@ html {
 
 .trans-status {
   text-align: center;
-  background-color: #09D84E;
+  background-color: #09d84e;
   width: 63px;
   height: 18px;
   border-radius: 100px;
@@ -1390,7 +1382,6 @@ html {
 .hist-trans-main-div {
   display: flex;
   justify-content: center;
-
 }
 
 .hist-p-div {
@@ -1400,21 +1391,21 @@ html {
 
 .hist-p {
   text-align: center;
-  color: #FFFFFF;
+  color: #ffffff;
   width: 335px;
   height: 20px;
   font-size: 20px;
   font-weight: 600;
 }
 
- .custom-select .ant-select-selector {
+.custom-select .ant-select-selector {
   width: 150px !important;
   height: 40px !important;
   background-color: #232425 !important;
-  color: #FFDE45;
+  color: #ffde45;
   border: none !important;
   border-radius: 12px;
-} 
+}
 
 /* Изменение цвета стрелки */
 .custom-select .ant-select-arrow {
@@ -1427,7 +1418,7 @@ html {
 }
 
 .custom-select .ant-select-selection-item {
-  color: #FFDE45 !important;
+  color: #ffde45 !important;
 }
 
 /* Цвет текста элементов списка */
@@ -1438,7 +1429,7 @@ html {
 /* Цвет фона при наведении на элемент списка */
 .custom-dropdown .ant-select-item-option-active {
   background-color: #232425 !important;
-  color: white !important; 
+  color: white !important;
 }
 
 .hist-btn-main-div {
@@ -1452,7 +1443,7 @@ html {
   justify-content: space-between;
   width: 335px;
   height: 40px;
-} 
+}
 
 .his-date-btn-img {
   width: 24px;
@@ -1474,12 +1465,12 @@ html {
 }
 
 .dropdown {
-  position: relative; 
+  position: relative;
   display: inline-block;
 }
 
 .dropdown-button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -1500,7 +1491,7 @@ html {
   top: 0;
   right: 0;
   width: 238px;
-  height: 114px; 
+  height: 114px;
 }
 
 .dropdown-menu a {
@@ -1533,17 +1524,17 @@ html {
   padding: 4px 8px;
   height: 27px;
   background-color: rgb(17, 17, 24);
-  border: 1px solid #ADA9A9; /* Граница по умолчанию */
+  border: 1px solid #ada9a9; /* Граница по умолчанию */
   font-size: 14px;
   font-weight: 400;
-  color: #DEDEDE;
+  color: #dedede;
   border-radius: 8px;
   text-align: center;
   transition: border-color 0.3s ease; /* Плавное изменение цвета границы */
 }
 
 .hist-btn-day:active {
-  border-color: #FFDE45; /* Цвет границы при нажатии */
+  border-color: #ffde45; /* Цвет границы при нажатии */
 }
 
 .hist-btn-day-flex-div {
@@ -1553,7 +1544,7 @@ html {
 }
 
 .hist-btn-p {
-  color: #ADA9A9;
+  color: #ada9a9;
 }
 
 .farming-h1 {
@@ -1578,12 +1569,12 @@ html {
   min-height: 55px;
   height: auto;
   border-radius: 12px;
-  background-color: #282D33;
+  background-color: #282d33;
   padding-bottom: 1px;
 }
 
 .exam-good {
-  border: 1px solid #0AC843;
+  border: 1px solid #0ac843;
   padding-right: 3px;
 }
 
@@ -1632,7 +1623,7 @@ html {
 }
 
 .coin-media-p {
-  color: #DEDEDE;
+  color: #dedede;
   font-size: 14px;
   font-weight: 500;
 }
@@ -1643,7 +1634,7 @@ html {
   margin-left: 8px;
   width: 24px;
   height: 24px;
-  color: #ADA9A9;
+  color: #ada9a9;
 }
 
 .arrow-media {
@@ -1687,7 +1678,7 @@ html {
   /* height: 192px; */
   height: 207px;
   border-radius: 16px;
-  background-color: #282D33;
+  background-color: #282d33;
 }
 
 .connect-wallet {
@@ -1703,9 +1694,9 @@ html {
   justify-content: center;
   margin-top: 12px;
 }
- 
+
 .about-connect-p {
-  color: #FFDE45;
+  color: #ffde45;
   width: 284px;
   font-size: 16px;
   font-weight: 300;
@@ -1719,7 +1710,7 @@ html {
   height: 48px;
   font-size: 16px;
   font-weight: 800;
-  background-color: #FFDE45;
+  background-color: #ffde45;
   color: #111118;
   border-radius: 12px;
   border: none;
@@ -1741,7 +1732,7 @@ html {
   height: 48px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #282D33;
+  border-bottom: 1px solid #282d33;
 }
 
 .review-p-div {
@@ -1798,7 +1789,7 @@ html {
 }
 
 .open-wallet-p-second {
-  color: #11B254;
+  color: #11b254;
   font-weight: 500;
 }
 
@@ -1817,7 +1808,7 @@ html {
   height: 48px;
   border-radius: 12px;
   background-color: #111118;
-  color: #AEBEE0;
+  color: #aebee0;
   text-align: center;
   display: flex;
   align-items: center;
@@ -1845,7 +1836,7 @@ html {
   width: 312px;
   height: 48px;
   background-color: transparent;
-  border: 1px solid #FFDE45;
+  border: 1px solid #ffde45;
   color: white;
   font-size: 16px;
   font-weight: 600;
@@ -1864,7 +1855,7 @@ html {
 }
 
 .total-balance {
-  background-color: #282D33;
+  background-color: #282d33;
   border-radius: 16px;
   width: 335px;
   height: 219px;
@@ -1873,7 +1864,7 @@ html {
 .title-balance {
   font-size: 14px;
   font-weight: 500;
-  color: #DEDEDE;
+  color: #dedede;
 }
 
 .title-price {
@@ -1883,7 +1874,7 @@ html {
 }
 
 .balance-bonus-title {
-  color: #FFDE45;
+  color: #ffde45;
   font-size: 14px;
   font-weight: 500;
 }
@@ -1907,17 +1898,9 @@ html {
   margin-top: 11.5px;
 }
 
-
-
-
-
-
-
-
-
 .withdraw-container {
   display: flex;
-  font-family: "Manrope", sans-serif;
+  font-family: 'Manrope', sans-serif;
   color: white;
   text-align: center;
   flex-direction: column;
@@ -2050,13 +2033,13 @@ html {
 }
 
 .profit {
-  color: #6BDA5A;
+  color: #6bda5a;
   font-weight: 700;
   font-size: 20px;
 }
 
 .profit-day {
-  color: #ADA9A9;
+  color: #ada9a9;
   margin-left: 4px;
 }
 
@@ -2070,23 +2053,25 @@ html {
 
 .active-balance-title {
   font-size: 12px;
-  color: #09D84E;
+  color: #09d84e;
   font-weight: 500;
 }
 
-.active-balance, .blocked-balance {
+.active-balance,
+.blocked-balance {
   font-size: 12px;
   font-weight: 400;
-  color: #ADA9A9;
+  color: #ada9a9;
 }
 
 .blocked-balance-title {
   font-size: 12px;
-  color: #09D84E;
+  color: #09d84e;
   font-weight: 500;
 }
 
-.activ-balance-div, .blocked-balance-div {
+.activ-balance-div,
+.blocked-balance-div {
   text-align: justify;
   margin-top: 4px;
 }
@@ -2100,7 +2085,7 @@ html {
   display: flex;
   width: 335px;
   height: 56px;
-  background-color: #282D33;
+  background-color: #282d33;
   border-radius: 16px;
   border: none;
   align-items: center;
@@ -2108,7 +2093,7 @@ html {
 }
 
 .conclu-input-adres {
-  background-color: #282D33;
+  background-color: #282d33;
   font-size: 15px;
   font-weight: 600;
   border: none;
@@ -2122,7 +2107,7 @@ html {
 }
 
 .insert-p {
-  color: #ADA9A9;
+  color: #ada9a9;
   font-size: 15px;
   font-weight: 600;
 }
@@ -2131,7 +2116,7 @@ html {
   display: flex;
   width: 335px;
   height: 56px;
-  background-color: #282D33;
+  background-color: #282d33;
   border-radius: 16px;
   border: none;
   align-items: center;
@@ -2147,7 +2132,7 @@ html {
 }
 
 .usdt-input {
-  background-color: #282D33;
+  background-color: #282d33;
   outline: none;
   border: none;
   color: white;
@@ -2161,7 +2146,7 @@ html {
   align-items: center;
   height: 54px;
   gap: 4px;
-  border: 1px solid #FFDE45;
+  border: 1px solid #ffde45;
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
 }
@@ -2169,19 +2154,19 @@ html {
 .USDT-p {
   font-size: 14px;
   font-weight: 600;
-  color: #ADA9A9;
+  color: #ada9a9;
 }
 
 .ВСЕ-p {
   font-size: 14px;
-  color: #FFDE45;
+  color: #ffde45;
   font-weight: 600;
   padding-right: 7px;
 }
 
 .conclu-btn {
   margin: 0 auto;
-  background-color: #FFDE45;
+  background-color: #ffde45;
   width: 335px;
   height: 48px;
   border-radius: 12px;
@@ -2200,7 +2185,7 @@ html {
 .commission-p {
   font-size: 14px;
   font-weight: 500;
-  color: #FFDE45;
+  color: #ffde45;
   margin-bottom: 12px;
   display: flex;
 }
@@ -2214,7 +2199,7 @@ html {
   background-color: #111118;
   width: 335px;
   height: 248px;
-  border: 1px solid #785D06;
+  border: 1px solid #785d06;
   border-radius: 16px;
   align-items: center;
   justify-content: center;
@@ -2248,7 +2233,7 @@ html {
   height: 48px;
   font-size: 16px;
   font-weight: 300;
-  color: #FFDE45;
+  color: #ffde45;
   margin-top: 24px;
   margin-bottom: 24px;
 }
@@ -2257,7 +2242,7 @@ html {
   width: 303px;
   height: 48px;
   border-radius: 12px;
-  background-color: #FFDE45;
+  background-color: #ffde45;
   color: #111118;
   font-size: 16px;
   font-weight: 800;
@@ -2316,14 +2301,14 @@ html {
 .text-steking {
   font-size: 15px;
   font-weight: 600;
-  color: #ADA9A9;
+  color: #ada9a9;
   margin-bottom: 8px;
 }
 
 .text-USDT-transfers {
   font-size: 24px;
   font-weight: 600;
-  color: #F3F3F3;
+  color: #f3f3f3;
   margin-top: 14px;
 }
 
@@ -2335,25 +2320,25 @@ html {
 
 .transfer-max {
   text-align: center;
-  color: #FFDE45;
+  color: #ffde45;
   border-radius: 8px;
   width: 47px;
   height: 22px;
   background-color: transparent;
-  border: 1px solid #FFDE45;
+  border: 1px solid #ffde45;
 }
 
 .trans-balance-p {
   font-size: 15px;
   font-weight: 500;
-  color: #ADA9A9;
+  color: #ada9a9;
 }
 
 .trans-head-num {
   display: flex;
   font-size: 24px;
   font-weight: 600;
-  color: #F3F3F3;
+  color: #f3f3f3;
   justify-content: flex-end;
 }
 
@@ -2368,23 +2353,6 @@ html {
 .conclu-btn-two {
   margin-top: 12px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .stacking-container {
   width: 300px;
@@ -2465,38 +2433,3 @@ html {
   height: 20px;
   margin-right: 5px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

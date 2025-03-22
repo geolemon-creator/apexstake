@@ -1,0 +1,80 @@
+.StakingBalanceContainer {
+  position: relative;
+  background-color: #282d33;
+  margin: 0 auto;
+  margin-top: 30px;
+  border-radius: 16px;
+  padding: 10px;
+}
+
+.BalanceAmount {
+  color: white;
+  text-align: center;
+}
+
+.stakingBalanceText {
+  font-size: 14px;
+}
+
+.stakingAmount {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.stakingStats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stakingIncrease {
+  color: #6bda5a;
+  font-size: 20px;
+}
+
+.stakingPercentage {
+  color: #6bda5a;
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+.stakingPeriod {
+  color: #ada9a9;
+  font-size: 14px;
+}
+
+.triangleUp {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 11px solid #6bda5a;
+  margin-left: 8px;
+  margin-right: 5px;
+}
+.triangleDown {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 11px solid #ff0000;
+  margin-left: 8px;
+  margin-right: 5px;
+}
+
+.stakingStats {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.infoIcon {
+  position: absolute !important;
+  top: 10px;
+  right: 10px;
+  width: 25px;
+  height: auto;
+  position: relative;
+}
