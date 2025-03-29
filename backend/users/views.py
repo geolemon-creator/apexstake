@@ -39,7 +39,9 @@ class AuthAPIView(APIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
+        print(request.data, 'request data')
         init_data = request.data.get("initData")
+        print(init_data, 'INIT DATA')
 
         if not init_data:
             return Response({"error": "initData is required"}, status=400)

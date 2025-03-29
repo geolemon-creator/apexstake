@@ -5,7 +5,7 @@ from aiogram.types import WebAppInfo, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.filters import Command
 
 API_TOKEN = "7491473745:AAFnW9YSI8fufwI0IJHvwY0wgYcnaWPzSDA"
-WEB_APP_URL = "https://54f158ec67739d.lhr.life"
+WEB_APP_URL = "https://f813-2a02-3037-308-9a0-b501-2df3-f7ae-6510.ngrok-free.app"
 
 logging.basicConfig(level=logging.INFO)
 
@@ -18,7 +18,7 @@ async def start(message: types.Message):
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text="Открыть сайт",
+                    text="Открыть сайт Apexstake",
                     web_app=WebAppInfo(url=WEB_APP_URL)  # Указываем URL Mini App
                 )
             ]
