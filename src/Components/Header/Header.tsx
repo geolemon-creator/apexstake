@@ -2,12 +2,13 @@ import { NavLink } from 'react-router-dom';
 import { level } from '../../Components/Data';
 import LevelModal from '../SelectLevelModal/LevelModal';
 import LevelDetailModal from '../LevelDetailsModal/LevelDetailModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Header.module.css';
-import arrowRightIcon from '../../Img/arrow-right.svg';
 import arrowDownIcon from '../../Img/arrow-down.svg';
 import { LevelData } from '../Type';
 import InputDepositeModal from '../InputDepositeModal/InputDepositeModal';
+import rightArrow from '../../Img/arrow-right.svg';
+import { getDecodedAvatarUrl } from '../../Utils/decodeAvatar';
 
 const Header = () => {
   const [selectedLevelId, setSelectedLevelId] = useState<number | null>(null);
@@ -17,6 +18,19 @@ const Header = () => {
   const [isLevelsListOpen, setIsLevelsListOpen] = useState<boolean>(false);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isDepositeModalOpen, setIsDepositeModalOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    // Получаем данные из localStorage
+    const authData = localStorage.getItem('auth');
+
+    if (authData) {
+      const parsedAuthData = JSON.parse(authData);
+      if (parsedAuthData?.access_token) {
+        setUser(parsedAuthData.user); // Сохраняем данные пользователя
+      }
+    }
+  }, []);
 
   const handleCloseLevelsList = () => {
     setIsLevelsListOpen(false);
@@ -27,7 +41,6 @@ const Header = () => {
   };
 
   const handleSelectLevel = (id: number) => {
-    console.log(id);
     setIsLevelsListOpen(false);
     setIsDetailModalOpen(true);
   };
@@ -47,12 +60,24 @@ const Header = () => {
 
   const selectedLevel = level.find((level) => level.id === selectedLevelId);
 
+  if (!user) {
+    return <div>Пользователь не авторизован</div>;
+  }
+
+  const avatarUrl = getDecodedAvatarUrl(user.avatar);
+
   return (
     <div className={styles.headerContainer}>
       <NavLink className={styles.headerUser} to="/profile">
-        <div className="user-icon"></div>
-        <p>UserName</p>
-        <img src={arrowRightIcon} alt="right-arrow" />
+        <img
+          width={32}
+          height={32}
+          style={{ borderRadius: '100%' }}
+          src={avatarUrl}
+          alt="right-arrow"
+        />
+        <p>{user.username}</p>
+        <img src={rightArrow} alt="right-arrow" />
       </NavLink>
 
       {selectedLevel && (

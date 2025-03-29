@@ -23,8 +23,7 @@ declare global {
 }
 
 function App() {
-  const { signIn } = useAuth();
-  // @ts-ignore
+  const { signIn, isAuth } = useAuth();
   const [initData, setInitData] = useState<string>('');
 
   useEffect(() => {
@@ -39,11 +38,14 @@ function App() {
 
   useEffect(() => {
     if (initData) {
-      alert('login');
       signIn(initData);
     }
   }, [initData]);
-  console.log(window.Telegram.WebApp.initData, 'tgweap');
+
+  if (!isAuth) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <TransactionsProvider>
       <div className="app-container">
