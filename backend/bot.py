@@ -5,7 +5,7 @@ from aiogram.types import WebAppInfo, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.filters import Command
 
 API_TOKEN = "7491473745:AAFnW9YSI8fufwI0IJHvwY0wgYcnaWPzSDA"
-WEB_APP_URL = "https://38926d8c5511b6.lhr.life"
+WEB_APP_URL = "https://54f158ec67739d.lhr.life"
 
 logging.basicConfig(level=logging.INFO)
 
