@@ -27,40 +27,6 @@ html {
   padding: 0 16px; /* Отступы по бокам */
 }
 
-.home-user {
-  background-color: rgb(40, 45, 51);
-  width: 163px;
-  height: 42px;
-  border-radius: 12px;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  color: white;
-  font-size: 14px;
-  gap: 7.5px;
-}
-
-.home-level {
-  color: #ffde45;
-  background-color: rgb(40, 45, 51);
-  width: 163px;
-  height: 42px;
-  border-radius: 12px;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  justify-content: flex-start;
-  font-size: 14px;
-}
-
-.home-top-catlog {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-
 .home-lower-catalog {
   margin-top: 12px;
   gap: 16px;
@@ -69,7 +35,6 @@ html {
 }
 
 .home-reward {
-  width: 320px;
   height: 100px;
   background-color: #282d33;
   border-radius: 16px;
@@ -198,7 +163,7 @@ html {
   justify-content: center;
 
   font-family: 'Manrope', sans-serif;
-  width: 335px;
+
   height: 48px;
   background-color: rgb(17, 17, 24);
   border: 1px solid #ffde45;
@@ -219,7 +184,6 @@ html {
   justify-content: center;
 
   font-family: 'Manrope', sans-serif;
-  width: 335px;
   height: 48px;
   background-color: #ffde45;
   border-color: #ffde45;
@@ -232,7 +196,7 @@ html {
   margin-bottom: 19.17px;
 }
 
-.footer-countainer {
+.footer-container {
   display: flex;
   justify-content: center;
   position: fixed;
@@ -249,7 +213,8 @@ html {
   display: flex;
   list-style: none;
   gap: 23px;
-  width: 319px;
+  max-width: 420px;
+  width: 100%;
   height: 42px;
   border-radius: 12px;
   justify-content: center;
@@ -273,7 +238,7 @@ html {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: rgb(0, 89, 255);
+  background-color: rgb(0, 123, 255);
 }
 
 .stak-balance-price {
@@ -300,7 +265,7 @@ html {
 }
 
 .stak-balance-line {
-  width: 303px;
+  width: 90%;
   height: 12px;
   background-color: #ffffff33;
   display: flex;
@@ -311,8 +276,8 @@ html {
 
 .stak-btn-div {
   display: flex;
-  justify-content: center;
-  gap: 134px;
+  justify-content: space-around;
+
   margin-top: 12px;
 }
 
@@ -716,10 +681,6 @@ html {
   transform: rotate(90deg);
 }
 
-.level-p {
-  width: 125px;
-}
-
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -740,8 +701,7 @@ html {
   padding: 20px;
   border-radius: 8px;
   color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 77%);
-  max-width: 400px;
+  max-width: 420px;
   width: 100%;
   text-align: center;
 }
@@ -761,7 +721,7 @@ html {
   background-color: #282d33;
   border-radius: 8px;
   cursor: pointer;
-  width: 335px;
+  width: 100%;
   height: 60px;
   border-radius: 12px;
   flex-direction: column;
@@ -777,7 +737,8 @@ html {
 
 .header-list-item {
   display: flex;
-  width: 319px;
+  justify-content: space-between;
+  width: 100%;
   margin-left: 8px;
   margin-right: 8px;
 }
@@ -793,6 +754,7 @@ html {
 .diamond-div {
   display: flex;
   gap: 8px;
+  margin-right: 15px;
 }
 
 .level-img {
@@ -876,7 +838,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 335px;
+  width: 100%;
   height: 42px;
   color: white;
   background-color: #232425;
@@ -933,7 +895,7 @@ html {
   top: 0px;
   background-color: #282d33;
   width: 335px;
-  height: 426px;
+  height: 406px;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -945,6 +907,7 @@ html {
   font-size: 14px;
   font-weight: 600;
   margin-left: 16px;
+  color: white;
   margin-top: 16px;
 }
 
@@ -963,6 +926,8 @@ html {
   margin-top: 3px;
   font-size: 16px;
   font-weight: 700;
+  color: white;
+  margin-left: 5px;
 }
 
 .schedule-img {
@@ -1125,7 +1090,7 @@ html {
   gap: 8px;
 }
 
-.thrid-almaz {
+.thrid-ton {
   width: 24px;
   height: 24px;
   margin-right: 12px;
@@ -1273,7 +1238,7 @@ html {
 .transactions-div {
   display: block;
   margin: 0 auto;
-  width: 335px;
+
   height: 100%;
 }
 
@@ -1298,8 +1263,8 @@ html {
 
 .transactions-list-div {
   display: flex;
+  width: 100%;
   background-color: #282d33;
-  width: 335px;
   min-height: 288px;
   margin-top: 12px;
   border-radius: 16px;
@@ -1336,42 +1301,6 @@ html {
   width: 303px;
   gap: 12px;
   height: 44px;
-}
-
-.trans-img {
-  width: 36px;
-  height: 36px;
-}
-
-.trans-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: #ada9a9;
-  margin-bottom: 8px;
-}
-
-.trans-data {
-  font-size: 14px;
-  font-weight: 500;
-  color: #ada9a9;
-}
-
-.trans-price-p {
-  font-size: 14px;
-  font-weight: 500;
-  color: green;
-  text-align: end;
-  margin-bottom: 12px;
-}
-
-.trans-status {
-  text-align: center;
-  background-color: #09d84e;
-  width: 63px;
-  height: 18px;
-  border-radius: 100px;
-  font-size: 10px;
-  font-weight: 500;
 }
 
 .transactions-main-div {
@@ -1857,7 +1786,7 @@ html {
 .total-balance {
   background-color: #282d33;
   border-radius: 16px;
-  width: 335px;
+  width: 100%;
   height: 219px;
 }
 
@@ -2432,4 +2361,26 @@ html {
   width: 20px;
   height: 20px;
   margin-right: 5px;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.shake {
+  animation: shake 0.3s ease-in-out;
 }

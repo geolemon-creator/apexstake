@@ -1,0 +1,21 @@
+.transactionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.transactionData {
+  font-size: 14px;
+  color: #ada9a9;
+}
+
+.transactionStatus {
+  text-align: center;
+  background-color: #09d84e;
+  width: 63px;
+  height: 18px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 500;
+}

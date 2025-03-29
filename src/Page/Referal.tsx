@@ -1,15 +1,15 @@
-import megafon from "./../Img/megafon.png";
-import copy from "./../Img/copy.png";
-import { useState } from "react";
-import { Frend, leader } from "../Components/Data";
-import Frends from "../Components/Frends";
-import Leader from "../Components/Leader";
+import megafon from './../Img/megafon.png';
+import copy from './../Img/copy.png';
+import { useState } from 'react';
+import { Frend, leader } from '../Components/Data';
+import Friends from '../Components/Friends';
+import Leader from '../Components/Leader';
 
 export default function Referal() {
-    const [activeTab, setActiveTab] = useState<'friends' | 'leaders'>('friends');
-    const [friends] = useState(Frend);
-    const currentUserId = 2; 
-    const topN = 104;
+  const [activeTab, setActiveTab] = useState<'friends' | 'leaders'>('friends');
+  const [friends] = useState(Frend);
+  const currentUserId = 2;
+  const topN = 104;
 
   const handleClick = (tab: 'friends' | 'leaders') => {
     setActiveTab(tab);
@@ -18,29 +18,40 @@ export default function Referal() {
   const sortedFriends = [...friends].sort((a, b) => b.coins - a.coins);
   const sortedLeader = [...leader].sort((a, b) => b.coins - a.coins);
 
-  const currentUser = leader.find(l => l.id === currentUserId);
-  
-  const currentUserIndex = sortedLeader.findIndex(l => l.id === currentUserId);
+  const currentUser = leader.find((l) => l.id === currentUserId);
+
+  const currentUserIndex = sortedLeader.findIndex(
+    (l) => l.id === currentUserId
+  );
   const currentUserPlace = currentUserIndex + 1;
 
   return (
-    <div className='ref-countainer'>
+    <div className="ref-countainer">
       {activeTab === 'friends' ? (
         <>
-          <p className='main-title'>Рефералы</p>
+          <p className="main-title">Рефералы</p>
           <div className="ref-swith-div">
-
             <div className="ref-btn-frend-div">
-              <p className={`ref-swith-btn ${activeTab === 'friends' ? 'active' : ''}`} onClick={() => handleClick('friends')} >
+              <p
+                className={`ref-swith-btn ${
+                  activeTab === 'friends' ? 'active' : ''
+                }`}
+                onClick={() => handleClick('friends')}
+              >
                 Приглашенные друзья
               </p>
             </div>
 
             <div className="ref-btn-leader-div">
-            <p className={`ref-swith-btn ${activeTab as "leaders" === 'leaders' ? 'active' : ''}`} 
-            onClick={() => handleClick('leaders')}>Лидеры</p>
+              <p
+                className={`ref-swith-btn ${
+                  (activeTab as 'leaders') === 'leaders' ? 'active' : ''
+                }`}
+                onClick={() => handleClick('leaders')}
+              >
+                Лидеры
+              </p>
             </div>
-
           </div>
 
           {sortedFriends.length === 0 ? (
@@ -68,7 +79,7 @@ export default function Referal() {
             <>
               <div className="frend-array">
                 {sortedFriends.map((frend) => (
-                  <Frends key={frend.id} data={frend} />
+                  <Friends key={frend.id} data={frend} />
                 ))}
               </div>
 
@@ -81,34 +92,41 @@ export default function Referal() {
             </>
           )}
         </>
-      ) : ( 
+      ) : (
         <div>
-            <h1 className="leader-h1">Лидеры</h1>
-            <div className="leader-array">
-              
+          <h1 className="leader-h1">Лидеры</h1>
+          <div className="leader-array">
             {currentUser && currentUserPlace > topN && (
-               <div className="current-user-header">
-               <Leader data={currentUser} position={currentUserPlace} isCurrentUser={true} />
-             </div>
+              <div className="current-user-header">
+                <Leader
+                  data={currentUser}
+                  position={currentUserPlace}
+                  isCurrentUser={true}
+                />
+              </div>
             )}
 
-              {sortedLeader.map((leader, index) => {
-                const position = index + 1;
-                if (leader.id === currentUserId) {
-                  // Если это текущий пользователь
-                  if (currentUserPlace <= topN) {
-                    // И он входит в топ, отображаем его как обычного участника
-                    return <Leader key={leader.id} data={leader} position={position} />;
-                  } else {
-                    // И если он крч НЕ входит в топ, то пропускаем его, так как он уже отображен
-                    return null;
-                  }
+            {sortedLeader.map((leader, index) => {
+              const position = index + 1;
+              if (leader.id === currentUserId) {
+                // Если это текущий пользователь
+                if (currentUserPlace <= topN) {
+                  // И он входит в топ, отображаем его как обычного участника
+                  return (
+                    <Leader key={leader.id} data={leader} position={position} />
+                  );
                 } else {
-                  // Если это не текущий пользователь, отображаем как обычно
-                  return <Leader key={leader.id} data={leader} position={position} />;
+                  // И если он крч НЕ входит в топ, то пропускаем его, так как он уже отображен
+                  return null;
                 }
-              })}
-            </div>
+              } else {
+                // Если это не текущий пользователь, отображаем как обычно
+                return (
+                  <Leader key={leader.id} data={leader} position={position} />
+                );
+              }
+            })}
+          </div>
         </div>
       )}
     </div>

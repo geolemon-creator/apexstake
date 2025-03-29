@@ -1,10 +1,17 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
-    allowedHosts: ["8a6c-2a02-3037-304-59ef-f0af-a9b7-cd79-c12e.ngrok-free.app"]
-  }
-})
+    host: true, // Разрешает принимать запросы с любого хоста
+    strictPort: true, // Гарантирует использование указанного порта
+    port: 3000,
+    cors: {
+      origin: '*', // Разрешает запросы со всех доменов
+      methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешенные методы
+    },
+    allowedHosts: ['work.lnx-usr.xyz', 'localhost', '127.0.0.1'],
+  },
+});

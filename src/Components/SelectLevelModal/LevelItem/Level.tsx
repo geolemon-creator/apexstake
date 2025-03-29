@@ -1,10 +1,11 @@
-import { levelID } from './Type';
-import check from "./../Img/chek.png"
+import { levelID } from '../../Type';
+import check from '../../../Img/chek.png';
+import rightArrow from '../../../Img/arrow-right.svg';
 
 interface LevelProps {
-    data: levelID,
-    selectedLevel: number | null; 
-    onSelect: (id: number) => void;
+  data: levelID;
+  selectedLevel: number | null;
+  onSelect: (id: number) => void;
 }
 
 export default function Level(props: LevelProps) {
@@ -16,9 +17,14 @@ export default function Level(props: LevelProps) {
     <div className="level-item" onClick={() => onSelect(data.id)}>
       <div className="header-list-item">
         <p className="level-p-header">Уровень</p>
+
         <div className="diamond-div">
           <img className="level-img" src={props.data.img} alt="diamond" />
-          <p className={`level-title ${isSpecialLevel ? `adv-level-title` : ""}`}>{props.data.title}</p>
+          <p
+            className={`level-title ${isSpecialLevel ? `adv-level-title` : ''}`}
+          >
+            {props.data.title}
+          </p>
           {selectedLevel === props.data.id ? (
             <img
               className="check-img"
@@ -30,7 +36,7 @@ export default function Level(props: LevelProps) {
               }}
             />
           ) : (
-            <span className="level-arrow">&gt;</span>
+            <img src={rightArrow} alt="arrow" />
           )}
         </div>
       </div>

@@ -9,8 +9,32 @@ import Farming from './Page/Farming';
 import Profile from './Page/Profile';
 import Conclusioin from '././Page/Conclusion';
 import Transfers from './Page/Transfers';
+import useAuth from './Hooks/useAuth';
+import { useEffect, useState } from 'react';
+
+declare global {
+  interface Window {
+    Telegram: {
+      WebApp: {
+        initData: string;
+      };
+    };
+  }
+}
 
 function App() {
+  const { signIn } = useAuth();
+  const [initData, setInitData] = useState<string>('');
+
+  useEffect(() => {
+    if (window.Telegram && window.Telegram.WebApp) {
+      const data = window.Telegram.WebApp.initData;
+
+      setInitData(data);
+      signIn(data);
+    }
+  }, [signIn]);
+  console.log(window.Telegram.WebApp.initData, 'tgweap');
   return (
     <TransactionsProvider>
       <div className="app-container">
