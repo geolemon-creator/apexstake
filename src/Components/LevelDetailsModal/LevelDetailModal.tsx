@@ -8,10 +8,8 @@ interface LevelDetailModalProps {
   handleOpenDepositeModal: (level: LevelData) => void;
 }
 
-const LevelDetailModal = ({
-  selectedLevelId,
-  handleOpenDepositeModal,
-}: LevelDetailModalProps) => {
+// @ts-ignore
+const LevelDetailModal = ({selectedLevelId, handleOpenDepositeModal}: LevelDetailModalProps) => {
   const [isChecked, setIsChecked] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
   const checkboxRef = useRef<HTMLDivElement | null>(null);

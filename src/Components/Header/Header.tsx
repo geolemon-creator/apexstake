@@ -27,6 +27,7 @@ const Header = () => {
   };
 
   const handleSelectLevel = (id: number) => {
+    console.log(id);
     setIsLevelsListOpen(false);
     setIsDetailModalOpen(true);
   };

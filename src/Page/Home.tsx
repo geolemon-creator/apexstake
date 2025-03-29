@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import { useTransactions } from '../Components/TransactionsContext';
-import { useState } from 'react';
 
 import box from './../Img/present.svg';
 import arrowRight from './../Img/arrow-right.svg';

@@ -1,6 +1,6 @@
 import RoundGraph from '../RoundGraph/RoundGraph';
 import styles from './StakingBalance.module.css';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import infoIcon from '../../Img/info.svg';
 
 const StakingBalance = () => {

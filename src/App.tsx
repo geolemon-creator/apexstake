@@ -24,6 +24,7 @@ declare global {
 
 function App() {
   const { signIn } = useAuth();
+  // @ts-ignore
   const [initData, setInitData] = useState<string>('');
 
   useEffect(() => {
