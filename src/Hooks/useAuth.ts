@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { parseInitData } from '../Utils/parseInitData';
 
 // Тип для данных, которые мы получаем от сервера в ответ на запрос
 interface AuthResponse {
@@ -10,17 +11,21 @@ const useAuth = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
 
   const signIn = async (initData: string): Promise<void> => {
-    alert(initData);
     try {
+      // Отправляем initData как есть
       const response = await axios.post<AuthResponse>(
-        `https://185.125.103.74/api/auth/`,
-        { initData: 'query_id=AAEv2R53AgAAAC_ZHncrYrpL' }
+        `http://127.0.0.1:8000/api/auth/`,
+        { initData }, // передаем строку как есть
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       );
-      alert(response.data);
-      setIsAuth(response.data.data);
+      setIsAuth(response.data.data); // предполагаем, что ответ содержит статус авторизации
     } catch (error) {
-      alert(error);
       console.error('Ошибка аутентификации:', error);
+      alert(error);
       setIsAuth(false);
     }
   };

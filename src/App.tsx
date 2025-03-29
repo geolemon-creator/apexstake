@@ -31,10 +31,18 @@ function App() {
     if (window.Telegram && window.Telegram.WebApp) {
       const data = window.Telegram.WebApp.initData;
 
-      setInitData(data);
-      signIn(data);
+      if (data) {
+        setInitData(data);
+      }
     }
   }, [signIn]);
+
+  useEffect(() => {
+    if (initData) {
+      alert('login');
+      signIn(initData);
+    }
+  }, [initData]);
   console.log(window.Telegram.WebApp.initData, 'tgweap');
   return (
     <TransactionsProvider>

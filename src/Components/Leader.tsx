@@ -2,7 +2,7 @@ import { LeaderID } from './Type';
 import tonIcon from './../Img/TonCoin.svg';
 import coin from './../Img/coin.svg';
 import vector from './../Img/Vector.png';
-import second from './../Img/second.png';
+import second from './../Img/Second.png';
 import third from './../Img/third.png';
 
 interface LeaderProps {
