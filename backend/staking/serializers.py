@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import StakingStage, StakingLevel, UserStaking
+from datetime import timedelta
+from django.utils.timezone import now
 
 
 class StakingStageSerializer(serializers.ModelSerializer):
@@ -13,6 +15,32 @@ class StakingLevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = StakingLevel
         fields = ['id', 'stage', 'level', 'min_deposite', 'max_deposite', 'percentage']
+
+
+class StakingLevelDetailsSerializer(serializers.ModelSerializer):
+    stage = StakingStageSerializer()
+    start_date = serializers.SerializerMethodField()
+    end_date = serializers.SerializerMethodField()
+    full_rate = serializers.SerializerMethodField()
+
+    class Meta:
+        model = StakingLevel
+        fields = [
+            'id', 'stage', 'level', 'min_deposite', 'max_deposite', 'percentage',
+            'start_date', 'end_date', 'full_rate'
+        ]
+
+    def get_start_date(self, obj):
+        return now().isoformat()
+
+    def get_end_date(self, obj):
+        staking_time = obj.stage.staking_time if obj.stage else 0
+        return (now() + timedelta(days=staking_time)).isoformat()
+
+    def get_full_rate(self, obj):
+        print(obj.percentage, obj.stage.staking_time, 'FULL RATE')
+        return obj.percentage * (obj.stage.staking_time if obj.stage else 1)
+
 
 class UserStakingSerializer(serializers.ModelSerializer):
     class Meta:

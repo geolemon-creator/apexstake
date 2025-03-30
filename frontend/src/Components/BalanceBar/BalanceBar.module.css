@@ -1,0 +1,25 @@
+.balanceBarContainer {
+  width: 90%;
+  height: 12px;
+  background-color: #ffffff33;
+  display: flex;
+  margin: 8px auto 0;
+  border-radius: 96.33px;
+  overflow: hidden;
+}
+
+.balanceBar {
+  height: 100%;
+  transition: width 0.3s ease-in-out;
+}
+
+.balanceInfoContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.balanceInfo {
+  font-size: 12px;
+}

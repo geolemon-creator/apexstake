@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
-
+from staking.models import UserStaking
 from .models import CustomUser
 from .serializers import CustomUserSerializer
 from .permissions import IsAdminOrSelf
@@ -39,9 +39,7 @@ class AuthAPIView(APIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
-        print(request.data, 'request data')
         init_data = request.data.get("initData")
-        print(init_data, 'INIT DATA')
 
         if not init_data:
             return Response({"error": "initData is required"}, status=400)
@@ -64,6 +62,12 @@ class AuthAPIView(APIView):
             },
         )
 
+        staking_stage = user.staking_stage.stage if user.staking_stage else None
+
+        # Определяем текущий уровень пользователя по UserStaking (если есть активные ставки)
+        user_staking = UserStaking.objects.filter(user=user, status="in_progress").order_by("-start_date").first()
+        selected_level = user_staking.staking_level.level if user_staking else None
+
         refresh = RefreshToken.for_user(user)
         return Response(
             {
@@ -72,7 +76,13 @@ class AuthAPIView(APIView):
                 "user": {
                     "id": user.id,
                     "username": user.username,
+                    "balance": user.balance,
+                    "blocked_balance": user.blocked_balance,
+                    "tokens": user.tokens,
+                    "wallet": user.wallet,
                     "avatar": user.avatar.url if user.avatar else None,
+                    "staking_stage": staking_stage,
+                    "selected_level": selected_level
                 },
             }
         )

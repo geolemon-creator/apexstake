@@ -1,0 +1,29 @@
+.headerContainer {
+  display: flex;
+}
+
+.headerUser {
+  width: 50%;
+  font-size: 14px;
+  color: white;
+  background: #232425;
+  border-radius: 12px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.headerLevel {
+  color: #ffde45;
+  background: #232425;
+  width: 50%;
+  height: 42px;
+  border-radius: 12px;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  font-size: 14px;
+  cursor: pointer;
+}

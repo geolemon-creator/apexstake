@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
+from datetime import timedelta
+
 
 load_dotenv(find_dotenv())
 
@@ -120,6 +122,14 @@ SWAGGER_SETTINGS = {
             'type': 'basic'
         }
     }
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=14),
+    "ROTATE_REFRESH_TOKENS": False,
+    "SIGNING_KEY": SECRET_KEY,
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
 # Celery config

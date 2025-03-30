@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
 from .models import StakingLevel, UserStaking
-from .serializers import StakingLevelSerializer, OpenStakingSerializer, UserStakingSerializer, StakingStage
+from .serializers import StakingLevelSerializer, OpenStakingSerializer, UserStakingSerializer, StakingStage, StakingLevelDetailsSerializer
 
 
 class StakingLevelsAPIView(APIView):
@@ -100,5 +100,6 @@ class LevelDetailsAPIView(APIView):
         except StakingLevel.DoesNotExist:
             return Response({'error': 'Level not found'}, status=status.HTTP_404_NOT_FOUND)
     
-        serializer = StakingLevelSerializer(staking_info)
+        serializer = StakingLevelDetailsSerializer(staking_info)
+
         return Response(serializer.data, status=status.HTTP_200_OK)
