@@ -78,3 +78,26 @@
   height: auto;
   position: relative;
 }
+
+.BalanceModalOverlay {
+  position: fixed; /* Закрепляем элемент на экране */
+  top: 0;
+  left: 0;
+  width: 100%; /* Занимает всю ширину */
+  height: 100%; /* Занимает всю высоту */
+  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+  display: flex;
+  justify-content: center; /* Центрируем по горизонтали */
+  align-items: center; /* Центрируем по вертикали */
+  z-index: 1000;
+}
+
+.BalanceModalContent > div {
+  position: absolute; /* Позиционируем элемент относительно контейнера */
+  top: 50%; /* Центрируем по вертикали */
+  left: 50%; /* Центрируем по горизонтали */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Сдвигаем блок на половину его размера, чтобы точно центрировать */
+}

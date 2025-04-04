@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import close from './../Img/close.svg';
+import close from './../../Img/close.svg';
 
 interface ConnectWalletModalProps {
   closeModal: () => void;

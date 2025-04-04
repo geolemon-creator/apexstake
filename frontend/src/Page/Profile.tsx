@@ -6,10 +6,15 @@ import transWallet from './../Img/transWallet.svg';
 import copy from './../Img/copy.svg';
 import { useState, useEffect } from 'react';
 import { getDecodedAvatarUrl } from '../Utils/decodeAvatar';
+import { useTonConnectUI } from '@tonconnect/ui-react';
+import { useTonAddress } from '@tonconnect/ui-react';
 
 export default function Profile() {
-  const [openWallet, setOpenWallet] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [tonConnectUI, setOptions] = useTonConnectUI();
+  const [isCopied, setIsCopied] = useState(false);
+  const userFriendlyAddress = useTonAddress();
+  const rawAddress = useTonAddress(false);
 
   useEffect(() => {
     const userString = localStorage.getItem('user');
@@ -20,8 +25,22 @@ export default function Profile() {
     }
   }, []);
 
-  const handleOpenWallet = () => {
-    setOpenWallet(!openWallet);
+  const shortenAddress = (address: string) => {
+    // Проверим, что адрес длиннее 10 символов
+    if (address.length > 10) {
+      return `${address.slice(0, 12)}...${address.slice(-6)}`;
+    }
+    return address; // Если адрес короткий, не обрезаем
+  };
+
+  const handleCopyClick = () => {
+    navigator.clipboard
+      .writeText(userFriendlyAddress)
+      .then(() => {
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000); // Возвращаем иконку через 2 секунды
+      })
+      .catch((err) => console.error('Ошибка копирования: ', err));
   };
 
   if (!user) {
@@ -45,7 +64,7 @@ export default function Profile() {
 
       <div className="user-wallet-div">
         <div className="user-wallet">
-          {!openWallet ? (
+          {!userFriendlyAddress ? (
             <>
               <p className="connect-wallet">Подключите ваш кошелек</p>
 
@@ -55,7 +74,10 @@ export default function Profile() {
                 </p>
               </div>
 
-              <button onClick={handleOpenWallet} className="user-wallet-btn">
+              <button
+                onClick={() => tonConnectUI.openModal()}
+                className="user-wallet-btn"
+              >
                 Подключить кошелек TON
               </button>
             </>
@@ -78,13 +100,23 @@ export default function Profile() {
 
               <div className="adres-main-block">
                 <div className="wallet-adres-div">
-                  <p className="adres-p">UQATfAg...JiCDYY%b</p>
-                  <img className="afres-copy-img" src={copy} alt="" />
+                  <p className="adres-p">
+                    {shortenAddress(userFriendlyAddress)}
+                  </p>
+                  <img
+                    onClick={handleCopyClick}
+                    className="adress-copy-img"
+                    src={isCopied ? ok : copy}
+                    alt=""
+                  />
                 </div>
               </div>
 
               <div className="untie-wallet-div">
-                <button onClick={handleOpenWallet} className="untie-wallet">
+                <button
+                  onClick={() => tonConnectUI.disconnect()}
+                  className="untie-wallet"
+                >
                   Отвязать кошелек
                 </button>
               </div>

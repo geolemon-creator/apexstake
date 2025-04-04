@@ -1,14 +1,15 @@
+import tonIcon from './../Img/TonCoin.svg';
 import closen from './../Img/close.svg';
 import { useEffect, useState } from 'react';
 import BalanceBar from '../Components/BalanceBar/BalanceBar';
 import coin from './../Img/coin.svg';
-import tonIcon from './../Img/TonCoin.svg';
-import { useTonAddress } from '@tonconnect/ui-react';
+import { useTonConnectUI, useTonAddress } from '@tonconnect/ui-react';
+import TonWeb from 'tonweb';
 
-export default function Withdraw() {
-  const [valueUsdt, setValueUsdt] = useState('');
+export default function Deposite() {
+  const [amount, setAmount] = useState('');
   const [user, setUser] = useState<any>(null);
-  const userFriendlyAddress = useTonAddress();
+  const [tonConnectUI] = useTonConnectUI();
 
   useEffect(() => {
     // Получаем данные из localStorage
@@ -19,12 +20,26 @@ export default function Withdraw() {
     }
   }, []);
 
-  const shortenAddress = (address: string) => {
-    // Проверим, что адрес длиннее 10 символов
-    if (address.length > 10) {
-      return `${address.slice(0, 12)}...${address.slice(-6)}`;
+  const handleDeposit = async (amount: number) => {
+    const transaction = {
+      validUntil: Math.floor(Date.now() / 1000) + 300,
+      messages: [
+        {
+          address: 'UQCgeLzYVTFtZYIPOJGEDPeXXts1BbKIwhQ6l7_XTcMvqj_T',
+          amount: (amount * 1e9).toString(),
+        },
+      ],
+    };
+
+    try {
+      await tonConnectUI.sendTransaction(transaction);
+      alert('Транзакция отправлена');
+
+      console.log(amount, 'Deposite', user);
+    } catch (error) {
+      console.error('Ошибка при отправке транзакции:', error);
+      alert('Ошибка при отправке транзакции');
     }
-    return address; // Если адрес короткий, не обрезаем
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,20 +51,14 @@ export default function Withdraw() {
       return;
     }
 
-    setValueUsdt(numericValue);
-  };
-  const handleSetMaxValue = () => {
-    if (user && user.balance) {
-      setValueUsdt(user.balance.toString()); // Преобразуем в строку при установке
-    }
+    setAmount(numericValue);
   };
 
-  const isButtonDisabled =
-    valueUsdt.trim() === '' || parseFloat(valueUsdt) <= 0;
+  const isButtonDisabled = amount.trim() === '' || parseFloat(amount) <= 0;
 
   return (
     <div className="withdraw-container">
-      <h1 className="withdraw-title">Вывод</h1>
+      <h1 className="withdraw-title">Пополнение</h1>
 
       <div className="total-balance">
         <div className="total-price-div">
@@ -79,20 +88,10 @@ export default function Withdraw() {
       </div>
 
       <div className="conclu-input-div">
-        <div className="conclu-div-adres">
-          <input
-            className="conclu-input-adres"
-            type="text"
-            placeholder="Адрес"
-            disabled
-            value={shortenAddress(userFriendlyAddress)}
-          />
-        </div>
-
         <div className="conclu-div-usdt">
           <input
             className="usdt-input"
-            value={valueUsdt}
+            value={amount}
             onChange={handleInputChange}
             placeholder="0"
           />
@@ -100,31 +99,23 @@ export default function Withdraw() {
           <div className="usdt-input-div">
             <img
               src={closen}
-              onClick={() => setValueUsdt('')}
-              alt="close"
-              style={{ marginLeft: '5px' }}
+              style={{ paddingLeft: '5px' }}
+              onClick={() => setAmount('')}
+              alt="TON"
             />
-            <p className="USDT-p">TON</p>
-            <p className="ВСЕ-p" onClick={handleSetMaxValue}>
-              ВСЕ
+            <p className="USDT-p" style={{ paddingRight: '5px' }}>
+              TON
             </p>
           </div>
         </div>
       </div>
 
-      {isButtonDisabled ? (
-        <></>
-      ) : (
-        <div className="commission-div-p">
-          <p className="commission-p">Комиссия 10%=30 USDT</p>
-        </div>
-      )}
-
       <button
         disabled={isButtonDisabled}
+        onClick={() => handleDeposit(Number(amount))}
         className={`conclu-btn ${isButtonDisabled ? 'disabled' : 'active'}`}
       >
-        Подтвердить вывод
+        Подтвердить пополнение
       </button>
     </div>
   );

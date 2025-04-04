@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useTransactions } from '../Components/TransactionsContext';
 
 import box from './../Img/present.svg';
@@ -6,6 +6,7 @@ import arrowRight from './../Img/arrow-right.svg';
 import coin from './../Img/coin.svg';
 import deposit from './../Img/deposit.svg';
 import withdraw from './../Img/withdraw.svg';
+import tonIcon from './../Img/TonCoin.svg';
 import Header from '../Components/Header/Header';
 
 import 'slick-carousel/slick/slick.css';
@@ -13,10 +14,15 @@ import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import { useEffect, useState } from 'react';
 import BalanceBar from '../Components/BalanceBar/BalanceBar';
+import ConnectWalletModal from '../Components/ConnectWalletModal/ConnectWalletModal';
+import { useTonAddress } from '@tonconnect/ui-react';
 
 export default function Home() {
   const { transactions } = useTransactions();
+  const [isModalConnect, setIsModalConnect] = useState(false);
+  const userFriendlyAddress = useTonAddress();
   const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Получаем данные из localStorage
@@ -26,6 +32,16 @@ export default function Home() {
       setUser(user);
     }
   }, []);
+
+  const handleNavigation = (route: string) => {
+    if (!userFriendlyAddress) {
+      // Если нет userFriendlyAddress, показываем модальное окно
+      setIsModalConnect(true);
+    } else {
+      // Если адрес есть, переходим по нужному маршруту
+      navigate(route);
+    }
+  };
 
   const settings = {
     dots: false,
@@ -82,7 +98,16 @@ export default function Home() {
         <div className="total-balance">
           <div className="total-price-div">
             <p className="title-balance">Total Balance</p>
-            <p className="title-price">$ {user?.balance}</p>
+            <p className="title-price">
+              <img
+                src={tonIcon}
+                alt="ton"
+                width={20}
+                height={20}
+                style={{ marginRight: '5px' }}
+              />
+              {user?.balance}
+            </p>
           </div>
 
           <div className="balance-bonus">
@@ -97,14 +122,32 @@ export default function Home() {
           />
 
           <div className="stak-btn-div">
-            <div className="stak-first-div">
-              <img src={deposit} alt="desposit" />
-              <p className="deposit-p">Пополнить</p>
-            </div>
-            <div className="stak-first-div">
-              <img src={withdraw} alt="withdraw" />
-              <p className="deposit-p">Вывод</p>
-            </div>
+            <NavLink
+              style={{ textDecoration: 'none' }}
+              to="/deposite"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavigation('/deposite'); // Навигация к маршруту пополнения
+              }}
+            >
+              <div className="stak-first-div">
+                <img src={deposit} alt="desposit" />
+                <p className="deposit-p">Пополнить</p>
+              </div>
+            </NavLink>
+            <NavLink
+              style={{ textDecoration: 'none' }}
+              to="/conclusioin"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavigation('/conclusioin'); // Навигация к маршруту вывода
+              }}
+            >
+              <div className="stak-first-div">
+                <img src={withdraw} alt="withdraw" />
+                <p className="deposit-p">Вывод</p>
+              </div>
+            </NavLink>
           </div>
         </div>
       </div>
@@ -117,7 +160,7 @@ export default function Home() {
         )}
       </div>
 
-      <NavLink style={{ textDecoration: 'none' }} to="/Conclusioin">
+      <NavLink style={{ textDecoration: 'none' }} to="/">
         <div className="btn-more">
           <p>Узнать больше</p>
           <img src={arrowRight} alt="arrow" />
@@ -127,6 +170,9 @@ export default function Home() {
       <NavLink style={{ textDecoration: 'none' }} to="/staking">
         <div className="btn-staking">Открыть стейкинг</div>
       </NavLink>
+      {isModalConnect && (
+        <ConnectWalletModal closeModal={() => setIsModalConnect(false)} />
+      )}
     </div>
   );
 }

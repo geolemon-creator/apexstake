@@ -66,7 +66,8 @@ const useAuth = () => {
       setIsAuth(true);
     } catch (error) {
       console.error('Ошибка аутентификации:', error);
-      alert('Ошибка аутентификации');
+      // alert('Ошибка аутентификации');
+      // alert(error);
       setIsAuth(false);
     }
   };

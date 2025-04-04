@@ -11,7 +11,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     id = models.CharField(max_length=13, unique=True, primary_key=True, editable=False)
     username = models.CharField(max_length=50, unique=True)
-    avatar = models.ImageField(default="users/avatar/default-avatar.png", upload_to='users/avatar/')
+    avatar = models.URLField()
     wallet = models.CharField(max_length=30, null=True, blank=True)
     staking_stage = models.ForeignKey(StakingStage, null=True, blank=True, on_delete=models.CASCADE)
     telegram_id = models.IntegerField()

@@ -84,3 +84,36 @@ export interface LevelData {
 export interface GetLevelsListResponse {
   levels: LevelData[];
 }
+
+// Staking Details
+export interface UserStakingDetails {
+  id: number;
+  user: string;
+  staking_level: number;
+  amount: string;
+  percentage: number;
+  start_date: string; // Время в ISO 8601 формате
+  end_date: string; // Время в ISO 8601 формате
+  daily_earning: number;
+  daily_percentage: number;
+  current_day: number;
+  total_days: number;
+  now_date: string; // Время в ISO 8601 формате
+}
+
+// REFFERAL SYSTEM
+export interface InvitedUser {
+  id: string;
+  username: string;
+  staking_stage: number;
+  avatar: string;
+  wallet: string | null;
+  telegram_id: number;
+  balance: string; // Можно использовать string, если это число с десятичными знаками
+  selected_level: string | null;
+  created_at: string; // Для даты можно использовать строковый формат ISO
+}
+
+export interface GetInvitedUsersResponse {
+  invited_users: InvitedUser[];
+}

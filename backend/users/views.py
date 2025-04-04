@@ -1,14 +1,11 @@
-from datetime import datetime
-from django.utils.timezone import make_aware
-
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from staking.models import UserStaking
 from .models import CustomUser
-from .serializers import CustomUserSerializer
+from .serializers import CustomUserSerializer, RegisterUserSerializer
 from .permissions import IsAdminOrSelf
 from .services import validate_telegram_init_data
 
@@ -39,6 +36,7 @@ class AuthAPIView(APIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
+        ''' Получение или создание пользователя при открытии WebApp '''
         init_data = request.data.get("initData")
 
         if not init_data:
@@ -57,8 +55,7 @@ class AuthAPIView(APIView):
             defaults={
                 "id": str(telegram_id),
                 "username": username,
-                "avatar": avatar_url or "users/avatar/default-avatar.png",
-                "created_at": make_aware(datetime.now()),
+                "avatar": avatar_url,
             },
         )
 
@@ -80,9 +77,38 @@ class AuthAPIView(APIView):
                     "blocked_balance": user.blocked_balance,
                     "tokens": user.tokens,
                     "wallet": user.wallet,
-                    "avatar": user.avatar.url if user.avatar else None,
+                    "avatar": user.avatar if user.avatar else None,
                     "staking_stage": staking_stage,
-                    "selected_level": selected_level
+                    "selected_level": selected_level,
+                    "referral_code": user.referral_code
                 },
             }
         )
+    
+class RegisterUserAPIView(APIView):
+    def post(self, request):
+        print(request.data, 'data')
+        serializer = RegisterUserSerializer(data=request.data)
+
+        if serializer.is_valid():
+            user = serializer.save()
+            return Response(
+                {"message": "Пользователь зарегистрирован"},
+                status=status.HTTP_201_CREATED
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class GetInvitedUsersAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get(self, request):
+        user = request.user
+        
+        if not user:
+            return Response({"error": "User not found"}, status=404)
+        
+        invited_users = CustomUser.objects.filter(referred_by=user)
+
+        serializer = CustomUserSerializer(invited_users, many=True)
+
+        return Response({"invited_users": serializer.data})

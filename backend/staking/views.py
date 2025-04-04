@@ -86,10 +86,13 @@ class UserStakingAPIView(APIView):
 
     def get(self, request):
         """Получение стейкинга пользователя"""
-        user_stakings = UserStaking.objects.filter(user=request.user)
-        serializer = UserStakingSerializer(user_stakings, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
+        user_staking = UserStaking.objects.filter(user=request.user, status="in_progress", end_date__gt=timezone.now()).first()
+        if user_staking:
+            serializer = UserStakingSerializer(user_staking)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"detail": "No active staking found for this user."}, status=status.HTTP_404_NOT_FOUND)
+
 class LevelDetailsAPIView(APIView):
     permission_classes = [IsAuthenticated]
     

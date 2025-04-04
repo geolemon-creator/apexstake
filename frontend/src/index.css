@@ -401,12 +401,22 @@ html {
   border: none;
   font-size: 16px;
   font-weight: 800;
+  cursor: pointer;
+}
+
+.ref-btn-invit:hover {
+  background-color: #fdd524;
 }
 
 .ref-copy-btn {
   height: 48px;
   border-radius: 16px;
   background-color: #ffde45;
+  cursor: pointer;
+}
+.ref-copy-btn :hover {
+  border-radius: 16px;
+  background-color: #fdd524;
 }
 
 .ref-copy-img {
@@ -2028,7 +2038,6 @@ html {
   border-radius: 16px;
   border: none;
   align-items: center;
-  justify-content: space-evenly;
 }
 
 .conclu-input-adres {
@@ -2037,7 +2046,10 @@ html {
   font-weight: 600;
   border: none;
   outline: none;
-  color: white;
+  user-select: none;
+  width: 50%;
+  color: rgb(216, 216, 216);
+  margin-left: 15px;
 }
 
 .insert-div-input {
@@ -2079,6 +2091,10 @@ html {
   padding-left: 15px;
   font-size: 15px;
   font-weight: 600;
+  width: 100%;
+  border-radius: 15px;
+  height: 54px;
+  margin-right: 5px;
 }
 
 .usdt-input-div {
@@ -2372,6 +2388,14 @@ html {
   width: 20px;
   height: 20px;
   margin-right: 5px;
+}
+
+.adress-copy-img {
+  cursor: pointer;
+}
+
+.adress-copy-img:hover {
+  transform: scale(1.1);
 }
 
 @keyframes shake {

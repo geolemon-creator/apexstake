@@ -43,10 +43,38 @@ class StakingLevelDetailsSerializer(serializers.ModelSerializer):
 
 
 class UserStakingSerializer(serializers.ModelSerializer):
+    percentage = serializers.SerializerMethodField()
+    daily_earning = serializers.SerializerMethodField()
+    daily_percentage = serializers.SerializerMethodField()
+    current_day = serializers.SerializerMethodField()
+    total_days = serializers.SerializerMethodField()
+    now_date = serializers.SerializerMethodField()
+
     class Meta:
         model = UserStaking
-        fields = ['id', 'user', 'staking_level', 'amount', 'start_date', 'end_date']
+        fields = ['id', 'user', 'staking_level', 'amount', 'percentage', 'start_date', 'end_date', 'daily_earning', 'daily_percentage', 'current_day', 'total_days', 'now_date']
         read_only_fields = ['id', 'start_date', 'end_date']
+
+    def get_percentage(self, obj):
+        user_staking_stage = obj.user.staking_stage
+        staking_level = StakingLevel.objects.get(stage=user_staking_stage, level=obj.staking_level.level)
+        return staking_level.percentage
+    
+    def get_total_days(self, obj):
+        return (obj.end_date - obj.start_date).days
+    
+    def get_current_day(self, obj):
+        return (now().date() - obj.start_date.date()).days + 1
+    
+    def get_daily_percentage(self, obj):
+        total_days = self.get_total_days(obj)
+        return self.get_percentage(obj) / total_days if total_days > 0 else 0
+    
+    def get_daily_earning(self, obj):
+        return (obj.amount * self.get_daily_percentage(obj)) / 100
+    
+    def get_now_date(self, obj):
+        return now().isoformat()
 
     def validate_amount(self, value):
         """
@@ -67,7 +95,6 @@ class UserStakingSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(f"Amount cannot exceed {staking_level.max_deposite}.")
 
         return value    
-
 
 class OpenStakingSerializer(serializers.Serializer):
     amount = serializers.DecimalField(max_digits=10, decimal_places=2)

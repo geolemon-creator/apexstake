@@ -1,18 +1,68 @@
 import megafon from './../Img/megafon.png';
 import copy from './../Img/copy.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Frend, leader } from '../Components/Data';
 import Friends from '../Components/Friends';
 import Leader from '../Components/Leader';
+import { GetInvitedUsersResponse, InvitedUser } from '../Components/Type';
+import { usersApi } from '../Api/usersApi';
 
 export default function Referal() {
+  const [user, setUser] = useState<any>(null);
+  const [invitedUsers, setInvitedUsers] = useState<InvitedUser[]>([]);
   const [activeTab, setActiveTab] = useState<'friends' | 'leaders'>('friends');
   const [friends] = useState(Frend);
   const currentUserId = 2;
   const topN = 104;
 
+  const BotUsername = import.meta.env.VITE_BOT_USERNAME;
+
+  useEffect(() => {
+    const userString = localStorage.getItem('user');
+
+    if (userString) {
+      const user = JSON.parse(userString);
+      setUser(user);
+    }
+  }, []);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchInvitedUsers = async () => {
+      try {
+        const invitedUsers: GetInvitedUsersResponse =
+          await usersApi.getInvitedUsers();
+        setInvitedUsers(invitedUsers?.invited_users);
+
+        setIsLoading(false);
+      } catch (err) {
+        console.error(err);
+        setIsLoading(false);
+      }
+    };
+
+    fetchInvitedUsers();
+  }, []);
+
   const handleClick = (tab: 'friends' | 'leaders') => {
     setActiveTab(tab);
+  };
+
+  const handleCopyCode = () => {
+    const referralLink = `https://t.me/${BotUsername}?start=${user.referral_code}`;
+
+    // Копируем ссылку в буфер обмена
+    navigator.clipboard
+      .writeText(referralLink)
+      .then(() => {
+        // Выводим сообщение или выполняем действия после успешного копирования
+        alert('Реферальная ссылка скопирована!');
+      })
+      .catch((error) => {
+        console.error('Не удалось скопировать реферальную ссылку: ', error);
+        alert('Ошибка при копировании.');
+      });
   };
 
   const sortedFriends = [...friends].sort((a, b) => b.coins - a.coins);
@@ -24,6 +74,8 @@ export default function Referal() {
     (l) => l.id === currentUserId
   );
   const currentUserPlace = currentUserIndex + 1;
+
+  console.log(invitedUsers);
 
   return (
     <div className="ref-countainer">
@@ -78,12 +130,12 @@ export default function Referal() {
           ) : (
             <>
               <div className="frend-array">
-                {sortedFriends.map((frend) => (
-                  <Friends key={frend.id} data={frend} />
+                {invitedUsers?.map((invitedUser) => (
+                  <Friends key={invitedUser?.id} data={invitedUser} />
                 ))}
               </div>
 
-              <div className="ref-button">
+              <div className="ref-button" onClick={handleCopyCode}>
                 <button className="ref-btn-invit">Пригласи друга</button>
                 <div className="ref-copy-btn">
                   <img className="ref-copy-img" src={copy} alt="copy" />

@@ -1,4 +1,5 @@
 import styles from './BalanceBar.module.css';
+import tonIcon from '../../Img/TonCoin.svg';
 
 export default function BalanceBar({
   balance,
@@ -30,7 +31,7 @@ export default function BalanceBar({
               Активный баланс
             </p>
             <p className={styles.balanceInfo} style={{ color: '#ADA9A9' }}>
-              {balance} $
+              {balance} TON
             </p>
           </div>
           <div>
@@ -38,7 +39,7 @@ export default function BalanceBar({
               Заблокировано
             </p>
             <p className={styles.balanceInfo} style={{ color: '#ADA9A9' }}>
-              {blockedBalance} $
+              {blockedBalance} TON
             </p>
           </div>
         </div>

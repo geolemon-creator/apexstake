@@ -52,7 +52,8 @@ apiClient.interceptors.response.use(
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         localStorage.removeItem('user');
-        alert('Ошибка обновления токена');
+        // alert('Ошибка обновления токена');
+        // alert(refreshError);
       }
     }
 

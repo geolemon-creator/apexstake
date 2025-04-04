@@ -39,7 +39,8 @@ const Header = () => {
         const levelsList: LevelData[] = await levelsApi.getLevelsList();
         setLevels(levelsList);
       } catch (err) {
-        alert('Ошибка загрузки уровней');
+        // alert(err);
+        // alert('Ошибка загрузки уровней');
         console.error(err);
       }
     };
@@ -82,9 +83,12 @@ const Header = () => {
 
       setIsStakingDepositeOpen(false);
       updateUser(user.id);
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (err) {
-      alert('Ошибка открытия стейкинга');
+      // alert('Ошибка открытия стейкинга');
+      // alert(err);
       console.error(err);
     }
   };

@@ -1,11 +1,14 @@
 import logging
+import requests
 import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.types import WebAppInfo, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.filters import Command
 
 API_TOKEN = "7491473745:AAFnW9YSI8fufwI0IJHvwY0wgYcnaWPzSDA"
-WEB_APP_URL = "https://f813-2a02-3037-308-9a0-b501-2df3-f7ae-6510.ngrok-free.app" #"https://work.lnx-usr.xyz/"
+WEB_APP_URL = "https://78ad-2a02-3037-311-d8a4-c477-1166-6ea5-f606.ngrok-free.app" #"https://work.lnx-usr.xyz/"
+BACKEND_URL = "http://127.0.0.1:8000/api"
+API_URL = "http://127.0.0.1:8000/api/register/"
 
 logging.basicConfig(level=logging.INFO)
 
@@ -14,6 +17,36 @@ dp = Dispatcher()
 
 @dp.message(Command("start"))
 async def start(message: types.Message):
+    user_id = message.from_user.id
+    username = message.from_user.username
+
+    # Разбираем аргумент реферального кода (если есть)
+    args = message.text.split(" ")
+    referral_code = args[1] if len(args) > 1 else None
+
+    # Получаем аватарку пользователя
+    profile_pictures = await bot.get_user_profile_photos(user_id)
+    photo_id = profile_pictures.photos[0][0].file_id if profile_pictures.photos else None
+
+    photo_url = f"https://api.telegram.org/file/bot{API_TOKEN}/{(await bot.get_file(photo_id)).file_path}" if photo_id else None
+
+    data = {
+        "referral_code": referral_code, 
+        "telegram_id": user_id, 
+        "username": username, 
+        "avatar": photo_url
+    }
+    
+    try:
+        response = requests.post(API_URL, json=data)
+        if response.status_code == 201:
+            print("User successfully registered.")
+        else:
+            print(response.text)
+            print("Error registering user.")
+    except requests.exceptions.RequestException as e:
+        print(f"Error during API request: {e}")
+
     inline_kb = InlineKeyboardMarkup(
         inline_keyboard=[
             [
