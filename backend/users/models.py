@@ -12,7 +12,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.CharField(max_length=13, unique=True, primary_key=True, editable=False)
     username = models.CharField(max_length=50, unique=True)
     avatar = models.URLField()
-    wallet = models.CharField(max_length=30, null=True, blank=True)
+    wallet = models.CharField(max_length=48, null=True, blank=True)
     staking_stage = models.ForeignKey(StakingStage, null=True, blank=True, on_delete=models.CASCADE)
     telegram_id = models.IntegerField()
     balance = models.DecimalField(default=0, max_digits=10, decimal_places=2)
@@ -99,3 +99,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         self.blocked_balance += Decimal(amount)
 
         self.save()
+
+class UserReferralReward(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='referral_rewards')
+    referral = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='referred_rewards')
+    first_deposite = models.BooleanField(default=False)
+    reward = models.DecimalField(default=0, max_digits=10, decimal_places=2)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'User: {self.user.username} | Referral: {self.referral.username} | Reward: {self.reward}'

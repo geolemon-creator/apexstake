@@ -17,11 +17,11 @@ export default function Friends(props: FrendProps) {
         alt="img"
       />
       <p className="name-frend">{props.data.username}</p>
-      <img className="ton-img" src={tonIcon} alt="ton" />
-      <p className="ton-frend">{props.data.balance}</p>
       <img className="coin-frend-img" src={coin} alt="coin" />
-      <p className="coin-frend">4</p>
-      <p className="bonus-frend">+34</p>
+      <p className="coin-frend">{props.data.tokens}</p>
+      {Number(props.data.bonus) > 0 && (
+        <p className="bonus-frend">+ {props.data.bonus}</p>
+      )}
     </div>
   );
 }

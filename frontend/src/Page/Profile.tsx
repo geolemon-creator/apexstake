@@ -8,6 +8,8 @@ import { useState, useEffect } from 'react';
 import { getDecodedAvatarUrl } from '../Utils/decodeAvatar';
 import { useTonConnectUI } from '@tonconnect/ui-react';
 import { useTonAddress } from '@tonconnect/ui-react';
+import { usersApi } from '../Api/usersApi';
+import { UpdateUserRequest } from '../Components/Type';
 
 export default function Profile() {
   const [user, setUser] = useState<any>(null);
@@ -24,6 +26,29 @@ export default function Profile() {
       setUser(user); // Сохраняем данные пользователя
     }
   }, []);
+
+  const fetchInvitedUsers = async (id: string, payload: UpdateUserRequest) => {
+    try {
+      await usersApi.updateUser(id, payload);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.id && userFriendlyAddress && !user?.wallet) {
+      const payload = {
+        wallet: userFriendlyAddress,
+      };
+      fetchInvitedUsers(user.id, payload);
+
+      const updatedUser = {
+        ...user,
+        wallet: userFriendlyAddress,
+      };
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+    }
+  }, [userFriendlyAddress]);
 
   const shortenAddress = (address: string) => {
     // Проверим, что адрес длиннее 10 символов

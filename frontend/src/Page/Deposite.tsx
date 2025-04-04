@@ -5,6 +5,11 @@ import BalanceBar from '../Components/BalanceBar/BalanceBar';
 import coin from './../Img/coin.svg';
 import { useTonConnectUI, useTonAddress } from '@tonconnect/ui-react';
 import TonWeb from 'tonweb';
+import {
+  CreateTransactionRequest,
+  CreateTransactionResponse,
+} from '../Components/Type';
+import { transactionsApi } from '../Api/transactionsApi';
 
 export default function Deposite() {
   const [amount, setAmount] = useState('');
@@ -33,9 +38,16 @@ export default function Deposite() {
 
     try {
       await tonConnectUI.sendTransaction(transaction);
-      alert('Транзакция отправлена');
+      const data: CreateTransactionRequest = {
+        user_id: user.id,
+        amount: amount,
+        operation_type: 'deposit' as 'deposit', // или 'withdraw' as 'withdraw'
+      };
 
-      console.log(amount, 'Deposite', user);
+      await transactionsApi.createTransaction(data);
+
+      alert('Транзакция отправлена');
+      window.location.reload();
     } catch (error) {
       console.error('Ошибка при отправке транзакции:', error);
       alert('Ошибка при отправке транзакции');

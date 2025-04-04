@@ -2,10 +2,11 @@ from rest_framework import viewsets, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.db.models import Sum
 
 from staking.models import UserStaking
-from .models import CustomUser
-from .serializers import CustomUserSerializer, RegisterUserSerializer
+from .models import CustomUser, UserReferralReward
+from .serializers import CustomUserSerializer, RegisterUserSerializer, LeadersListSerializer
 from .permissions import IsAdminOrSelf
 from .services import validate_telegram_init_data
 
@@ -103,12 +104,49 @@ class GetInvitedUsersAPIView(APIView):
     
     def get(self, request):
         user = request.user
-        
+
         if not user:
             return Response({"error": "User not found"}, status=404)
         
         invited_users = CustomUser.objects.filter(referred_by=user)
 
-        serializer = CustomUserSerializer(invited_users, many=True)
+        data = []
+        for invited_user in invited_users:
+            # Получаем сумму всех бонусов для этого реферала
+            total_bonus = UserReferralReward.objects.filter(referral=invited_user).aggregate(total=Sum('reward'))['total'] or 0
 
-        return Response({"invited_users": serializer.data})
+            # Добавляем данные о юзере + бонус
+            user_data = CustomUserSerializer(invited_user).data
+            user_data['bonus'] = total_bonus
+            data.append(user_data)
+
+        return Response({"invited_users": data})
+    
+
+class GetLeadersListAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        """
+        Возвращает список лидеров по балансу и токенам, исключая текущего пользователя."
+        """
+        user = request.user
+
+        leaders = CustomUser.objects.all().order_by('-balance', '-tokens')
+        leader_ids = list(leaders.values_list('id', flat=True))
+        user_position = leader_ids.index(user.id) + 1 if user.id in leader_ids else None
+        leaders = leaders.exclude(id=user.id)
+
+        leaders_data = LeadersListSerializer(leaders, many=True).data
+
+        return Response({
+            'user': {
+                'id': user.id,
+                'avatar': user.avatar,
+                'username': user.username,
+                'balance': user.balance,
+                'tokens': user.tokens,
+                'position': user_position
+            },
+            'leaders': leaders_data
+        })

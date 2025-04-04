@@ -4,9 +4,11 @@ import BalanceBar from '../Components/BalanceBar/BalanceBar';
 import coin from './../Img/coin.svg';
 import tonIcon from './../Img/TonCoin.svg';
 import { useTonAddress } from '@tonconnect/ui-react';
+import { transactionsApi } from '../Api/transactionsApi';
+import { CreateTransactionRequest } from '../Components/Type';
 
 export default function Withdraw() {
-  const [valueUsdt, setValueUsdt] = useState('');
+  const [amount, setAmount] = useState('');
   const [user, setUser] = useState<any>(null);
   const userFriendlyAddress = useTonAddress();
 
@@ -18,6 +20,24 @@ export default function Withdraw() {
       setUser(user);
     }
   }, []);
+
+  const handleWithdraw = async (amount: number) => {
+    try {
+      const data: CreateTransactionRequest = {
+        user_id: user.id,
+        amount: amount,
+        operation_type: 'withdraw' as 'withdraw', // или 'withdraw' as 'withdraw'
+      };
+
+      await transactionsApi.createTransaction(data);
+
+      alert('Вывод прошел успешно!');
+      window.location.reload();
+    } catch (error) {
+      console.error('Ошибка при отправке транзакции:', error);
+      alert('Ошибка при отправке транзакции');
+    }
+  };
 
   const shortenAddress = (address: string) => {
     // Проверим, что адрес длиннее 10 символов
@@ -36,16 +56,15 @@ export default function Withdraw() {
       return;
     }
 
-    setValueUsdt(numericValue);
+    setAmount(numericValue);
   };
   const handleSetMaxValue = () => {
     if (user && user.balance) {
-      setValueUsdt(user.balance.toString()); // Преобразуем в строку при установке
+      setAmount(user.balance.toString()); // Преобразуем в строку при установке
     }
   };
 
-  const isButtonDisabled =
-    valueUsdt.trim() === '' || parseFloat(valueUsdt) <= 0;
+  const isButtonDisabled = amount.trim() === '' || parseFloat(amount) <= 0;
 
   return (
     <div className="withdraw-container">
@@ -92,7 +111,7 @@ export default function Withdraw() {
         <div className="conclu-div-usdt">
           <input
             className="usdt-input"
-            value={valueUsdt}
+            value={amount}
             onChange={handleInputChange}
             placeholder="0"
           />
@@ -100,7 +119,7 @@ export default function Withdraw() {
           <div className="usdt-input-div">
             <img
               src={closen}
-              onClick={() => setValueUsdt('')}
+              onClick={() => setAmount('')}
               alt="close"
               style={{ marginLeft: '5px' }}
             />
@@ -122,6 +141,7 @@ export default function Withdraw() {
 
       <button
         disabled={isButtonDisabled}
+        onClick={() => handleWithdraw(Number(amount))}
         className={`conclu-btn ${isButtonDisabled ? 'disabled' : 'active'}`}
       >
         Подтвердить вывод

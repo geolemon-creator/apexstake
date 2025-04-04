@@ -110,10 +110,81 @@ export interface InvitedUser {
   wallet: string | null;
   telegram_id: number;
   balance: string; // Можно использовать string, если это число с десятичными знаками
+  tokens: string;
+  bonus: string;
   selected_level: string | null;
   created_at: string; // Для даты можно использовать строковый формат ISO
 }
 
 export interface GetInvitedUsersResponse {
   invited_users: InvitedUser[];
+}
+
+// Transactions
+export interface CreateTransactionRequest {
+  operation_type: 'deposit' | 'withdraw';
+  amount: number; // Можно указать Decimal.js тип, если используешь его
+  user_id: number;
+}
+
+// Тип для успешного ответа
+export interface CreateTransactionResponse {
+  message: string;
+  transaction_id: number;
+  status: 'completed' | 'waiting' | 'canceled';
+  timestamp: string; // ISO дата-время, например: "2025-04-04T12:34:56.789Z"
+}
+
+// Leaders
+interface LeaderUser {
+  id: string; // Пользовательский ID как строка
+  avatar: string;
+  username: string; // Имя пользователя
+  balance: number; // Баланс пользователя (число, так как в ответе это число)
+  tokens: number; // Количество токенов (число, так как в ответе это число)
+}
+
+export interface Leader {
+  id: string; // ID лидера как строка
+  username: string; // Имя лидера
+  avatar: string; // Ссылка на аватар
+  balance: string; // Баланс в строковом формате (в ответе это строка)
+  tokens: string; // Количество токенов в строковом формате (в ответе это строка)
+}
+
+export interface LeadersListResponse {
+  user: LeaderUser; // Информация о текущем пользователе
+  leaders: Leader[]; // Список лидеров
+}
+
+// Tasks
+export interface Task {
+  id: number;
+  title: string;
+  description: string;
+  icon: string; // URL к иконке
+  link: string; // Ссылка на выполнение задания
+  reward_amount: number; // Награда за выполнение
+}
+
+// UPDATE USER
+export interface UpdateUserRequest {
+  username?: string;
+  avatar?: string;
+  telegram_id?: number;
+  staking_stage?: number | null;
+  wallet?: string | null;
+  balance?: string;
+  tokens?: string;
+}
+
+export interface UpdateUserResponse {
+  id: number;
+  username: string;
+  avatar: string;
+  telegram_id: number;
+  staking_stage: number | null;
+  wallet: string | null;
+  balance: string;
+  tokens: string;
 }

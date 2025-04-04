@@ -3,7 +3,7 @@ import copy from './../Img/copy.png';
 import { useEffect, useState } from 'react';
 import { Frend, leader } from '../Components/Data';
 import Friends from '../Components/Friends';
-import Leader from '../Components/Leader';
+import Leaders from '../Components/Leaders/Leader';
 import { GetInvitedUsersResponse, InvitedUser } from '../Components/Type';
 import { usersApi } from '../Api/usersApi';
 
@@ -68,12 +68,9 @@ export default function Referal() {
   const sortedFriends = [...friends].sort((a, b) => b.coins - a.coins);
   const sortedLeader = [...leader].sort((a, b) => b.coins - a.coins);
 
-  const currentUser = leader.find((l) => l.id === currentUserId);
-
   const currentUserIndex = sortedLeader.findIndex(
     (l) => l.id === currentUserId
   );
-  const currentUserPlace = currentUserIndex + 1;
 
   console.log(invitedUsers);
 
@@ -148,36 +145,7 @@ export default function Referal() {
         <div>
           <h1 className="leader-h1">Лидеры</h1>
           <div className="leader-array">
-            {currentUser && currentUserPlace > topN && (
-              <div className="current-user-header">
-                <Leader
-                  data={currentUser}
-                  position={currentUserPlace}
-                  isCurrentUser={true}
-                />
-              </div>
-            )}
-
-            {sortedLeader.map((leader, index) => {
-              const position = index + 1;
-              if (leader.id === currentUserId) {
-                // Если это текущий пользователь
-                if (currentUserPlace <= topN) {
-                  // И он входит в топ, отображаем его как обычного участника
-                  return (
-                    <Leader key={leader.id} data={leader} position={position} />
-                  );
-                } else {
-                  // И если он крч НЕ входит в топ, то пропускаем его, так как он уже отображен
-                  return null;
-                }
-              } else {
-                // Если это не текущий пользователь, отображаем как обычно
-                return (
-                  <Leader key={leader.id} data={leader} position={position} />
-                );
-              }
-            })}
+            <Leaders />
           </div>
         </div>
       )}

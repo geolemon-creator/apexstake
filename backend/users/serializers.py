@@ -10,12 +10,17 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'staking_stage', 'avatar', 'wallet', 'telegram_id', 'balance', 'selected_level', 'created_at']
+        fields = ['id', 'username', 'staking_stage', 'avatar', 'wallet', 'telegram_id', 'balance', 'tokens', 'selected_level', 'created_at']
 
     def get_selected_level(self, obj):
         staking = UserStaking.objects.filter(user=obj, status='in_progress').first()
         return staking.staking_level.level if staking else None
     
+class LeadersListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username', 'avatar', 'balance', 'tokens']
+
 class RegisterUserSerializer(serializers.ModelSerializer):
     referral_code = serializers.CharField(required=False, allow_blank=True, allow_null=True)
 
