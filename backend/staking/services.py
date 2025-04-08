@@ -1,4 +1,6 @@
 from django.db import transaction
+from django.utils import timezone
+from decimal import Decimal
 import logging
 
 logger = logging.getLogger(__name__)
@@ -21,15 +23,12 @@ def close_user_staking(staking):
     """
     from .models import UserStakingReward
 
-    print('start logic')
     try:
         # Проверяем статус стейкинга
         if staking.status != 'in_progress':
-            print('in progres no')
             raise ValueError(f"Staking is not in progress, current status: {staking.status}")
 
         # Получаем данные пользователя и стейкинга
-        print(staking, 'staking')
         user = staking.user
         amount = staking.amount
         percentage = staking.staking_level.percentage
@@ -52,7 +51,6 @@ def close_user_staking(staking):
                 tokens=(amount / 2),
                 user_staking=staking
             )
-        print(f"Стейкинг успешно завершен для пользователя {user.id}, ID Стейкинга: {staking.id}, Сумма: {amount}, Результат: {result_amount}")
         logger.info(f"Стейкинг успешно завершен для пользователя {user.id}, ID Стейкинга: {staking.id}, Сумма: {amount}, Результат: {result_amount}")
     
     except ValueError as e:
@@ -78,3 +76,65 @@ def increase_user_stage(user):
         next_stage = StakingStage.objects.filter(stage=user.staking_stage.stage + 1).first()
         if next_stage:
             user.staking_stage = next_stage
+
+def calculate_staking_balance(user_staking):
+    # PROD: days_staked = (timezone.now() - user_staking.start_date).days
+    # TEST: 
+    delta = timezone.now() - user_staking.start_date
+    days_staked = delta.total_seconds() / 60
+
+    daily_percentage = Decimal(user_staking.staking_level.percentage) / Decimal('100')
+
+    if days_staked > user_staking.staking_level.stage.days_for_change:
+        profit = user_staking.amount * daily_percentage * Decimal(days_staked)
+
+        profit_after_deduction = profit * Decimal('0.75')
+        
+        new_amount = user_staking.amount + profit_after_deduction
+
+        return Decimal(new_amount)
+
+    return Decimal(user_staking.amount)
+
+def change_staking_level(user, amount, level):
+    from .models import StakingLevel, UserStaking
+
+    current_staking = UserStaking.objects.select_for_update().filter(user=user, status='in_progress').first()
+
+    if not current_staking:
+        raise ValueError("У пользователя нет открытых стейкингов")
+
+    if current_staking.staking_level.level >= level:
+        raise ValueError("Уровень стейкинга должен быть выше текущео")
+
+    try:
+        new_level = StakingLevel.objects.get(level=level)
+    except StakingLevel.DoesNotExist:
+        raise ValueError("Уровень не найден")
+
+    if not new_level.min_deposite <= amount <= new_level.max_deposite:
+        raise ValueError(
+            f"Сумма должна быть между {new_level.min_deposite} и {new_level.max_deposite}"
+        )
+
+    with transaction.atomic():
+        staking_balance = calculate_staking_balance(current_staking)
+        total_available = user.balance + staking_balance
+
+        if total_available < amount:
+            raise ValueError("Не достаточно средств на балансе")
+
+        remainder = amount - staking_balance
+        if remainder > 0:
+            user.decrease_balance(remainder)
+
+        current_staking.amount = amount
+        current_staking.staking_level = new_level
+        current_staking.start_date = timezone.now()
+        current_staking.end_date = timezone.now() + timezone.timedelta(minutes=new_level.stage.staking_time)
+        current_staking.save()
+
+        user.blocked_balance = amount
+        user.save()
+
+        return "Уровень стейкинга успешно обновлен"

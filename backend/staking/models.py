@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from datetime import timedelta
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 from .tasks import close_staking
 
@@ -24,6 +25,7 @@ class StakingStage(models.Model):
         (3, 'Stage 3'),
     ]
     stage = models.IntegerField(choices=STAGE_CHOICES, unique=True)
+    days_for_change = models.IntegerField(default=60)
     staking_time = models.IntegerField()
 
     def __str__(self):
@@ -83,3 +85,46 @@ class UserStakingReward(models.Model):
 
     def __str__(self):
         return f'User: {self.user_staking.user.username} | Amount: {self.amount} | Tokens: {self.tokens}'
+
+class Competition(models.Model):
+    title = models.CharField(max_length=28)
+    badge_content = models.CharField(max_length=12, null=True, blank=True)
+    img = models.ImageField()
+    end_date = models.DateTimeField()
+
+    def __str__(self):
+        return self.title
+
+class Wallets(models.Model):
+    title = models.CharField(max_length=100)
+    wallet = models.CharField(max_length=48)
+
+    def __str__(self):
+        short_wallet = self.wallet[:16] + '...' if len(self.wallet) > 16 else self.wallet
+        return f'{self.title} {short_wallet}'
+
+class Banner(models.Model):
+    title = models.CharField(max_length=18)
+    description = models.CharField(max_length=18)
+    img = models.ImageField()
+    link = models.URLField()
+
+    def __str__(self):
+        return f'{self.title}'
+
+class Commission(models.Model):
+    percent = models.IntegerField(
+        default=10,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(100)
+        ]
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.pk and Commission.objects.exists():
+            raise ValueError("Можно создать только один объект Commission.")
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Commission: {self.percent}%"

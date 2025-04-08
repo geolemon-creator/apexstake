@@ -25,6 +25,8 @@ html {
   max-width: 420px; /* Максимальная ширина */
   margin: 0 auto; /* Центрирование по горизонтали */
   padding: 0 16px; /* Отступы по бокам */
+  margin-top: 5px;
+  margin-bottom: 25px;
 }
 
 .home-lower-catalog {
@@ -36,7 +38,6 @@ html {
 }
 
 .slick-arrow {
-  display: none !important;
 }
 
 .home-reward {
@@ -45,6 +46,7 @@ html {
   /* background-color: #282d33; */
   border-radius: 16px;
   display: flex;
+  overflow: hidden;
   justify-content: center;
   margin-right: 10px;
 }
@@ -440,27 +442,15 @@ html {
 }
 
 .frend-countainer-first {
-  display: flex;
   background: linear-gradient(90deg, #343434 4.48%, #ffa319 100%);
-  height: 40px;
-  border-radius: 12px;
-  align-items: center;
 }
 
 .frend-countainer-second {
-  display: flex;
   background: linear-gradient(90deg, #343434 18.63%, #788799 100%);
-  height: 40px;
-  border-radius: 12px;
-  align-items: center;
 }
 
 .frend-countainer-third {
-  display: flex;
   background: linear-gradient(90deg, #343434 33.5%, #813906 100%);
-  height: 40px;
-  border-radius: 12px;
-  align-items: center;
 }
 
 .frend-array {
@@ -479,8 +469,7 @@ html {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  padding: 10px;
-  overflow-y: auto;
+
   padding-bottom: 80px;
 }
 
@@ -508,7 +497,6 @@ html {
   font-weight: 400;
   color: #dedede;
   margin-left: 4px;
-  margin-right: 4px;
 }
 
 .bonus-frend {
@@ -566,7 +554,7 @@ html {
   margin: 0 auto;
   text-align: center;
   margin-top: 12px;
-  height: 325px;
+  padding-bottom: 10px;
   background-color: #ffde45;
   border-radius: 16px;
 }
@@ -595,15 +583,16 @@ html {
 }
 
 .contest-img {
-  width: 335px;
-  height: 159px;
   margin-top: 8px;
+  width: 85%;
 }
 
 .contest-text-div {
-  width: 311px;
+  width: 85%;
+  margin: 0 auto;
+  text-align: left;
+
   height: 18px;
-  margin-left: 12px;
 }
 
 .contest-text {
@@ -623,7 +612,8 @@ html {
 
 .num-timer {
   width: 20px;
-  height: 20px;
+  padding-bottom: 2px;
+  padding-top: 2px;
   background-color: white;
   color: #111118;
   text-align: center;
@@ -641,7 +631,7 @@ html {
 
 .contest-btn-about {
   font-family: 'Manrope', sans-serif;
-  width: 311px;
+  width: 85%;
   height: 48px;
   text-align: center;
   background-color: #111118;
@@ -662,8 +652,9 @@ html {
 }
 
 .paty-img {
-  width: 334px;
-  height: 188px;
+  width: 85%;
+  height: auto;
+  border-radius: 5px;
   margin-top: 8px;
 }
 
@@ -683,7 +674,7 @@ html {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #111118;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -707,6 +698,8 @@ html {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 95%;
+  margin: 0 auto;
   align-items: center;
 }
 
@@ -908,6 +901,7 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 5px;
 }
 
 .close-detail-icon {
@@ -2147,7 +2141,7 @@ html {
 }
 
 .commission-div-p {
-  width: 326px;
+  width: 100%;
 }
 
 .connect-wallet-div {
@@ -2396,6 +2390,17 @@ html {
 
 .adress-copy-img:hover {
   transform: scale(1.1);
+}
+
+.staking-transactions-header {
+  margin-top: 40px;
+}
+
+.transactions-header-label {
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
 }
 
 @keyframes shake {

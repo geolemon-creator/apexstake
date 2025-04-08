@@ -13,8 +13,12 @@ const StakingBalance = () => {
   const [progress, setProgress] = useState<string | number>(0);
   const [timeRemaining, setTimeRemaining] = useState('');
   const [level, setLevel] = useState<LevelData>();
+  const [profit, setProfit] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const storedStaking = JSON.parse(
+    localStorage.getItem('current_staking') || '{}'
+  );
 
   useEffect(() => {
     const fetchStakingDetails = async () => {
@@ -62,7 +66,12 @@ const StakingBalance = () => {
           userStakingData.end_date
         );
 
+        localStorage.setItem('current_staking', JSON.stringify(userStakingData));
+
         if (timeRemaining === 'Время истекло') {
+          if (storedStaking) {
+            localStorage.removeItem('current_staking');
+          }
           window.location.reload();
         }
 
@@ -75,6 +84,16 @@ const StakingBalance = () => {
         userStakingData.start_date,
         userStakingData.end_date
       );
+      const rawAmount = userStakingData?.amount ?? '0';
+      const rawProfit = userStakingData?.current_profit ?? 0;
+
+      const amount = parseFloat(rawAmount); // теперь точно number
+      const currentProfit = rawProfit; // уже number по типу
+
+      const profitPercentage =
+        amount > 0 ? ((currentProfit - amount) / amount) * 100 : 0;
+
+      setProfit(profitPercentage);
       setTimeRemaining(timeRemaining);
       setProgress(progress);
 
@@ -95,7 +114,6 @@ const StakingBalance = () => {
   if (isLoading) {
     <div>Loading...</div>;
   }
-
   return (
     <>
       <div className={styles.StakingBalanceContainer}>
@@ -190,7 +208,8 @@ const StakingBalance = () => {
                 fontWeight="bold"
                 fill="white"
               >
-                75% 0.003 ТОН
+                {Number(profit.toFixed(2))}% {userStakingData.current_profit}{' '}
+                TОН
               </text>
             </RoundGraph>
 

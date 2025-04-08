@@ -13,7 +13,6 @@ export default function Referal() {
   const [activeTab, setActiveTab] = useState<'friends' | 'leaders'>('friends');
   const [friends] = useState(Frend);
   const currentUserId = 2;
-  const topN = 104;
 
   const BotUsername = import.meta.env.VITE_BOT_USERNAME;
 
@@ -61,7 +60,6 @@ export default function Referal() {
       })
       .catch((error) => {
         console.error('Не удалось скопировать реферальную ссылку: ', error);
-        alert('Ошибка при копировании.');
       });
   };
 

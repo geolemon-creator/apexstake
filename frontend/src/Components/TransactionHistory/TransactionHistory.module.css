@@ -1,0 +1,19 @@
+.TransactionHistoryContainer {
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 15px;
+  margin-bottom: 100px;
+}
+
+.TransactionHistoryContent {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+@media (max-width: 400px) {
+  .TransactionHistoryContent {
+    width: 95%;
+  }
+}

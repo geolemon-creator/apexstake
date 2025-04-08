@@ -6,11 +6,30 @@ import tonIcon from './../Img/TonCoin.svg';
 import { useTonAddress } from '@tonconnect/ui-react';
 import { transactionsApi } from '../Api/transactionsApi';
 import { CreateTransactionRequest } from '../Components/Type';
+import { Commission } from '../Components/Type';
+import { stakingApi } from '../Api/stakingApi';
+import { useNavigate } from 'react-router-dom';
 
 export default function Withdraw() {
   const [amount, setAmount] = useState('');
   const [user, setUser] = useState<any>(null);
+  const [commission, setCommission] = useState<Commission | null>(null);
+  const navigate = useNavigate();
+
   const userFriendlyAddress = useTonAddress();
+  const commissionAmount =
+    commission && amount
+      ? ((parseFloat(amount) * commission.percent) / 100).toFixed(2)
+      : '0.00';
+
+  const fetchCommission = async () => {
+    try {
+      const getCommission = await stakingApi.getCommission();
+      setCommission(getCommission);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     // Получаем данные из localStorage
@@ -19,6 +38,8 @@ export default function Withdraw() {
       const user = JSON.parse(userString);
       setUser(user);
     }
+
+    fetchCommission();
   }, []);
 
   const handleWithdraw = async (amount: number) => {
@@ -31,7 +52,8 @@ export default function Withdraw() {
 
       await transactionsApi.createTransaction(data);
 
-      alert('Вывод прошел успешно!');
+      alert('Ожидайте подтверждение вывода!');
+      navigate('/staking');
       window.location.reload();
     } catch (error) {
       console.error('Ошибка при отправке транзакции:', error);
@@ -135,7 +157,9 @@ export default function Withdraw() {
         <></>
       ) : (
         <div className="commission-div-p">
-          <p className="commission-p">Комиссия 10%=30 USDT</p>
+          <p className="commission-p">
+            Комиссия {commission?.percent} = {commissionAmount} TON
+          </p>
         </div>
       )}
 

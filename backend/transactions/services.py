@@ -3,6 +3,7 @@ from django.db import transaction
 from rest_framework.exceptions import ValidationError
 
 from users.models import UserReferralReward
+from staking.models import Commission
 from .models import Transactions
 
 
@@ -22,20 +23,20 @@ def create_transaction(user, operation_type, amount):
     transaction_status = 'completed' if operation_type == 'deposit' else 'waiting' #TODO: Добавить валидацию транзакции
 
     with transaction.atomic():
-        txn = Transactions.objects.create(
-            user=user,
-            operation_type=operation_type,
-            amount=amount,
-            status=transaction_status
-        )
-
         if operation_type == 'deposit':
+            txn = Transactions.objects.create(
+                user=user,
+                operation_type=operation_type,
+                wallet=user.wallet,
+                amount=amount,
+                status=transaction_status
+            )
             _handle_deposit(user, amount, txn)
         elif operation_type == 'withdraw':
-            try:
-                user.decrease_balance(amount)
-            except ValueError as e:
-                raise ValidationError(str(e))
+            txn = _handle_withdraw(user, amount)
+        else:
+            raise ValidationError("Unsupported operation type")
+
 
     return txn
 
@@ -54,6 +55,37 @@ def _handle_deposit(user, amount, txn):
     if user.referred_by and not has_deposited_before:
         _reward_referral(user)
 
+def _handle_withdraw(user, amount):
+    """
+    Обрабатывает вывод средств с учётом комиссии:
+    - снимает с баланса указанную сумму,
+    - сохраняет транзакцию с учетом комиссии.
+    """
+    commission = Commission.objects.first()
+    percent = commission.percent if commission else 10
+
+    try:
+        amount = Decimal(amount)
+    except:
+        raise ValidationError("Invalid amount format")
+
+    commission_amount = (amount * Decimal(percent)) / 100
+    payout_amount = amount - commission_amount
+
+    try:
+        user.decrease_balance(amount) 
+    except ValueError as e:
+        raise ValidationError(str(e))
+
+    txn = Transactions.objects.create(
+        user=user,
+        operation_type='withdraw',
+        wallet=user.wallet,
+        amount=payout_amount,
+        status='waiting'
+    )
+
+    return txn
 
 def _reward_referral(user):
     """

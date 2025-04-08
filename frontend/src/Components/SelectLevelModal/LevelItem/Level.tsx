@@ -20,11 +20,7 @@ export default function Level(props: LevelProps) {
     <div
       className={`level-item ${isSelectedLevel ? 'selected-level' : ''}`}
       onClick={() => {
-        if (!selectedLevel) {
-          onSelect(data.level);
-        } else {
-          alert('У вас уже открыт стейкинг');
-        }
+        onSelect(data.level);
       }}
     >
       <div className="header-list-item">
@@ -44,12 +40,8 @@ export default function Level(props: LevelProps) {
               src={check}
               alt="check"
               onClick={(e) => {
-                if (!selectedLevel) {
-                  e.stopPropagation(); // Проверка
-                  onSelect(data.id);
-                } else {
-                  alert('У вас уже открыт стейкинг');
-                }
+                e.stopPropagation(); // Проверка
+                onSelect(data.id);
               }}
             />
           ) : (

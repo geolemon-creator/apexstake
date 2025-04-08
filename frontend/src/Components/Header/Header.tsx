@@ -9,6 +9,7 @@ import InputDepositeModal from '../InputDepositeModal/InputDepositeModal';
 import rightArrow from '../../Img/arrow-right.svg';
 import { getDecodedAvatarUrl } from '../../Utils/decodeAvatar';
 import { levelsApi, stakingApi } from '../../Api/stakingApi';
+import { AxiosError } from 'axios';
 import { levelsAdditional } from '../SelectLevelModal/LevelItem/LevelAdditional';
 import useAuth from '../../Hooks/useAuth';
 
@@ -23,6 +24,9 @@ const Header = () => {
   const [levels, setLevels] = useState<LevelData[]>([]);
   const [user, setUser] = useState<any>(null);
   const { updateUser } = useAuth();
+  const storedStaking = JSON.parse(
+    localStorage.getItem('current_staking') || '{}'
+  );
 
   useEffect(() => {
     // Получаем данные из localStorage
@@ -57,44 +61,93 @@ const Header = () => {
   };
 
   // @ts-ignore
-  const handleSelectLevel = (id: number) => {
-    setSelectedLevelId(id);
+  const handleSelectLevel = (level: number) => {
+    setSelectedLevelId(level);
     setIsLevelsListOpen(false);
     setIsDetailModalOpen(true);
   };
 
   const handleOpenStakingDeposite = (level: LevelData) => {
-    setSelectedLevelDetail(level);
-    if (level.min_deposite > user.balance) {
-      // TODO: Редирект на страницу пополнения
-      alert('Не достаточно средств на балансе');
+    if (user?.selected_level) {
+      alert(
+        `Вы хотите поменять текущий уровень? ${user.selected_level} на ${level.level}`
+      );
+      if (user.selected_level >= level.level) {
+        alert('Для смены уровня нужно выбрать уровень выше текущего');
+      } else {
+        setSelectedLevelDetail(level);
+        setIsDetailModalOpen(false);
+        setIsStakingDepositeOpen(true);
+      }
     } else {
-      setIsDetailModalOpen(false);
-      setIsStakingDepositeOpen(true);
+      setSelectedLevelDetail(level);
+      if (level.min_deposite > user.balance) {
+        // TODO: Редирект на страницу пополнения
+        alert('Не достаточно средств на балансе');
+      } else {
+        setIsDetailModalOpen(false);
+        setIsStakingDepositeOpen(true);
+      }
     }
   };
 
   const handleDepositeSubmit = async (amount: number, level: LevelData) => {
-    console.log(amount, 'amount', level, 'level', 'HANDLE INPUT SUBMIT');
+    if (user.selected_level) {
+      try {
+        await stakingApi.changeStaking(amount, level.level);
 
-    try {
-      const response = await stakingApi.openStaking(amount, level.level);
-      console.log(response, 'open staking response');
+        setIsStakingDepositeOpen(false);
+        updateUser(user.id);
+        setTimeout(() => {
+          window.location.reload();
+        }, 300);
+      } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
 
-      setIsStakingDepositeOpen(false);
-      updateUser(user.id);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-    } catch (err) {
-      // alert('Ошибка открытия стейкинга');
-      // alert(err);
-      console.error(err);
+        const errorMessage = error.response?.data?.error || 'Произошла ошибка';
+        alert(errorMessage);
+      }
+    } else {
+      try {
+        await stakingApi.openStaking(amount, level.level);
+
+        setIsStakingDepositeOpen(false);
+        updateUser(user.id);
+        setTimeout(() => {
+          window.location.reload();
+        }, 300);
+      } catch (err) {
+        const error = err as AxiosError<{ error: string }>;
+
+        const errorMessage = error.response?.data?.error || 'Произошла ошибка';
+        alert(errorMessage);
+      }
     }
   };
 
+  useEffect(() => {
+    const stakingRaw = localStorage.getItem('current_staking');
+    if (!stakingRaw) return;
+
+    try {
+      const stakingData = JSON.parse(stakingRaw);
+      const endDate = new Date(stakingData.end_date).getTime();
+      const now = new Date().getTime();
+      const delay = endDate - now;
+
+      console.log('setted');
+      if (delay > 0) {
+        setTimeout(() => {
+          location.reload(); // Обновит страницу ровно в end_date
+        }, delay);
+      }
+    } catch (e) {
+      console.error('Failed to parse staking data from localStorage:', e);
+    }
+  }, []);
+
   if (!levels) {
-    return <div>NO levels</div>;
+    return <div>...</div>;
   }
 
   const selectedLevel: LevelData | undefined = levels.find(
@@ -102,7 +155,7 @@ const Header = () => {
   );
 
   const avatarUrl = getDecodedAvatarUrl(user?.avatar);
-
+  console.log('current-staking', storedStaking);
   return (
     <div className={styles.headerContainer}>
       <NavLink
@@ -126,8 +179,13 @@ const Header = () => {
           className={styles.headerLevel}
           onClick={() => setIsLevelsListOpen(true)}
         >
-          <img src={levelsAdditional[selectedLevel.id].icon} alt="down-arrow" />
-          <p className="level-p">{levelsAdditional[selectedLevel.id].title}</p>
+          <img
+            src={levelsAdditional[selectedLevel.level].icon}
+            alt="down-arrow"
+          />
+          <p className="level-p">
+            {levelsAdditional[selectedLevel.level].title}
+          </p>
           <img src={arrowDownIcon} alt="down-arrow" />
         </div>
       )}

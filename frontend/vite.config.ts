@@ -15,7 +15,7 @@ export default defineConfig({
     allowedHosts: [
       'work.lnx-usr.xyz',
       'localhost',
-      '78ad-2a02-3037-311-d8a4-c477-1166-6ea5-f606.ngrok-free.app',
+      '6d9d-2a02-3037-305-3bdf-1504-1e99-38e6-768e.ngrok-free.app',
     ],
   },
 });

@@ -98,6 +98,7 @@ export interface UserStakingDetails {
   daily_percentage: number;
   current_day: number;
   total_days: number;
+  current_profit?: number;
   now_date: string; // Время в ISO 8601 формате
 }
 
@@ -123,16 +124,29 @@ export interface GetInvitedUsersResponse {
 // Transactions
 export interface CreateTransactionRequest {
   operation_type: 'deposit' | 'withdraw';
-  amount: number; // Можно указать Decimal.js тип, если используешь его
+  amount: number;
   user_id: number;
 }
 
+export interface TransactionFitrersRequest {
+  operation_type?: 'deposit' | 'withdraw';
+  limit?: number;
+  start_date?: string;
+  end_date?: string;
+}
+
 // Тип для успешного ответа
-export interface CreateTransactionResponse {
-  message: string;
-  transaction_id: number;
+export interface TransactionData {
+  id: string;
+  amount: string;
+  wallet: string;
   status: 'completed' | 'waiting' | 'canceled';
-  timestamp: string; // ISO дата-время, например: "2025-04-04T12:34:56.789Z"
+  operation_type: 'deposit' | 'withdraw';
+  timestamp: string;
+}
+
+export interface TransactionList {
+  transactions: TransactionData[];
 }
 
 // Leaders
@@ -142,6 +156,7 @@ interface LeaderUser {
   username: string; // Имя пользователя
   balance: number; // Баланс пользователя (число, так как в ответе это число)
   tokens: number; // Количество токенов (число, так как в ответе это число)
+  position?: number;
 }
 
 export interface Leader {
@@ -187,4 +202,31 @@ export interface UpdateUserResponse {
   wallet: string | null;
   balance: string;
   tokens: string;
+}
+
+// System wallet
+export interface Wallet {
+  title: string;
+  wallet: string;
+}
+
+export interface Competition {
+  id: number;
+  title: string;
+  badge_content?: string;
+  img: string;
+  end_date: string; // ISO-8601 datetime string
+}
+
+// Banners
+export interface Banner {
+  id: number;
+  title: string;
+  description: string;
+  img: string; // URL изображения
+  link: string; // Ссылка
+}
+
+export interface Commission {
+  percent: number;
 }

@@ -5,7 +5,7 @@ from users.models import CustomUser
 
 class FarmingTask(models.Model):
     title = models.CharField(max_length=120)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, null=True, blank=True)
     icon = models.ImageField(upload_to='tasks/icons')
     link = models.URLField()
     reward_amount = models.IntegerField()

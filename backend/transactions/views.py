@@ -1,8 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, permissions
+from rest_framework import status, permissions, generics
+from django_filters.rest_framework import DjangoFilterBackend
 
+from .models import Transactions
+from .serializers import UserTransactionSerializer
 from .services import create_transaction
+from .filters import TransactionFilter
 
 
 class CreateTransactionView(APIView):
@@ -28,5 +32,11 @@ class CreateTransactionView(APIView):
             'timestamp': txn.timestamp
         }, status=status.HTTP_201_CREATED)
     
-class GetUserTransactionAPIView(APIView):
-    pass
+class GetUserTransactionAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserTransactionSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = TransactionFilter
+
+    def get_queryset(self):
+        return Transactions.objects.filter(user=self.request.user).order_by('-timestamp')

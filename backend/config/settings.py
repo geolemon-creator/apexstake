@@ -45,6 +45,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://work.lnx-usr.xyz',
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -149,7 +153,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-STATIC_URL = '/static/'
+STATIC_URL = '/api/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/api/media/'

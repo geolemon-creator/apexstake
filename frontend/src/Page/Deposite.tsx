@@ -3,17 +3,15 @@ import closen from './../Img/close.svg';
 import { useEffect, useState } from 'react';
 import BalanceBar from '../Components/BalanceBar/BalanceBar';
 import coin from './../Img/coin.svg';
-import { useTonConnectUI, useTonAddress } from '@tonconnect/ui-react';
-import TonWeb from 'tonweb';
-import {
-  CreateTransactionRequest,
-  CreateTransactionResponse,
-} from '../Components/Type';
+import { useTonConnectUI } from '@tonconnect/ui-react';
+import { CreateTransactionRequest, Wallet } from '../Components/Type';
 import { transactionsApi } from '../Api/transactionsApi';
+import { stakingApi } from '../Api/stakingApi';
 
 export default function Deposite() {
   const [amount, setAmount] = useState('');
   const [user, setUser] = useState<any>(null);
+  const [wallet, setWallet] = useState<Wallet>();
   const [tonConnectUI] = useTonConnectUI();
 
   useEffect(() => {
@@ -23,14 +21,29 @@ export default function Deposite() {
       const user = JSON.parse(userString);
       setUser(user);
     }
+
+    const fetchWallet = async () => {
+      try {
+        const wallet: Wallet = await stakingApi.getWallet();
+        setWallet(wallet);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchWallet();
   }, []);
 
   const handleDeposit = async (amount: number) => {
+    if (!wallet) {
+      return;
+    }
+
     const transaction = {
       validUntil: Math.floor(Date.now() / 1000) + 300,
       messages: [
         {
-          address: 'UQCgeLzYVTFtZYIPOJGEDPeXXts1BbKIwhQ6l7_XTcMvqj_T',
+          address: wallet.wallet,
           amount: (amount * 1e9).toString(),
         },
       ],

@@ -13,6 +13,7 @@ class Transactions(models.Model):
         ('waiting', 'Waiting'),
     ]
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    wallet = models.CharField(max_length=48)
     operation_type = models.CharField(max_length=8, choices=OPERATION_TYPES, default='deposit')
     amount = models.DecimalField(default=0, max_digits=10, decimal_places=2)
     status = models.CharField(max_length=9, choices=TRANSACTION_STATUS, default='waiting')

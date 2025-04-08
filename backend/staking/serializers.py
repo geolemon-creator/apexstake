@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import StakingStage, StakingLevel, UserStaking
+from .models import StakingStage, StakingLevel, UserStaking, Competition, Banner
 from datetime import timedelta
+from decimal import Decimal
 from django.utils.timezone import now
 
 
@@ -44,16 +45,21 @@ class StakingLevelDetailsSerializer(serializers.ModelSerializer):
 
 class UserStakingSerializer(serializers.ModelSerializer):
     percentage = serializers.SerializerMethodField()
+    current_profit = serializers.SerializerMethodField()
     daily_earning = serializers.SerializerMethodField()
     daily_percentage = serializers.SerializerMethodField()
     current_day = serializers.SerializerMethodField()
     total_days = serializers.SerializerMethodField()
     now_date = serializers.SerializerMethodField()
+    staking_level = serializers.SerializerMethodField()
 
     class Meta:
         model = UserStaking
-        fields = ['id', 'user', 'staking_level', 'amount', 'percentage', 'start_date', 'end_date', 'daily_earning', 'daily_percentage', 'current_day', 'total_days', 'now_date']
+        fields = ['id', 'user', 'staking_level', 'amount', 'percentage', 'start_date', 'end_date', 'daily_earning', 'daily_percentage', 'current_day', 'current_profit', 'total_days', 'now_date']
         read_only_fields = ['id', 'start_date', 'end_date']
+
+    def get_staking_level(self, obj):
+        return obj.staking_level.level
 
     def get_percentage(self, obj):
         user_staking_stage = obj.user.staking_stage
@@ -75,6 +81,28 @@ class UserStakingSerializer(serializers.ModelSerializer):
     
     def get_now_date(self, obj):
         return now().isoformat()
+    
+    def get_current_profit(self, obj):
+        amount = obj.amount
+        percentage = Decimal(self.get_percentage(obj))
+
+        start = obj.start_date
+        end = obj.end_date
+        now_time = now()
+
+        total_minutes = (end - start).total_seconds() / 60
+        elapsed_minutes = (now_time - start).total_seconds() / 60
+
+        # Защита от выхода за границы
+        if total_minutes <= 0 or elapsed_minutes <= 0:
+            return amount
+
+        if elapsed_minutes > total_minutes:
+            elapsed_minutes = total_minutes
+
+        profit = (amount * percentage / 100) * Decimal(elapsed_minutes / total_minutes)
+
+        return round(amount + profit, 2)
 
     def validate_amount(self, value):
         """
@@ -120,3 +148,17 @@ class OpenStakingSerializer(serializers.Serializer):
         except StakingLevel.DoesNotExist:
             raise serializers.ValidationError('Staking level not found for the user’s current staking stage.')
         return staking
+    
+class ChangeStakingSerializer(serializers.Serializer):
+    amount = serializers.DecimalField(max_digits=10, decimal_places=2)
+    level = serializers.IntegerField()
+
+class CompetitionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Competition
+        fields = '__all__'
+
+class BannerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Banner
+        fields = '__all__'

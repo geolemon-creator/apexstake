@@ -1,11 +1,11 @@
 .leaderItemContainer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   height: 40px;
   color: white;
   border-radius: 12px;
   background: #282d33;
+  justify-content: space-between;
   margin-bottom: 8px;
 }
 

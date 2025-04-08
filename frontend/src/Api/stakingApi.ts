@@ -22,8 +22,27 @@ export const stakingApi = {
     });
     return response.data;
   },
+  changeStaking: async (amount: number, staking_level: number) => {
+    const response = await apiClient.post('/staking/change/', {
+      amount: amount,
+      level: staking_level,
+    });
+    return response.data;
+  },
   getStakingMe: async () => {
     const response = await apiClient.get(`/staking/me/`);
+    return response.data;
+  },
+  getWallet: async () => {
+    const response = await apiClient.get(`/wallet/`);
+    return response.data;
+  },
+  getBanners: async () => {
+    const response = await apiClient.get(`/banners/`);
+    return response.data;
+  },
+  getCommission: async () => {
+    const response = await apiClient.get(`/commission/`);
     return response.data;
   },
 };

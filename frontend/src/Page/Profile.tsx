@@ -181,6 +181,15 @@ export default function Profile() {
 
           <span className="review-arrow">&gt;</span>
         </div>
+
+        <div className="review-div">
+          <img className="review-img" src={help} />
+          <div className="review-p-div">
+            <p className="review-p">Узнать больше о проекте</p>
+          </div>
+
+          <span className="review-arrow">&gt;</span>
+        </div>
       </div>
     </div>
   );

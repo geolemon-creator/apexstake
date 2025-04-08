@@ -1,7 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTransactions } from '../Components/TransactionsContext';
 
-import box from './../Img/present.svg';
 import arrowRight from './../Img/arrow-right.svg';
 import coin from './../Img/coin.svg';
 import deposit from './../Img/deposit.svg';
@@ -16,12 +15,15 @@ import { useEffect, useState } from 'react';
 import BalanceBar from '../Components/BalanceBar/BalanceBar';
 import ConnectWalletModal from '../Components/ConnectWalletModal/ConnectWalletModal';
 import { useTonAddress } from '@tonconnect/ui-react';
+import { Banner } from '../Components/Type';
+import { stakingApi } from '../Api/stakingApi';
 
 export default function Home() {
   const { transactions } = useTransactions();
   const [isModalConnect, setIsModalConnect] = useState(false);
   const userFriendlyAddress = useTonAddress();
   const [user, setUser] = useState<any>(null);
+  const [banners, setBanners] = useState<Banner[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,6 +33,17 @@ export default function Home() {
       const user = JSON.parse(userString);
       setUser(user);
     }
+
+    const fetchBannersList = async () => {
+      try {
+        const bannersList: Banner[] = await stakingApi.getBanners();
+        setBanners(bannersList);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchBannersList();
   }, []);
 
   const handleNavigation = (route: string) => {
@@ -43,6 +56,38 @@ export default function Home() {
     }
   };
 
+  const PrevArrow = (props: any) => {
+    const { className, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          display: 'block',
+          left: 0,
+          zIndex: 2,
+          cursor: 'pointer',
+        }}
+        onClick={onClick}
+      />
+    );
+  };
+
+  const NextArrow = (props: any) => {
+    const { className, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          display: 'block',
+          right: 0,
+          zIndex: 2,
+          cursor: 'pointer',
+        }}
+        onClick={onClick}
+      ></div>
+    );
+  };
+
   const settings = {
     dots: false,
     infinite: false,
@@ -50,47 +95,34 @@ export default function Home() {
     slidesToShow: 1.05,
     slidesToScroll: 1,
     swipeToSlide: true,
-    focusOnSelect: true,
-  };
 
+    autoplay: true,
+    autoplaySpeed: 3000,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+  };
+  console.log(banners, 'ban');
   return (
     <div className="home-countainer">
       <Header />
 
       <div className="home-lower-catalog">
         <Slider {...settings}>
-          <div>
-            <div className="home-reward">
-              <div className="rewad-text">
-                <h1 className="reward-h1">Ежедневная награда</h1>
-                <p className="reward-p">Успей забрать</p>
+          {banners.map((banner, index) => (
+            <div
+              key={index}
+              style={{ userSelect: 'none' }}
+              onClick={() => window.open(banner.link, '_blank')}
+            >
+              <div className="home-reward">
+                <div className="rewad-text">
+                  <h1 className="reward-h1">{banner.title}</h1>
+                  <p className="reward-p">{banner.description}</p>
+                </div>
+                <img className="reward-img" src={banner.img} alt="img" />
               </div>
-
-              <img className="reward-img" src={box} alt="img" />
             </div>
-          </div>
-
-          <div>
-            <div className="home-reward">
-              <div className="rewad-text">
-                <h1 className="reward-h1">Ежедневная награда</h1>
-                <p className="reward-p">Успей забрать</p>
-              </div>
-
-              <img className="reward-img" src={box} alt="img" />
-            </div>
-          </div>
-
-          <div>
-            <div className="home-reward">
-              <div className="rewad-text">
-                <h1 className="reward-h1">Ежедневная награда</h1>
-                <p className="reward-p">Успей забрать</p>
-              </div>
-
-              <img className="reward-img" src={box} alt="img" />
-            </div>
-          </div>
+          ))}
         </Slider>
       </div>
 
@@ -127,7 +159,7 @@ export default function Home() {
               to="/deposite"
               onClick={(e) => {
                 e.preventDefault();
-                handleNavigation('/deposite'); // Навигация к маршруту пополнения
+                handleNavigation('/deposite');
               }}
             >
               <div className="stak-first-div">
@@ -152,17 +184,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="home-info-div">
-        {transactions.length > 0 ? (
-          <p className="home-info">НУЖЕН ГРАФИК</p>
-        ) : (
-          <p className="home-info">Данные появятся после начала стейкинга</p>
-        )}
-      </div>
-
       <NavLink style={{ textDecoration: 'none' }} to="/">
         <div className="btn-more">
-          <p>Узнать больше</p>
+          <p>Узнать больше о проекте</p>
           <img src={arrowRight} alt="arrow" />
         </div>
       </NavLink>

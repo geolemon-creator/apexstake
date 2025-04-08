@@ -121,7 +121,7 @@ class GetInvitedUsersAPIView(APIView):
             data.append(user_data)
 
         return Response({"invited_users": data})
-    
+
 
 class GetLeadersListAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -132,10 +132,9 @@ class GetLeadersListAPIView(APIView):
         """
         user = request.user
 
-        leaders = CustomUser.objects.all().order_by('-balance', '-tokens')
+        leaders = CustomUser.objects.all().order_by('-tokens')
         leader_ids = list(leaders.values_list('id', flat=True))
         user_position = leader_ids.index(user.id) + 1 if user.id in leader_ids else None
-        leaders = leaders.exclude(id=user.id)
 
         leaders_data = LeadersListSerializer(leaders, many=True).data
 

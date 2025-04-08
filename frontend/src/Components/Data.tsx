@@ -1,4 +1,11 @@
-import { FrendID, levelID, MediaID, TansactionsID, TermsID } from './Type';
+import {
+  FrendID,
+  levelID,
+  MediaID,
+  TansactionsID,
+  TermsID,
+  TransactionData,
+} from './Type';
 import { LeaderID } from './Type';
 import leadava from './../Img/avatarlead.png';
 import primaryDiamond from './../Img/diamonds/diamond-primary.svg';
@@ -229,16 +236,6 @@ export const Terms: TermsID[] = [
     dateRepayment: '1 день',
     bid: 140,
     ton: '1,49959500 TON',
-  },
-];
-
-export const tansactions: TansactionsID[] = [
-  {
-    id: 1,
-    title: 'EQDRgEeQULqqwau_9Tbe98Uss5SSI',
-    date: 'Сегодня, 16:09',
-    price: 12,
-    img: transWallet,
   },
 ];
 

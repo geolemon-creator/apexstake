@@ -6,9 +6,9 @@ from aiogram.types import WebAppInfo, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.filters import Command
 
 API_TOKEN = "7491473745:AAFnW9YSI8fufwI0IJHvwY0wgYcnaWPzSDA"
-WEB_APP_URL = "https://78ad-2a02-3037-311-d8a4-c477-1166-6ea5-f606.ngrok-free.app" #"https://work.lnx-usr.xyz/"
-BACKEND_URL = "http://127.0.0.1:8000/api"
-API_URL = "http://127.0.0.1:8000/api/register/"
+WEB_APP_URL = "https://admin.adminbottle.ru/" #"https://work.lnx-usr.xyz/"
+BACKEND_URL = "https://api.adminbottle.ru/api"
+API_URL = "https://api.adminbottle.ru/api/register/"
 
 logging.basicConfig(level=logging.INFO)
 
