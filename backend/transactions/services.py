@@ -3,7 +3,7 @@ from django.db import transaction
 from rest_framework.exceptions import ValidationError
 
 from users.models import UserReferralReward
-from staking.models import Commission
+from main.models import Commission
 from .models import Transactions
 
 

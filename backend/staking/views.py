@@ -1,5 +1,3 @@
-import random
-from django.shortcuts import render
 from django.db import transaction
 from django.utils import timezone
 
@@ -7,10 +5,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import ListAPIView
 
-from .models import StakingLevel, UserStaking, Wallets, Competition, Banner, Commission
-from .serializers import StakingLevelSerializer, OpenStakingSerializer, UserStakingSerializer, StakingStage, StakingLevelDetailsSerializer, ChangeStakingSerializer, CompetitionSerializer, BannerSerializer
+from .models import StakingLevel, UserStaking
+from .serializers import StakingLevelSerializer, OpenStakingSerializer, UserStakingSerializer, StakingStage, StakingLevelDetailsSerializer, ChangeStakingSerializer
 from .services import change_staking_level
 
 
@@ -126,28 +123,3 @@ class LevelDetailsAPIView(APIView):
         serializer = StakingLevelDetailsSerializer(staking_info)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-class CompetitionListAPIView(ListAPIView):
-    queryset = Competition.objects.all()
-    serializer_class = CompetitionSerializer
-
-class RandomWalletAPIView(APIView):
-    def get(self, request):
-        wallets = Wallets.objects.all()
-        if not wallets.exists():
-            return Response({'error': 'Кошельки не найдены'}, status=status.HTTP_404_NOT_FOUND)
-
-        wallet = random.choice(wallets)
-        return Response({
-            'title': wallet.title,
-            'wallet': wallet.wallet
-        }, status=status.HTTP_200_OK)
-
-class BannerListView(ListAPIView):
-    queryset = Banner.objects.all()
-    serializer_class = BannerSerializer
-
-class CommissionAPIView(APIView):
-    def get(self, request):
-        commission, _ = Commission.objects.get_or_create(defaults={"percent": 10})
-        return Response({"percent": commission.percent}, status=status.HTTP_200_OK)

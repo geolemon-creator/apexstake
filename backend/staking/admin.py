@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import StakingLevel, StakingStage, UserStaking, UserStakingReward, Competition, Wallets, Banner, Commission
+from .models import StakingLevel, StakingStage, UserStaking, UserStakingReward
 
 
 class UserStakingAdmin(admin.ModelAdmin):
@@ -14,7 +14,3 @@ admin.site.register(UserStaking, UserStakingAdmin)
 admin.site.register(StakingLevel)
 admin.site.register(StakingStage)
 admin.site.register(UserStakingReward)
-admin.site.register(Competition)
-admin.site.register(Wallets)
-admin.site.register(Banner)
-admin.site.register(Commission)

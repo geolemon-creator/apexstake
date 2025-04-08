@@ -77,6 +77,7 @@ def increase_user_stage(user):
         if next_stage:
             user.staking_stage = next_stage
 
+
 def calculate_staking_balance(user_staking):
     # PROD: days_staked = (timezone.now() - user_staking.start_date).days
     # TEST: 

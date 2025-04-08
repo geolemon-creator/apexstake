@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'tasks.apps.TasksConfig',
     'transactions.apps.TransactionsConfig',
     'users.apps.UsersConfig',
+    'main.apps.MainConfig'
 ]
 
 MIDDLEWARE = [

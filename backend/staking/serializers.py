@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import StakingStage, StakingLevel, UserStaking, Competition, Banner
+from .models import StakingStage, StakingLevel, UserStaking
 from datetime import timedelta
 from decimal import Decimal
 from django.utils.timezone import now
@@ -152,13 +152,3 @@ class OpenStakingSerializer(serializers.Serializer):
 class ChangeStakingSerializer(serializers.Serializer):
     amount = serializers.DecimalField(max_digits=10, decimal_places=2)
     level = serializers.IntegerField()
-
-class CompetitionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Competition
-        fields = '__all__'
-
-class BannerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Banner
-        fields = '__all__'
