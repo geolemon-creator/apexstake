@@ -1,6 +1,6 @@
 from django.db import transaction
 from django.utils import timezone
-from decimal import Decimal
+from decimal import Decimal, ROUND_DOWN
 import logging
 
 logger = logging.getLogger(__name__)
@@ -139,3 +139,23 @@ def change_staking_level(user, amount, level):
         user.save()
 
         return "Уровень стейкинга успешно обновлен"
+
+# Staking Serializer Logic
+def calculate_current_profit(amount, percentage, start, end):
+    total_minutes = (end - start).total_seconds() / 60
+    elapsed_minutes = (timezone.now() - start).total_seconds() / 60
+
+    if total_minutes <= 0 or elapsed_minutes <= 0:
+        return amount
+
+    elapsed_minutes = min(elapsed_minutes, total_minutes)
+    profit = (amount * percentage / 100) * Decimal(elapsed_minutes / total_minutes)
+    return (amount + profit).quantize(Decimal('0.01'), rounding=ROUND_DOWN)
+
+def calculate_daily_percentage(percentage, total_days):
+    if total_days <= 0:
+        return 0
+    return percentage / total_days
+
+def calculate_daily_earning(amount, daily_percentage):
+    return (amount * daily_percentage) / 100

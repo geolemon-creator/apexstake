@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from .models import StakingStage, StakingLevel, UserStaking
 from datetime import timedelta
-from decimal import Decimal
 from django.utils.timezone import now
+from .staking_mixins import UserStakingCalculationMixin
 
 
 class StakingStageSerializer(serializers.ModelSerializer):
@@ -43,7 +43,7 @@ class StakingLevelDetailsSerializer(serializers.ModelSerializer):
         return obj.percentage * (obj.stage.staking_time if obj.stage else 1)
 
 
-class UserStakingSerializer(serializers.ModelSerializer):
+class UserStakingSerializer(serializers.ModelSerializer, UserStakingCalculationMixin):
     percentage = serializers.SerializerMethodField()
     current_profit = serializers.SerializerMethodField()
     daily_earning = serializers.SerializerMethodField()
@@ -57,53 +57,10 @@ class UserStakingSerializer(serializers.ModelSerializer):
         model = UserStaking
         fields = ['id', 'user', 'staking_level', 'amount', 'percentage', 'start_date', 'end_date', 'daily_earning', 'daily_percentage', 'current_day', 'current_profit', 'total_days', 'now_date']
         read_only_fields = ['id', 'start_date', 'end_date']
-
+    
     def get_staking_level(self, obj):
         return obj.staking_level.level
-
-    def get_percentage(self, obj):
-        user_staking_stage = obj.user.staking_stage
-        staking_level = StakingLevel.objects.get(stage=user_staking_stage, level=obj.staking_level.level)
-        return staking_level.percentage
     
-    def get_total_days(self, obj):
-        return (obj.end_date - obj.start_date).days
-    
-    def get_current_day(self, obj):
-        return (now().date() - obj.start_date.date()).days + 1
-    
-    def get_daily_percentage(self, obj):
-        total_days = self.get_total_days(obj)
-        return self.get_percentage(obj) / total_days if total_days > 0 else 0
-    
-    def get_daily_earning(self, obj):
-        return (obj.amount * self.get_daily_percentage(obj)) / 100
-    
-    def get_now_date(self, obj):
-        return now().isoformat()
-    
-    def get_current_profit(self, obj):
-        amount = obj.amount
-        percentage = Decimal(self.get_percentage(obj))
-
-        start = obj.start_date
-        end = obj.end_date
-        now_time = now()
-
-        total_minutes = (end - start).total_seconds() / 60
-        elapsed_minutes = (now_time - start).total_seconds() / 60
-
-        # Защита от выхода за границы
-        if total_minutes <= 0 or elapsed_minutes <= 0:
-            return amount
-
-        if elapsed_minutes > total_minutes:
-            elapsed_minutes = total_minutes
-
-        profit = (amount * percentage / 100) * Decimal(elapsed_minutes / total_minutes)
-
-        return round(amount + profit, 2)
-
     def validate_amount(self, value):
         """
         Проверка, что сумма депозита соответствует min/max депозита уровня стейкинга

@@ -80,11 +80,11 @@ class OpenStakingAPIView(APIView):
         except ValueError as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-
 class ChangeStakingAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        """Смена уровня пользователя"""
         serializer = ChangeStakingSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -96,7 +96,6 @@ class ChangeStakingAPIView(APIView):
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 class UserStakingAPIView(APIView):
     permission_classes = [IsAuthenticated]
