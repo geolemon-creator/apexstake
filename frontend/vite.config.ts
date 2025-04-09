@@ -13,7 +13,7 @@ export default defineConfig({
       methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешенные методы
     },
     allowedHosts: [
-      'work.lnx-usr.xyz',
+      'admin.adminbottle.ru',
       'localhost',
       '6d9d-2a02-3037-305-3bdf-1504-1e99-38e6-768e.ngrok-free.app',
     ],

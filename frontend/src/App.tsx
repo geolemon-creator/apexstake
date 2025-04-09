@@ -10,9 +10,13 @@ import Profile from './Page/Profile';
 import Conclusioin from '././Page/Conclusion';
 import Transfers from './Page/Transfers';
 import useAuth from './Hooks/useAuth';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useLayoutEffect } from 'react';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import Deposite from './Page/Deposite';
+import LoadingPage from './Components/LoadingPage/LoadingPage';
+import { fetchProfitPercentage, setProfit } from './Features/stakingSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from './store';
 
 declare global {
   interface Window {
@@ -27,6 +31,33 @@ declare global {
 function App() {
   const { signIn, isAuth } = useAuth();
   const [initData, setInitData] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(true);
+  const { user } = useSelector((state: RootState) => state.headerUI);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  useLayoutEffect(() => {
+    const hasVisited = sessionStorage.getItem('hasVisited');
+    if (hasVisited) {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(user?.selected_level);
+    if (user?.selected_level) {
+      dispatch(fetchProfitPercentage());
+
+      const interval = setInterval(() => {
+        dispatch(fetchProfitPercentage());
+      }, 600); // TODO: Таймер для обновления процентов
+
+      return () => clearInterval(interval);
+    } else {
+      dispatch(setProfit(0));
+      localStorage.removeItem('profitPercentage');
+    }
+  }, [dispatch, user]);
 
   useEffect(() => {
     // if (window.Telegram && window.Telegram.WebApp) {
@@ -43,13 +74,20 @@ function App() {
 
   useEffect(() => {
     if (initData) {
-      // alert(initData);
       signIn(initData);
     }
   }, [initData]);
 
   if (!isAuth) {
-    return <div>Loading...</div>;
+    return <div>No auth</div>;
+  }
+
+  const handleContinue = () => {
+    sessionStorage.setItem('hasVisited', 'true');
+    setIsLoading(false);
+  };
+  if (isLoading) {
+    return <LoadingPage onContinue={handleContinue} />;
   }
 
   return (
@@ -57,8 +95,8 @@ function App() {
       manifestUrl="https://admin.adminbottle.ru/tonconnect-manifest.json"
       walletsRequiredFeatures={{
         sendTransaction: {
-          minMessages: 2, // Кошелек должен поддерживать отправку хотя бы 2 сообщений
-          extraCurrencyRequired: true, // Кошелек должен поддерживать дополнительную валюту в транзакциях
+          minMessages: 2,
+          extraCurrencyRequired: true,
         },
       }}
     >

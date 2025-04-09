@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import transaction
 from django.utils import timezone
 
@@ -5,6 +6,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import ValidationError
+
+from transactions.models import Transactions
 
 from .models import StakingLevel, UserStaking
 from .serializers import StakingLevelSerializer, OpenStakingSerializer, UserStakingSerializer, StakingStage, StakingLevelDetailsSerializer, ChangeStakingSerializer
@@ -71,6 +75,13 @@ class OpenStakingAPIView(APIView):
                     amount=amount,
                     staking_level=staking,
                 )
+                Transactions.objects.create(
+                    user=user,
+                    amount=amount,
+                    wallet=user.wallet,
+                    operation_type='withdraw',
+                    status='completed'
+                )
 
                 return Response(
                     {'message': f'Стейкинг успешно открыт. Дата окончания: {user_staking.end_date}'}, 
@@ -122,3 +133,54 @@ class LevelDetailsAPIView(APIView):
         serializer = StakingLevelDetailsSerializer(staking_info)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class UserStakingProfitView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user_staking = UserStaking.objects.filter(user=request.user, status='in_progress').first()
+        return Response({'profit': user_staking.get_profit() if user_staking else 0.0})
+    
+class WithdrawStakingProfit(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        
+        # 1. Проверка наличия активного стейкинга
+        user_staking = UserStaking.objects.filter(user=user, status='in_progress').first()
+        if not user_staking:
+            raise ValidationError('У вас нет активного стейкинга для вывода прибыли.')
+
+        # 2. Получение текущей прибыли и комиссии
+        profit = user_staking.get_profit()
+        if profit <= 0:
+            raise ValidationError('Нет прибыли для вывода.')
+
+        # Преобразуем float в Decimal
+        profit_decimal = Decimal(str(profit))
+        commission_profit = profit_decimal * Decimal('0.75')
+
+        # 3. Обновление данных о выводе
+        try:
+            user_staking.withdrawn_amount += profit_decimal
+            user.balance += commission_profit
+            user_staking.save()
+            user.save()
+        except Exception as e:
+            raise ValidationError(f'Ошибка при обновлении данных: {str(e)}')
+
+        # 4. Создание транзакции
+        try:
+            Transactions.objects.create(
+                user=user,
+                wallet=user.wallet,
+                amount=commission_profit,
+                operation_type='deposit',
+                status='completed'
+            )
+        except Exception as e:
+            raise ValidationError(f'Ошибка при создании транзакции: {str(e)}')
+
+        # 5. Ответ с успехом
+        return Response({'data': f'Вывод прошел успешно! На баланс зачислено {commission_profit}'})

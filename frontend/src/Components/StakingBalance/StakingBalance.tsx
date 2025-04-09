@@ -1,114 +1,89 @@
 import RoundGraph from '../RoundGraph/RoundGraph';
 import styles from './StakingBalance.module.css';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import infoIcon from '../../Img/info.svg';
-import { LevelData, UserStakingDetails } from '../Type';
-import { levelsApi, stakingApi } from '../../Api/stakingApi';
-import { calculateTimeRemainingAndProgress } from './StakingBalanceUtils';
+import {
+  calculateTimeRemainingAndProgress,
+  formatProfit,
+} from './StakingBalanceUtils';
 import LevelDetailInfo from '../LevelDetailsModal/LevelDetailInfo';
 import tonIcon from '../../Img/TonCoin.svg';
 
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchStakingDetails,
+  fetchLevelDetails,
+  setModalOpen,
+  setProgress,
+  setTimeRemaining,
+} from '../../Features/stakingSlice';
+import { RootState, AppDispatch } from '../../store';
+import { formatBalance } from '../../Utils/formatBalance';
+import { stakingApi } from '../../Api/stakingApi';
+
 const StakingBalance = () => {
-  const [userStakingData, setUserStakingData] = useState<UserStakingDetails>();
-  const [progress, setProgress] = useState<string | number>(0);
-  const [timeRemaining, setTimeRemaining] = useState('');
-  const [level, setLevel] = useState<LevelData>();
-  const [profit, setProfit] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const storedStaking = JSON.parse(
-    localStorage.getItem('current_staking') || '{}'
-  );
+  const dispatch = useDispatch<AppDispatch>();
+  const {
+    userStakingData,
+    progress,
+    timeRemaining,
+    level,
+    profit,
+    isModalOpen,
+    isLoading,
+  } = useSelector((state: RootState) => state.staking);
 
   useEffect(() => {
-    const fetchStakingDetails = async () => {
-      try {
-        const userStakingData: UserStakingDetails =
-          await stakingApi.getStakingMe();
-        setUserStakingData(userStakingData);
-
-        const { timeRemaining, progress } = calculateTimeRemainingAndProgress(
-          userStakingData.start_date,
-          userStakingData.end_date
-        );
-        setTimeRemaining(timeRemaining);
-        setProgress(progress);
-
-        setIsLoading(false);
-      } catch (err) {
-        console.error(err);
-        setIsLoading(false);
-      }
-    };
-
-    fetchStakingDetails();
-  }, []);
-
-  const fetchLevelDetails = async () => {
-    try {
-      if (userStakingData?.staking_level) {
-        const levelDetails: LevelData = await levelsApi.getLevelDetails(
-          userStakingData?.staking_level
-        );
-        setLevel(levelDetails);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    dispatch(fetchStakingDetails());
+  }, [dispatch]);
 
   useEffect(() => {
     if (userStakingData?.start_date && userStakingData?.end_date) {
-      // Функция для обновления таймера и процента каждую минуту
       const interval = setInterval(() => {
         const { timeRemaining, progress } = calculateTimeRemainingAndProgress(
           userStakingData.start_date,
           userStakingData.end_date
         );
 
-        localStorage.setItem('current_staking', JSON.stringify(userStakingData));
-
+        localStorage.setItem(
+          'current_staking',
+          JSON.stringify(userStakingData)
+        );
         if (timeRemaining === 'Время истекло') {
-          if (storedStaking) {
-            localStorage.removeItem('current_staking');
-          }
+          localStorage.removeItem('current_staking');
           window.location.reload();
         }
 
-        setTimeRemaining(timeRemaining);
-        setProgress(progress);
-      }, 600); // Обновляем каждую минуту
+        dispatch(setTimeRemaining(timeRemaining));
+        dispatch(setProgress(Number(progress)));
+      }, 600); // 60 сек
 
-      // Начальный расчет, чтобы сразу отобразить
-      const { timeRemaining, progress } = calculateTimeRemainingAndProgress(
-        userStakingData.start_date,
-        userStakingData.end_date
-      );
-      const rawAmount = userStakingData?.amount ?? '0';
-      const rawProfit = userStakingData?.current_profit ?? 0;
-
-      const amount = parseFloat(rawAmount); // теперь точно number
-      const currentProfit = rawProfit; // уже number по типу
-
-      const profitPercentage =
-        amount > 0 ? ((currentProfit - amount) / amount) * 100 : 0;
-
-      setProfit(profitPercentage);
-      setTimeRemaining(timeRemaining);
-      setProgress(progress);
-
-      return () => clearInterval(interval); // Очистка интервала при размонтировании компонента
+      return () => clearInterval(interval);
     }
-  }, [userStakingData]);
+  }, [dispatch, userStakingData]);
 
-  const openStakingInfoModal = () => {
-    fetchLevelDetails();
-
-    setIsModalOpen(true);
+  const openModal = async () => {
+    if (userStakingData?.staking_level) {
+      await dispatch(fetchLevelDetails(String(userStakingData.staking_level)));
+    }
+    dispatch(setModalOpen(true));
   };
 
-  const onClose = () => {
-    setIsModalOpen(false);
+  const onClose = async () => {
+    dispatch(setModalOpen(false));
+  };
+
+  const handleWithdrawProfit = async () => {
+    alert(`Вы хотите вывести прибыль на баланс? Комиссия составляет 25%`);
+    try {
+      await stakingApi.withdrawStakingProfit();
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   if (isLoading) {
@@ -120,7 +95,7 @@ const StakingBalance = () => {
         {userStakingData && (
           <>
             <img
-              onClick={openStakingInfoModal}
+              onClick={openModal}
               className={styles.infoIcon}
               src={infoIcon}
               alt="info"
@@ -208,8 +183,13 @@ const StakingBalance = () => {
                 fontWeight="bold"
                 fill="white"
               >
-                {Number(profit.toFixed(2))}% {userStakingData.current_profit}{' '}
-                TОН
+                {Number(userStakingData?.amount) > 0
+                  ? (
+                      (Number(profit) / Number(userStakingData?.amount)) *
+                      100
+                    ).toFixed(2)
+                  : 0}
+                % {formatBalance(Number(profit))} TОН
               </text>
             </RoundGraph>
 
@@ -237,6 +217,12 @@ const StakingBalance = () => {
                 <p className={styles.stakingPeriod}>
                   • {userStakingData?.current_day} Day
                 </p>
+              </div>
+              <div
+                className={styles.WithdrawProfitBtn}
+                onClick={handleWithdrawProfit}
+              >
+                Вывод прибыли
               </div>
             </div>
             {isModalOpen && level && (

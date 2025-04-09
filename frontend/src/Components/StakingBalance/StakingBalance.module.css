@@ -101,3 +101,14 @@
     -50%
   ); /* Сдвигаем блок на половину его размера, чтобы точно центрировать */
 }
+
+.WithdrawProfitBtn {
+  background: #ffde45;
+  color: black;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 14px;
+  width: 85%;
+  margin: 0 auto;
+  margin-top: 10px;
+}

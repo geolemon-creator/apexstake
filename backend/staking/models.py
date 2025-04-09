@@ -48,6 +48,26 @@ class UserStaking(models.Model):
     def __str__(self):
         return f'User: {self.user.username} | Lvl: {self.staking_level.level}'
     
+    def get_profit(self) -> float:
+        if self.status != 'in_progress':
+            return 0.0
+
+        total_duration = (self.end_date - self.start_date).total_seconds()
+        elapsed_time = min((timezone.now() - self.start_date).total_seconds(), total_duration)
+
+        if total_duration <= 0:
+            return 0.0
+
+        progress_ratio = elapsed_time / total_duration
+
+        # Доход за весь срок: (сумма * процент / 100)
+        full_profit = float(self.amount) * float(self.staking_level.percentage) / 100
+
+        current_profit = full_profit * progress_ratio
+        total_profit = current_profit - float(self.withdrawn_amount)
+
+        return total_profit
+    
     def clean(self):
         """
         Валидация, что amount находится в пределах от min_deposite до max_deposite

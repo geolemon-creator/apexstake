@@ -14,8 +14,6 @@ export default function TaskItem({ data }: TaskItemProps) {
   const [exam, setExam] = useState(false);
 
   const handleTaskComplete = () => {
-    console.log('Opening link:', data.link);
-
     window.open(data.link, '_blank');
     const startTime = Date.now();
 

@@ -19,9 +19,7 @@ export default function Level(props: LevelProps) {
   return (
     <div
       className={`level-item ${isSelectedLevel ? 'selected-level' : ''}`}
-      onClick={() => {
-        onSelect(data.level);
-      }}
+      onClick={() => {onSelect(data.level);}}
     >
       <div className="header-list-item">
         <p className="level-p-header">Уровень</p>

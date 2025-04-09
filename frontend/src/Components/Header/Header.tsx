@@ -1,94 +1,80 @@
 import { NavLink } from 'react-router-dom';
 import LevelModal from '../SelectLevelModal/LevelModal';
 import LevelDetailModal from '../LevelDetailsModal/LevelDetailModal';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styles from './Header.module.css';
 import arrowDownIcon from '../../Img/arrow-down.svg';
 import { LevelData } from '../Type';
 import InputDepositeModal from '../InputDepositeModal/InputDepositeModal';
 import rightArrow from '../../Img/arrow-right.svg';
 import { getDecodedAvatarUrl } from '../../Utils/decodeAvatar';
-import { levelsApi, stakingApi } from '../../Api/stakingApi';
+import { stakingApi } from '../../Api/stakingApi';
 import { AxiosError } from 'axios';
 import { levelsAdditional } from '../SelectLevelModal/LevelItem/LevelAdditional';
 import useAuth from '../../Hooks/useAuth';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchLevels,
+  loadUserFromStorage,
+  setIsLevelsListOpen,
+  setIsDetailModalOpen,
+  setIsStakingDepositeOpen,
+  setSelectedLevelId,
+  setSelectedLevelDetail,
+} from '../../Features/headerUISlice';
+import { RootState, AppDispatch } from '../../store';
 
 const Header = () => {
-  const [isLevelsListOpen, setIsLevelsListOpen] = useState<boolean>(false);
-  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
-  const [isStakingDepositeOpen, setIsStakingDepositeOpen] = useState(false);
-
-  const [selectedLevelId, setSelectedLevelId] = useState<number | null>(null);
-  const [selectedLevelDetail, setSelectedLevelDetail] = useState<LevelData>();
-
-  const [levels, setLevels] = useState<LevelData[]>([]);
-  const [user, setUser] = useState<any>(null);
   const { updateUser } = useAuth();
-  const storedStaking = JSON.parse(
-    localStorage.getItem('current_staking') || '{}'
-  );
+  const dispatch = useDispatch<AppDispatch>();
+
+  const {
+    isLevelsListOpen,
+    isDetailModalOpen,
+    isStakingDepositeOpen,
+    selectedLevelId,
+    selectedLevelDetail,
+    levels,
+    user,
+  } = useSelector((state: RootState) => state.headerUI);
 
   useEffect(() => {
-    // Получаем данные из localStorage
-    const userString = localStorage.getItem('user');
-    if (userString) {
-      const user = JSON.parse(userString);
-      setUser(user);
-    }
-  }, []);
+    dispatch(fetchLevels());
+    dispatch(loadUserFromStorage());
+  }, [dispatch]);
 
-  useEffect(() => {
-    const fetchLevels = async () => {
-      try {
-        const levelsList: LevelData[] = await levelsApi.getLevelsList();
-        setLevels(levelsList);
-      } catch (err) {
-        // alert(err);
-        // alert('Ошибка загрузки уровней');
-        console.error(err);
-      }
-    };
-
-    fetchLevels();
-  }, []);
-
-  const handleCloseLevelsList = () => {
-    setIsLevelsListOpen(false);
-  };
-
-  const handleCloseDepositeModal = () => {
-    setIsStakingDepositeOpen(false);
-  };
-
-  // @ts-ignore
   const handleSelectLevel = (level: number) => {
-    setSelectedLevelId(level);
-    setIsLevelsListOpen(false);
-    setIsDetailModalOpen(true);
+    dispatch(setSelectedLevelId(level));
+    dispatch(setIsLevelsListOpen(false));
+    dispatch(setIsDetailModalOpen(true));
   };
 
   const handleOpenStakingDeposite = (level: LevelData) => {
     if (user?.selected_level) {
-      alert(
-        `Вы хотите поменять текущий уровень? ${user.selected_level} на ${level.level}`
-      );
       if (user.selected_level >= level.level) {
         alert('Для смены уровня нужно выбрать уровень выше текущего');
       } else {
-        setSelectedLevelDetail(level);
-        setIsDetailModalOpen(false);
-        setIsStakingDepositeOpen(true);
+        dispatch(setSelectedLevelDetail(level));
+        dispatch(setIsDetailModalOpen(false));
+        dispatch(setIsStakingDepositeOpen(true));
       }
     } else {
-      setSelectedLevelDetail(level);
       if (level.min_deposite > user.balance) {
-        // TODO: Редирект на страницу пополнения
         alert('Не достаточно средств на балансе');
       } else {
-        setIsDetailModalOpen(false);
-        setIsStakingDepositeOpen(true);
+        dispatch(setSelectedLevelDetail(level));
+        dispatch(setIsDetailModalOpen(false));
+        dispatch(setIsStakingDepositeOpen(true));
       }
     }
+  };
+
+  const handleCloseLevelsList = () => {
+    dispatch(setIsLevelsListOpen(false));
+  };
+
+  const handleCloseDepositeModal = () => {
+    dispatch(setIsStakingDepositeOpen(false));
   };
 
   const handleDepositeSubmit = async (amount: number, level: LevelData) => {
@@ -100,7 +86,7 @@ const Header = () => {
         updateUser(user.id);
         setTimeout(() => {
           window.location.reload();
-        }, 300);
+        }, 100);
       } catch (err) {
         const error = err as AxiosError<{ error: string }>;
 
@@ -115,7 +101,7 @@ const Header = () => {
         updateUser(user.id);
         setTimeout(() => {
           window.location.reload();
-        }, 300);
+        }, 100);
       } catch (err) {
         const error = err as AxiosError<{ error: string }>;
 
@@ -135,10 +121,9 @@ const Header = () => {
       const now = new Date().getTime();
       const delay = endDate - now;
 
-      console.log('setted');
       if (delay > 0) {
         setTimeout(() => {
-          location.reload(); // Обновит страницу ровно в end_date
+          location.reload();
         }, delay);
       }
     } catch (e) {
@@ -155,7 +140,7 @@ const Header = () => {
   );
 
   const avatarUrl = getDecodedAvatarUrl(user?.avatar);
-  console.log('current-staking', storedStaking);
+
   return (
     <div className={styles.headerContainer}>
       <NavLink
@@ -177,7 +162,7 @@ const Header = () => {
       {selectedLevel && (
         <div
           className={styles.headerLevel}
-          onClick={() => setIsLevelsListOpen(true)}
+          onClick={() => dispatch(setIsLevelsListOpen(true))}
         >
           <img
             src={levelsAdditional[selectedLevel.level].icon}
@@ -193,7 +178,7 @@ const Header = () => {
       {!selectedLevel && (
         <div
           className={styles.headerLevel}
-          onClick={() => setIsLevelsListOpen(true)}
+          onClick={() => dispatch(setIsLevelsListOpen(true))}
         >
           <p className="level-p">Выбор уровня</p>
           <img src={arrowDownIcon} alt="down-arrow" />
@@ -204,11 +189,11 @@ const Header = () => {
         <LevelDetailModal
           selectedLevelId={selectedLevelId}
           handleOpenStakingDeposite={handleOpenStakingDeposite}
-          onClose={() => setIsDetailModalOpen(false)}
+          onClose={() => dispatch(setIsDetailModalOpen(false))}
         />
       )}
 
-      {isStakingDepositeOpen && (
+      {isStakingDepositeOpen && selectedLevelDetail && (
         <InputDepositeModal
           level={selectedLevelDetail}
           handleDepositeSubmit={handleDepositeSubmit}

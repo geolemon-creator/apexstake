@@ -30,8 +30,12 @@ export const stakingApi = {
     return response.data;
   },
   getStakingMe: async () => {
-    const response = await apiClient.get(`/staking/me/`);
-    return response.data;
+    try {
+      const response = await apiClient.get(`/staking/me/`);
+      return response.data;
+    } catch {
+      return null;
+    }
   },
   getWallet: async () => {
     const response = await apiClient.get(`/wallet/`);
@@ -43,6 +47,18 @@ export const stakingApi = {
   },
   getCommission: async () => {
     const response = await apiClient.get(`/commission/`);
+    return response.data;
+  },
+  getStakingProfit: async () => {
+    try {
+      const response = await apiClient.get('/staking/profit/');
+      return response.data;
+    } catch {
+      return null;
+    }
+  },
+  withdrawStakingProfit: async () => {
+    const response = await apiClient.post('/staking/withdraw-profit/');
     return response.data;
   },
 };

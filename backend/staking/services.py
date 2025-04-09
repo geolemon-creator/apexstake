@@ -22,6 +22,7 @@ def close_user_staking(staking):
        - Создает запись о награде за стейкинг.
     """
     from .models import UserStakingReward
+    from transactions.models import Transactions
 
     try:
         # Проверяем статус стейкинга
@@ -31,9 +32,12 @@ def close_user_staking(staking):
         # Получаем данные пользователя и стейкинга
         user = staking.user
         amount = staking.amount
+        withdrawn_amount = staking.withdrawn_amount
         percentage = staking.staking_level.percentage
         result_amount = amount * (1 + percentage / 100)
         
+        result_amount_commission = result_amount - withdrawn_amount
+
         # Начинаем транзакцию для атомарных операций
         with transaction.atomic():
             user.decrease_blocked_balance(amount)
@@ -46,20 +50,26 @@ def close_user_staking(staking):
             staking.save()
             user.save()
 
+            Transactions.objects.create(
+                user=user,
+                wallet=user.wallet,
+                amount=result_amount_commission,
+                operation_type='deposit',
+                status='completed'
+            )
             UserStakingReward.objects.create(
-                amount=result_amount,
+                amount=result_amount_commission,
                 tokens=(amount / 2),
                 user_staking=staking
             )
+
         logger.info(f"Стейкинг успешно завершен для пользователя {user.id}, ID Стейкинга: {staking.id}, Сумма: {amount}, Результат: {result_amount}")
     
     except ValueError as e:
-        print(f"Ошибка при завершении стейкинга (ValueError): {str(e)}")
         logger.error(f"Ошибка при завершении стейкинга (ValueError): {str(e)}")
         raise
 
     except Exception as e:
-        print(f"Ошибка при завершении стейкинга (Exception): {str(e)}")
         logger.error(f"Ошибка при завершении стейкинга (Exception): {str(e)}")
         raise
 
@@ -146,11 +156,12 @@ def calculate_current_profit(amount, percentage, start, end):
     elapsed_minutes = (timezone.now() - start).total_seconds() / 60
 
     if total_minutes <= 0 or elapsed_minutes <= 0:
-        return amount
+        return Decimal("0.00")
 
     elapsed_minutes = min(elapsed_minutes, total_minutes)
     profit = (amount * percentage / 100) * Decimal(elapsed_minutes / total_minutes)
-    return (amount + profit).quantize(Decimal('0.01'), rounding=ROUND_DOWN)
+
+    return profit
 
 def calculate_daily_percentage(percentage, total_days):
     if total_days <= 0:

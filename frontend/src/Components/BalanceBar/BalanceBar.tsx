@@ -1,5 +1,6 @@
 import styles from './BalanceBar.module.css';
 import tonIcon from '../../Img/TonCoin.svg';
+import { formatBalance } from '../../Utils/formatBalance';
 
 export default function BalanceBar({
   balance,
@@ -39,7 +40,7 @@ export default function BalanceBar({
               Заблокировано
             </p>
             <p className={styles.balanceInfo} style={{ color: '#ADA9A9' }}>
-              {blockedBalance} TON
+              {formatBalance(blockedBalance)} TON
             </p>
           </div>
         </div>

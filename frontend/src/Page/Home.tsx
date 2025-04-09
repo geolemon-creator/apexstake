@@ -17,13 +17,18 @@ import ConnectWalletModal from '../Components/ConnectWalletModal/ConnectWalletMo
 import { useTonAddress } from '@tonconnect/ui-react';
 import { Banner } from '../Components/Type';
 import { stakingApi } from '../Api/stakingApi';
+import { useSelector } from 'react-redux';
+import { RootState } from './../store';
 
 export default function Home() {
+  const { profit } = useSelector((state: RootState) => state.staking);
+
   const { transactions } = useTransactions();
   const [isModalConnect, setIsModalConnect] = useState(false);
   const userFriendlyAddress = useTonAddress();
   const [user, setUser] = useState<any>(null);
   const [banners, setBanners] = useState<Banner[]>([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -150,7 +155,7 @@ export default function Home() {
 
           <BalanceBar
             balance={user?.balance}
-            blockedBalance={user?.blocked_balance}
+            blockedBalance={user?.blocked_balance + profit}
           />
 
           <div className="stak-btn-div">

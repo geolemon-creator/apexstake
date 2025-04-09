@@ -23,7 +23,7 @@ urlpatterns = [
     path('api/admin/', admin.site.urls),
     path('api/', include('users.urls')),
     path('api/', include('tasks.urls')),
-    path('api/', include('staking.urls')),
+    path('api/staking/', include('staking.urls')),
     path('api/', include('transactions.urls')),
     path('api/', include('main.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

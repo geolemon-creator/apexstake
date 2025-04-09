@@ -13,7 +13,6 @@ apiClient.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem('access_token');
     if (accessToken) {
-      // Если токен существует, добавляем его в заголовки Authorization
       config.headers.Authorization = `Bearer ${JSON.parse(accessToken)}`;
     }
     return config;
@@ -52,8 +51,6 @@ apiClient.interceptors.response.use(
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         localStorage.removeItem('user');
-        // alert('Ошибка обновления токена');
-        // alert(refreshError);
       }
     }
 

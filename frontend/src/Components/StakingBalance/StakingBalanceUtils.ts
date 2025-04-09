@@ -32,3 +32,10 @@ export const calculateTimeRemainingAndProgress = (
     progress: progress.toFixed(2), // округляем до двух знаков после запятой
   };
 };
+
+export const formatProfit = (profit: number) => {
+  if (typeof profit !== 'number') return '0.000';
+  return profit === 0
+    ? profit.toFixed(3) // для нуля — 3 знака после точки
+    : profit.toFixed(2); // иначе — 2 знака
+};
