@@ -3,6 +3,7 @@ import { levelsAdditional } from '../SelectLevelModal/LevelItem/LevelAdditional'
 import { LevelData } from '../Type';
 import closeIcon from '../../Img/close.svg';
 
+
 interface LevelDetailInfoProps {
   level: LevelData; // Ваш тип данных для уровня
   onClose: () => void;

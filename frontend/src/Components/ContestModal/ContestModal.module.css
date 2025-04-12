@@ -1,0 +1,54 @@
+.ContestModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #111118;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+  overflow-x: auto;
+}
+
+.ContestHeader {
+  background: #ffde45;
+  border-radius: 16px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.ContentInfo {
+  background: #282d33;
+  border-radius: 16px;
+  color: white;
+  font-size: 14px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.ContestPrize {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #282d33;
+  border-radius: 16px;
+  width: 90%;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin: 0 auto;
+}
+
+.ContestButton {
+  position: fixed;
+  bottom: 20px; /* отступ от нижнего края экрана */
+  left: 50%;
+  transform: translateX(-50%); /* центрирование по горизонтали */
+  width: 90%;
+  background: #ffde45;
+  font-weight: 700;
+  z-index: 1000; /* чтобы была поверх другого контента */
+  padding: 12px 0;
+  border-radius: 12px;
+  text-align: center;
+}

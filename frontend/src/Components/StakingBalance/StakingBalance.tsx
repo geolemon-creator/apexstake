@@ -74,15 +74,34 @@ const StakingBalance = () => {
   };
 
   const handleWithdrawProfit = async () => {
-    alert(`Вы хотите вывести прибыль на баланс? Комиссия составляет 25%`);
-    try {
-      await stakingApi.withdrawStakingProfit();
+    if (!userStakingData?.start_date || !userStakingData?.end_date) return;
 
-      setTimeout(() => {
-        window.location.reload();
-      }, 100);
-    } catch (err) {
-      console.error(err);
+    const startDate = new Date(userStakingData.start_date);
+    const now = new Date();
+
+    const minutesPassed = (now.getTime() - startDate.getTime()) / 1000 / 60;
+
+    let commissionRate;
+    if (minutesPassed < 5) {
+      commissionRate = 10;
+    } else {
+      commissionRate = 5;
+    }
+    const userConfirmed = window.confirm(
+      `Вы хотите вывести прибыль на баланс? Комиссия: ${commissionRate}%`
+    );
+
+    if (userConfirmed) {
+      try {
+        // Если пользователь нажал OK
+        await stakingApi.withdrawStakingProfit();
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 100);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -184,12 +203,11 @@ const StakingBalance = () => {
                 fill="white"
               >
                 {Number(userStakingData?.amount) > 0
-                  ? (
-                      (Number(profit) / Number(userStakingData?.amount)) *
-                      100
+                  ? Math.abs(
+                      (Number(profit) / Number(userStakingData?.amount)) * 100
                     ).toFixed(2)
                   : 0}
-                % {formatBalance(Number(profit))} TОН
+                % {formatBalance(Math.abs(Number(profit)))} TОН
               </text>
             </RoundGraph>
 

@@ -17,6 +17,10 @@ import LoadingPage from './Components/LoadingPage/LoadingPage';
 import { fetchProfitPercentage, setProfit } from './Features/stakingSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from './store';
+// @ts-ignore
+import 'swiper/css';
+// @ts-ignore
+import 'swiper/css/navigation';
 
 declare global {
   interface Window {

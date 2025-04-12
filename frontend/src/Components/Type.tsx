@@ -210,12 +210,27 @@ export interface Wallet {
   wallet: string;
 }
 
-export interface Competition {
+// Contests
+export interface ContestData {
   id: number;
   title: string;
   badge_content?: string;
   img: string;
-  end_date: string; // ISO-8601 datetime string
+  end_date: string;
+  prize_amount?: string;
+}
+export interface ContestInfo {
+  id: number;
+  title: string;
+  content: string;
+  amount: string;
+  contest: number;
+}
+export interface ContestApiResponse {
+  data: {
+    contest: ContestData;
+    contest_info: ContestInfo[];
+  };
 }
 
 // Banners

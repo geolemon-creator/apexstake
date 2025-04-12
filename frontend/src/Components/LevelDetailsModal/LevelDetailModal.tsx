@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { LevelData } from '../Type';
 import { levelsApi } from '../../Api/stakingApi';
 import LevelDetailInfo from './LevelDetailInfo';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
 
 interface LevelDetailModalProps {
   selectedLevelId: number | null;
@@ -17,17 +19,17 @@ const LevelDetailModal = ({
 }: LevelDetailModalProps) => {
   const [isChecked, setIsChecked] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
-  const [level, setLevel] = useState<LevelData>();
+  const [levels, setLevels] = useState<LevelData[]>([]);
   const checkboxRef = useRef<HTMLDivElement | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const fetchLevelDetails = async () => {
       try {
         if (selectedLevelId) {
-          const levelDetails: LevelData = await levelsApi.getLevelDetails(
-            selectedLevelId
-          );
-          setLevel(levelDetails);
+          const levelDetails: LevelData[] =
+            await levelsApi.getLevelListDetails();
+          setLevels(levelDetails);
         }
       } catch (err) {
         // alert('Ошибка загрузки уровней');
@@ -40,8 +42,8 @@ const LevelDetailModal = ({
   }, []);
 
   const handleButtonClick = () => {
-    if (isChecked && level) {
-      handleOpenStakingDeposite(level); // Вызываем функцию, если чекбокс установлен
+    if (isChecked && levels) {
+      handleOpenStakingDeposite(levels[activeIndex]); // Вызываем функцию, если чекбокс установлен
     } else {
       setIsShaking(true);
 
@@ -49,14 +51,50 @@ const LevelDetailModal = ({
     }
   };
 
-  if (!level) {
+  if (!levels) {
     return <div></div>;
   }
 
   return (
     <div>
       <div className="modal-overlay-check">
-        <LevelDetailInfo level={level} onClose={onClose} />
+        <div
+          style={{
+            margin: '0 auto',
+            maxWidth: '420px',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          {levels.length > 0 && (
+            <Swiper
+              modules={[Navigation, Pagination]}
+              navigation
+              pagination={{ clickable: true }}
+              spaceBetween={50}
+              slidesPerView={1}
+              initialSlide={levels.findIndex(
+                (level) => level.level === selectedLevelId
+              )}
+              onSlideChange={(swiper) => {
+                setActiveIndex(swiper.activeIndex);
+              }}
+            >
+              {levels.map((level, index) => (
+                <SwiperSlide key={level.level}>
+                  <div style={{ width: '335px', margin: '0 auto ' }}>
+                    <LevelDetailInfo
+                      key={index}
+                      level={level}
+                      onClose={onClose}
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
+        </div>
+
         <div
           className={`agreement-div ${isShaking ? 'shake' : ''}`}
           ref={checkboxRef}

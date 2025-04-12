@@ -24,6 +24,7 @@ import {
 } from '../../Features/headerUISlice';
 import { RootState, AppDispatch } from '../../store';
 
+
 const Header = () => {
   const { updateUser } = useAuth();
   const dispatch = useDispatch<AppDispatch>();

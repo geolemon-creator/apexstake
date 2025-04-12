@@ -12,6 +12,10 @@ export const levelsApi = {
     );
     return response.data;
   },
+  getLevelListDetails: async (): Promise<LevelData[]> => {
+    const response = await apiClient.get<LevelData[]>(`/staking/details/list/`);
+    return response.data;
+  },
 };
 
 export const stakingApi = {

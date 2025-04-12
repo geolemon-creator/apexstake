@@ -12,7 +12,7 @@ from transactions.models import Transactions
 
 from .models import StakingLevel, UserStaking
 from .serializers import StakingLevelSerializer, OpenStakingSerializer, UserStakingSerializer, StakingStage, StakingLevelDetailsSerializer, ChangeStakingSerializer
-from .services import change_staking_level
+from .services import change_staking_level, calculate_withdrawal_commission
 
 
 class StakingLevelsAPIView(APIView):
@@ -30,7 +30,7 @@ class StakingLevelsAPIView(APIView):
                 defaults={"staking_time": 110}
             )
             user.save()
-        
+
         levels = StakingLevel.objects.filter(stage=user.staking_stage)
         if not levels.exists():
             return Response(
@@ -134,6 +134,15 @@ class LevelDetailsAPIView(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+class LevelDetailsListAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        """Список всех уровней стейкинга пользователя"""
+        staking_levels = StakingLevel.objects.filter(stage=request.user.staking_stage).order_by('level')
+        serializer = StakingLevelDetailsSerializer(staking_levels, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 class UserStakingProfitView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -159,7 +168,8 @@ class WithdrawStakingProfit(APIView):
 
         # Преобразуем float в Decimal
         profit_decimal = Decimal(str(profit))
-        commission_profit = profit_decimal * Decimal('0.75')
+        commission = calculate_withdrawal_commission(user_staking.start_date, user_staking.end_date)
+        commission_profit = profit_decimal * commission
 
         # 3. Обновление данных о выводе
         try:

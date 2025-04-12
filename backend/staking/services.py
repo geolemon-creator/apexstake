@@ -170,3 +170,18 @@ def calculate_daily_percentage(percentage, total_days):
 
 def calculate_daily_earning(amount, daily_percentage):
     return (amount * daily_percentage) / 100
+
+def calculate_withdrawal_commission(start_date, end_date):
+    now = timezone.now()
+    days_passed = (now - start_date).total_seconds() / 60
+    total_days = (end_date - start_date).total_seconds() / 60
+
+    #days_passed = (now - start_date).days # TODO: DAYS на проде
+    #total_days = (end_date - start_date).days # TODO: DAYS на проде
+
+    if days_passed < 5: # 30 дней на проде
+        return Decimal('0.90')  # 10% комиссия
+    elif days_passed < total_days:
+        return Decimal('0.95')  # 5% комиссия
+    else:
+        return Decimal('1.00')  # без комиссии

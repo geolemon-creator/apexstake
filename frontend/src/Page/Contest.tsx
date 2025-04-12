@@ -1,27 +1,33 @@
-import picture from './../Img/picture.png';
-import timer from './../Img/timer.png';
-import party from './../Img/Party.png';
+import timer from './../Img/timer.svg';
 import { useEffect, useState } from 'react';
-import { Competition } from '../Components/Type';
-import { competitionsApi } from '../Api/competitionsApi';
+import { ContestData } from '../Components/Type';
+
 import CountdownTimer from '../Components/CountdownTimer';
+import { contestApi } from '../Api/contestApi';
+import ContestModal from '../Components/ContestModal/ContestModal';
 
 export default function Contest() {
-  const [data, setData] = useState<Competition[]>();
+  const [data, setData] = useState<ContestData[]>();
+  const [contestId, setContestId] = useState<number | undefined>(undefined);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const fetchCompetitions = async () => {
+    const fetchContests = async () => {
       try {
-        const competitionsList: Competition[] =
-          await competitionsApi.getCompetitions();
-        setData(competitionsList);
+        const contestList: ContestData[] = await contestApi.getContests();
+        setData(contestList);
       } catch (err) {
         console.error(err);
       }
     };
 
-    fetchCompetitions();
+    fetchContests();
   }, []);
+
+  const handleOpenModal = (id: number) => {
+    setContestId(id);
+    setIsModalOpen(true);
+  };
 
   if (!data) {
     return <div></div>;
@@ -52,7 +58,18 @@ export default function Contest() {
             <CountdownTimer endDate={item.end_date} />
           </div>
 
-          <button className="contest-btn-about">Подробнее</button>
+          <button
+            className="contest-btn-about"
+            onClick={() => handleOpenModal(item.id)}
+          >
+            Подробнее
+          </button>
+          {isModalOpen && contestId && (
+            <ContestModal
+              contest_id={contestId}
+              onClose={() => setIsModalOpen(false)}
+            />
+          )}
         </div>
       ))}
     </div>

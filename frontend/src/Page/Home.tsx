@@ -19,6 +19,7 @@ import { Banner } from '../Components/Type';
 import { stakingApi } from '../Api/stakingApi';
 import { useSelector } from 'react-redux';
 import { RootState } from './../store';
+import AboutModal from '../Components/AboutModal/AboutModal';
 
 export default function Home() {
   const { profit } = useSelector((state: RootState) => state.staking);
@@ -27,12 +28,12 @@ export default function Home() {
   const [isModalConnect, setIsModalConnect] = useState(false);
   const userFriendlyAddress = useTonAddress();
   const [user, setUser] = useState<any>(null);
+  const [isAboutModal, setIsAboutModal] = useState(false);
   const [banners, setBanners] = useState<Banner[]>([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Получаем данные из localStorage
     const userString = localStorage.getItem('user');
     if (userString) {
       const user = JSON.parse(userString);
@@ -53,10 +54,8 @@ export default function Home() {
 
   const handleNavigation = (route: string) => {
     if (!userFriendlyAddress) {
-      // Если нет userFriendlyAddress, показываем модальное окно
       setIsModalConnect(true);
     } else {
-      // Если адрес есть, переходим по нужному маршруту
       navigate(route);
     }
   };
@@ -190,11 +189,12 @@ export default function Home() {
       </div>
 
       <NavLink style={{ textDecoration: 'none' }} to="/">
-        <div className="btn-more">
+        <div className="btn-more" onClick={() => setIsAboutModal(true)}>
           <p>Узнать больше о проекте</p>
           <img src={arrowRight} alt="arrow" />
         </div>
       </NavLink>
+      {isAboutModal && <AboutModal onClose={() => setIsAboutModal(false)} />}
 
       <NavLink style={{ textDecoration: 'none' }} to="/staking">
         <div className="btn-staking">Открыть стейкинг</div>
