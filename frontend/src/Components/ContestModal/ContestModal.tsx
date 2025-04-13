@@ -8,6 +8,7 @@ import closeIcon from '../../Img/close.svg';
 import timer from '../../Img/timer.svg';
 import coin from '../../Img/coin.svg';
 import cub from '../../Img/cub-gold.svg';
+import { useTranslation } from 'react-i18next';
 
 interface ContestModalProps {
   contest_id: number;
@@ -16,6 +17,7 @@ interface ContestModalProps {
 
 const ContestModal = ({ contest_id, onClose }: ContestModalProps) => {
   const [data, setData] = useState<ContestApiResponse>();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchContest = async () => {
@@ -34,19 +36,16 @@ const ContestModal = ({ contest_id, onClose }: ContestModalProps) => {
   const handleEnterContest = async () => {
     try {
       await contestApi.enterContest(contest_id);
-      alert('Вы приняли участие в конкурсе!');
+      alert(t('contest_joined_success'));
     } catch (err) {
       const axiosError = err as AxiosError;
 
       const errorMessage =
-        (axiosError.response?.data as any)?.detail || // достаём detail из тела ответа
-        axiosError.message || // стандартное сообщение axios
-        'Произошла ошибка';
+        (axiosError.response?.data as any)?.detail || axiosError.message;
       alert(errorMessage);
     }
   };
 
-  console.log(data);
   if (!data) {
     return;
   }
@@ -57,10 +56,10 @@ const ContestModal = ({ contest_id, onClose }: ContestModalProps) => {
         alt="close icon"
         onClick={onClose}
         style={{
-          position: 'absolute', // иконка будет позиционироваться относительно родителя
-          top: '10px', // отступ сверху
-          left: '10px', // отступ слева
-          cursor: 'pointer', // указатель мыши для кликабельности
+          position: 'absolute',
+          top: '10px',
+          left: '10px',
+          cursor: 'pointer',
         }}
       />
       <div className={styles.ContestContent}>
@@ -97,7 +96,7 @@ const ContestModal = ({ contest_id, onClose }: ContestModalProps) => {
                   marginTop: '4px',
                 }}
               >
-                Закончится через:
+                {t('ends_in')}
               </p>
             </div>
             <div
@@ -117,7 +116,7 @@ const ContestModal = ({ contest_id, onClose }: ContestModalProps) => {
           <div style={{ display: 'flex', marginLeft: '12px' }}>
             <img src={cub} alt="cub" style={{ marginRight: '12px' }} />
             <p style={{ fontSize: '18px', color: 'white', fontWeight: '600' }}>
-              Призовой фонд
+              {t('prize_pool')}
             </p>
           </div>
           <div style={{ display: 'flex', marginRight: '12px' }}>
@@ -138,7 +137,7 @@ const ContestModal = ({ contest_id, onClose }: ContestModalProps) => {
             marginTop: '16px',
           }}
         >
-          Условия конкурса
+          {t('contest_conditions')}
         </h4>
         <div
           style={{
@@ -172,7 +171,7 @@ const ContestModal = ({ contest_id, onClose }: ContestModalProps) => {
                     display: 'flex',
                   }}
                 >
-                  <p>Стоимость входа:</p>
+                  <p>{t('entry_fee')}</p>
                   <p style={{ marginLeft: '12px', color: '#FFDE45' }}>
                     {Number(info.amount).toFixed(0)} TON
                   </p>
@@ -182,7 +181,7 @@ const ContestModal = ({ contest_id, onClose }: ContestModalProps) => {
           ))}
         </div>
         <div className={styles.ContestButton} onClick={handleEnterContest}>
-          Принять участие
+          {t('join_contest')}
         </div>
       </div>
     </div>

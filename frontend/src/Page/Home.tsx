@@ -1,5 +1,4 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useTransactions } from '../Components/TransactionsContext';
 
 import arrowRight from './../Img/arrow-right.svg';
 import coin from './../Img/coin.svg';
@@ -20,11 +19,12 @@ import { stakingApi } from '../Api/stakingApi';
 import { useSelector } from 'react-redux';
 import { RootState } from './../store';
 import AboutModal from '../Components/AboutModal/AboutModal';
+import { useTranslation } from 'react-i18next';
 
 export default function Home() {
   const { profit } = useSelector((state: RootState) => state.staking);
+  const { t } = useTranslation('home');
 
-  const { transactions } = useTransactions();
   const [isModalConnect, setIsModalConnect] = useState(false);
   const userFriendlyAddress = useTonAddress();
   const [user, setUser] = useState<any>(null);
@@ -105,7 +105,7 @@ export default function Home() {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
   };
-  console.log(banners, 'ban');
+
   return (
     <div className="home-countainer">
       <Header />
@@ -133,7 +133,7 @@ export default function Home() {
       <div className="home-balance">
         <div className="total-balance">
           <div className="total-price-div">
-            <p className="title-balance">Total Balance</p>
+            <p className="title-balance">{t('total_balance')}</p>
             <p className="title-price">
               <img
                 src={tonIcon}
@@ -147,7 +147,7 @@ export default function Home() {
           </div>
 
           <div className="balance-bonus">
-            <p className="balance-bonus-title">Bonus</p>
+            <p className="balance-bonus-title">{t('bonus')}</p>
             <img className="balance-bonus-img" src={coin} />
             <p className="bonus-num">{user?.tokens}</p>
           </div>
@@ -168,7 +168,7 @@ export default function Home() {
             >
               <div className="stak-first-div">
                 <img src={deposit} alt="desposit" />
-                <p className="deposit-p">Пополнить</p>
+                <p className="deposit-p">{t('deposit')}</p>
               </div>
             </NavLink>
             <NavLink
@@ -181,7 +181,7 @@ export default function Home() {
             >
               <div className="stak-first-div">
                 <img src={withdraw} alt="withdraw" />
-                <p className="deposit-p">Вывод</p>
+                <p className="deposit-p">{t('withdraw')}</p>
               </div>
             </NavLink>
           </div>
@@ -190,14 +190,14 @@ export default function Home() {
 
       <NavLink style={{ textDecoration: 'none' }} to="/">
         <div className="btn-more" onClick={() => setIsAboutModal(true)}>
-          <p>Узнать больше о проекте</p>
+          <p>{t('more_about_project')}</p>
           <img src={arrowRight} alt="arrow" />
         </div>
       </NavLink>
       {isAboutModal && <AboutModal onClose={() => setIsAboutModal(false)} />}
 
       <NavLink style={{ textDecoration: 'none' }} to="/staking">
-        <div className="btn-staking">Открыть стейкинг</div>
+        <div className="btn-staking">{t('open_staking')}</div>
       </NavLink>
       {isModalConnect && (
         <ConnectWalletModal closeModal={() => setIsModalConnect(false)} />

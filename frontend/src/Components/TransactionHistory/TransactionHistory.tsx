@@ -3,9 +3,11 @@ import styles from './TransactionHistory.module.css';
 import { transactionsApi } from '../../Api/transactionsApi';
 import { TransactionData } from '../Type';
 import TransactionItem from '../TransactionItem/TansactionItem';
+import { useTranslation } from 'react-i18next';
 
 const TransactionHistory = () => {
   const [data, setData] = useState<TransactionData[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchTransactionsApi = async () => {
@@ -43,7 +45,7 @@ const TransactionHistory = () => {
             textAlign: 'center',
           }}
         >
-          Пока нет транзакций
+          {t('no_transactions')}
         </p>
       )}
       {!isEmpty && (

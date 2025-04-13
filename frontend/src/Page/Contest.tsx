@@ -5,11 +5,13 @@ import { ContestData } from '../Components/Type';
 import CountdownTimer from '../Components/CountdownTimer';
 import { contestApi } from '../Api/contestApi';
 import ContestModal from '../Components/ContestModal/ContestModal';
+import { useTranslation } from 'react-i18next';
 
 export default function Contest() {
   const [data, setData] = useState<ContestData[]>();
   const [contestId, setContestId] = useState<number | undefined>(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchContests = async () => {
@@ -34,7 +36,7 @@ export default function Contest() {
   }
   return (
     <div className="contest-container">
-      <h1 className="contest-h1">Конкурсы</h1>
+      <h1 className="contest-h1">{t('contests')}</h1>
 
       {data.map((item) => (
         <div className="contest-div" key={item.id}>
@@ -50,7 +52,7 @@ export default function Contest() {
           <img className={'paty-img'} src={item.img} alt={item.title} />
 
           <div className="contest-text-div">
-            <p className="contest-text">Закончится через:</p>
+            <p className="contest-text">{t('ends_in')}</p>
           </div>
 
           <div className="contest-timer">
@@ -62,7 +64,7 @@ export default function Contest() {
             className="contest-btn-about"
             onClick={() => handleOpenModal(item.id)}
           >
-            Подробнее
+            {t('more_details')}
           </button>
           {isModalOpen && contestId && (
             <ContestModal

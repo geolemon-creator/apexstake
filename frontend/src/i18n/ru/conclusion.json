@@ -1,0 +1,11 @@
+{
+  "withdraw": "Вывод",
+  "total_balance": "Баланс",
+  "bonus": "Бонус",
+  "address": "Адрес",
+  "all": "ВСЕ",
+  "confirm_withdraw": "Подтвердить вывод",
+  "commission": "Комиссия",
+  "wait_withdraw_approval": "Ожидайте подтверждение вывода!",
+  "withdraw_error": "Ошибка при отправке транзакции"
+}

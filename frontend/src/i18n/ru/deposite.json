@@ -1,0 +1,8 @@
+{
+  "deposit": "Пополнение",
+  "total_balance": "Total Balance",
+  "bonus": "Бонус",
+  "confirm_deposit": "Подтвердить пополнение",
+  "transaction_sent": "Транзакция отправлена",
+  "transaction_error": "Ошибка при отправке транзакции"
+}

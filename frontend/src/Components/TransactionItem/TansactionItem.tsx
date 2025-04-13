@@ -1,12 +1,14 @@
 import { TransactionData } from '../Type';
 import style from './TransactionItem.module.css';
 import transWallet from './../../Img/transWallet.svg';
+import { useTranslation } from 'react-i18next';
 
 interface TansactionsProps {
   data: TransactionData;
 }
 
 export default function TansactionItem(props: TansactionsProps) {
+  const { t } = useTranslation();
   const truncateText = (text: string, maxLength: number): string => {
     if (text?.length > maxLength) {
       return text.slice(0, maxLength) + '...';
@@ -19,17 +21,17 @@ export default function TansactionItem(props: TansactionsProps) {
     { label: string; background: string; color: string }
   > = {
     completed: {
-      label: 'Завершено',
+      label: t('status_completed'),
       background: '#09D84E',
       color: '#ffffff',
     },
     waiting: {
-      label: 'В процессе',
+      label: t('status_waiting'),
       background: '#ADA9A9',
       color: '#FF0000',
     },
     canceled: {
-      label: 'Отменено',
+      label: t('status_canceled'),
       background: '#FF4C4C',
       color: '#ffffff',
     },

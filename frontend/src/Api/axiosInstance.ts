@@ -15,6 +15,10 @@ apiClient.interceptors.request.use(
     if (accessToken) {
       config.headers.Authorization = `Bearer ${JSON.parse(accessToken)}`;
     }
+
+    const language = localStorage.getItem('language') || 'ru';
+    config.headers['Accept-Language'] = language;
+
     return config;
   },
   (error) => {

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface CountdownTimerProps {
   endDate: string;
 }
 
 const CountdownTimer: React.FC<CountdownTimerProps> = ({ endDate }) => {
+  const { t } = useTranslation();
   const calculateTimeLeft = () => {
     const difference = +new Date(endDate) - +new Date();
 
@@ -40,13 +42,13 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ endDate }) => {
   return (
     <>
       <p className="num-timer">{timeLeft.days}</p>
-      <p className="contest-num">дня</p>
+      <p className="contest-num">{t('days')}</p>
       <p className="num-timer">{String(timeLeft.hours).padStart(2, '0')}</p>
-      <p className="contest-num">часов</p>
+      <p className="contest-num">{t('hours')}</p>
       <p className="num-timer">{String(timeLeft.minutes).padStart(2, '0')}</p>
-      <p className="contest-num">минут</p>
+      <p className="contest-num">{t('minutes')}</p>
       <p className="num-timer">{String(timeLeft.seconds).padStart(2, '0')}</p>
-      <p className="contest-num">секунд</p>
+      <p className="contest-num">{t('seconds')}</p>
     </>
   );
 };

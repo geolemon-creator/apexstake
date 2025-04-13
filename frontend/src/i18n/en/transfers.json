@@ -1,0 +1,10 @@
+{
+  "staking": "Staking",
+  "main_balance": "Main Balance",
+  "usdt": "USDT",
+  "max": "Max",
+  "balance": "Balance",
+  "all": "ALL",
+  "commission": "Commission 10% = {{amount}} USDT",
+  "confirm_withdraw": "Confirm Withdrawal"
+}

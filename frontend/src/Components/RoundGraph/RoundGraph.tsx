@@ -1,15 +1,15 @@
 import React from 'react';
 
 interface RoundGraphProps {
-  progress: number; // Прогресс в процентах (0-100)
+  progress: number;
   children?: React.ReactNode;
 }
 
 const RoundGraph: React.FC<RoundGraphProps> = ({ progress, children }) => {
-  const radius = 50; // Радиус кольца
-  const strokeWidth = 15; // Толщина бордера
-  const circumference = 2 * Math.PI * radius; // Длина окружности
-  const offset = circumference - (progress / 100) * circumference; // Рассчитываем смещение для прогресса
+  const radius = 50;
+  const strokeWidth = 15;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (progress / 100) * circumference;
 
   return (
     <div className="roundGraphContainer">
@@ -35,18 +35,18 @@ const RoundGraph: React.FC<RoundGraphProps> = ({ progress, children }) => {
           strokeWidth={strokeWidth}
           fill="none"
           strokeDasharray={circumference}
-          strokeDashoffset={0} // Не изменяем смещение фона
+          strokeDashoffset={0}
         />
         <circle
           cx="60"
           cy="60"
           r={radius}
-          stroke="url(#progressGradient)" // Цвет прогресса
+          stroke="url(#progressGradient)"
           strokeWidth={strokeWidth}
           fill="none"
           strokeDasharray={circumference}
-          strokeDashoffset={offset} // Прогресс
-          strokeLinecap="round" // Закругленные концы
+          strokeDashoffset={offset}
+          strokeLinecap="round"
         />
         {children}
       </svg>

@@ -4,6 +4,7 @@ import { levelsApi } from '../../Api/stakingApi';
 import LevelDetailInfo from './LevelDetailInfo';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
+import { useTranslation } from 'react-i18next';
 
 interface LevelDetailModalProps {
   selectedLevelId: number | null;
@@ -22,6 +23,7 @@ const LevelDetailModal = ({
   const [levels, setLevels] = useState<LevelData[]>([]);
   const checkboxRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchLevelDetails = async () => {
@@ -32,8 +34,6 @@ const LevelDetailModal = ({
           setLevels(levelDetails);
         }
       } catch (err) {
-        // alert('Ошибка загрузки уровней');
-        // alert(err);
         console.error(err);
       }
     };
@@ -43,7 +43,7 @@ const LevelDetailModal = ({
 
   const handleButtonClick = () => {
     if (isChecked && levels) {
-      handleOpenStakingDeposite(levels[activeIndex]); // Вызываем функцию, если чекбокс установлен
+      handleOpenStakingDeposite(levels[activeIndex]);
     } else {
       setIsShaking(true);
 
@@ -113,12 +113,11 @@ const LevelDetailModal = ({
           </div>
 
           <a className="agreement-a" href="#">
-            Я ознакомился с Соглашением об оказании услуг по размещению ставок и
-            согласен с ним
+            {t('agreement_text')}
           </a>
         </div>
         <button className="basic-lvl-btn" onClick={handleButtonClick}>
-          Выбрать
+          {t('choose_button')}
         </button>
       </div>
     </div>

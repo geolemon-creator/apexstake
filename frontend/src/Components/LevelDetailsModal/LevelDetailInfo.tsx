@@ -2,7 +2,7 @@ import RoundGraph from '../RoundGraph/RoundGraph';
 import { levelsAdditional } from '../SelectLevelModal/LevelItem/LevelAdditional';
 import { LevelData } from '../Type';
 import closeIcon from '../../Img/close.svg';
-
+import { useTranslation } from 'react-i18next';
 
 interface LevelDetailInfoProps {
   level: LevelData; // Ваш тип данных для уровня
@@ -10,6 +10,8 @@ interface LevelDetailInfoProps {
 }
 
 const LevelDetailInfo = ({ level, onClose }: LevelDetailInfoProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="basic-lvl-div">
       <img
@@ -20,14 +22,14 @@ const LevelDetailInfo = ({ level, onClose }: LevelDetailInfoProps) => {
       />
       <div className="bas-nor-block">
         <div className="title-lvl-div">
-          <p className="basic-lvl-p">Уровень:</p>
+          <p className="basic-lvl-p">{t('level_info_title')}</p>
           <div className="title-lvl-ab-div">
             <img
               className="lvl-img"
               src={levelsAdditional[level.level]?.icon}
               alt="diamond"
             />
-            <p className="lvl-p">{levelsAdditional[level.level]?.title}</p>
+            <p className="lvl-p">{t(levelsAdditional[level.level]?.title)}</p>
           </div>
         </div>
         <RoundGraph progress={Math.min(level.full_rate, 100)}>
@@ -47,7 +49,7 @@ const LevelDetailInfo = ({ level, onClose }: LevelDetailInfoProps) => {
       </div>
       <div className="data-lvl-div">
         <div className="data-lvl-text">
-          <p className="data-lvl-first-p">Дата ставки:</p>
+          <p className="data-lvl-first-p">{t('date_of_bet')}</p>
           <p className="data-lvl-second-p">
             {new Date(level.start_date)
               .toLocaleDateString('ru-RU')
@@ -56,15 +58,18 @@ const LevelDetailInfo = ({ level, onClose }: LevelDetailInfoProps) => {
         </div>
 
         <div className="data-lvl-text">
-          <p className="data-lvl-first-p">Период начисления процентов:</p>
+          <p className="data-lvl-first-p">{t('interest_period')}</p>
           <p className="data-lvl-second-p">
-            {10} {1 === 1 ? 'день' : 'дней'}
+            {/* TODO: Указать значения */}
+            {10} {1 === 1 ? t('day') : t('days')}
           </p>
         </div>
 
         <div className="data-lvl-text big-p">
           <p className="data-lvl-first-p">
-            Дата окончания начисления <br /> процентов:
+            <span
+              dangerouslySetInnerHTML={{ __html: t('end_date_of_interest') }}
+            />
           </p>
           <p className="data-lvl-second-p">
             {new Date(level.end_date)
@@ -74,15 +79,15 @@ const LevelDetailInfo = ({ level, onClose }: LevelDetailInfoProps) => {
         </div>
 
         <div className="data-lvl-text">
-          <p className="data-lvl-first-p">Срок погашения:</p>
+          <p className="data-lvl-first-p">{t('repayment_term')}</p>
           <p className="data-lvl-second-p">
             {level.stage.staking_time}{' '}
-            {level.stage.staking_time === 1 ? 'день' : 'дней'}
+            {level.stage.staking_time === 1 ? t('day') : t('days')}
           </p>
         </div>
 
         <div className="data-lvl-text">
-          <p className="data-lvl-first-p">Дата погашения:</p>
+          <p className="data-lvl-first-p">{t('repayment_date')}</p>
           <p className="data-lvl-second-p">
             {new Date(level.end_date)
               .toLocaleDateString('ru-RU')
@@ -91,7 +96,7 @@ const LevelDetailInfo = ({ level, onClose }: LevelDetailInfoProps) => {
         </div>
 
         <div className="data-lvl-text">
-          <p className="data-lvl-first-p">Процентная ставка:</p>
+          <p className="data-lvl-first-p">{t('interest_rate')}</p>
           <p className="data-lvl-second-p">{Math.round(level.percentage)}%</p>
         </div>
       </div>

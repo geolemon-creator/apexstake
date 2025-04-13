@@ -1,0 +1,13 @@
+{
+  "connect_wallet": "Connect your wallet",
+  "connect_wallet_description": "To deposit/withdraw funds, connect your TON wallet",
+  "connect_wallet_button": "Connect TON wallet",
+  "wallet_connected": "Your wallet is connected",
+  "wallet": "TON Wallet",
+  "wallet_address": "Wallet Address",
+  "copy_address": "Copy Address",
+  "disconnect_wallet": "Disconnect Wallet",
+  "telegram_chat_support": "Telegram support chat",
+  "feedback_suggestions": "Feedback and Suggestions",
+  "learn_more_about_project": "Learn more about the project"
+}

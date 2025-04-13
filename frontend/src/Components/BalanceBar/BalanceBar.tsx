@@ -1,6 +1,6 @@
 import styles from './BalanceBar.module.css';
-import tonIcon from '../../Img/TonCoin.svg';
 import { formatBalance } from '../../Utils/formatBalance';
+import { useTranslation } from 'react-i18next';
 
 export default function BalanceBar({
   balance,
@@ -12,6 +12,7 @@ export default function BalanceBar({
   const total = balance + blockedBalance;
   const balancePercentage = total > 0 ? (balance / total) * 100 : 0;
   const blockedPercentage = total > 0 ? (blockedBalance / total) * 100 : 0;
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -29,7 +30,7 @@ export default function BalanceBar({
         <div className={styles.balanceInfoContainer}>
           <div>
             <p className={styles.balanceInfo} style={{ color: '#09D84E' }}>
-              Активный баланс
+              {t('active_balance')}
             </p>
             <p className={styles.balanceInfo} style={{ color: '#ADA9A9' }}>
               {balance} TON
@@ -37,7 +38,7 @@ export default function BalanceBar({
           </div>
           <div>
             <p className={styles.balanceInfo} style={{ color: '#FF0000' }}>
-              Заблокировано
+              {t('blocked_balance')}
             </p>
             <p className={styles.balanceInfo} style={{ color: '#ADA9A9' }}>
               {formatBalance(blockedBalance)} TON

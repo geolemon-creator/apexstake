@@ -10,20 +10,21 @@ import { useTonConnectUI } from '@tonconnect/ui-react';
 import { useTonAddress } from '@tonconnect/ui-react';
 import { usersApi } from '../Api/usersApi';
 import { UpdateUserRequest } from '../Components/Type';
+import { useTranslation } from 'react-i18next';
 
 export default function Profile() {
   const [user, setUser] = useState<any>(null);
   const [tonConnectUI, setOptions] = useTonConnectUI();
   const [isCopied, setIsCopied] = useState(false);
   const userFriendlyAddress = useTonAddress();
-  const rawAddress = useTonAddress(false);
+  const { t } = useTranslation('profile');
 
   useEffect(() => {
     const userString = localStorage.getItem('user');
 
     if (userString) {
       const user = JSON.parse(userString);
-      setUser(user); // Сохраняем данные пользователя
+      setUser(user);
     }
   }, []);
 
@@ -51,11 +52,10 @@ export default function Profile() {
   }, [userFriendlyAddress]);
 
   const shortenAddress = (address: string) => {
-    // Проверим, что адрес длиннее 10 символов
     if (address.length > 10) {
       return `${address.slice(0, 12)}...${address.slice(-6)}`;
     }
-    return address; // Если адрес короткий, не обрезаем
+    return address;
   };
 
   const handleCopyClick = () => {
@@ -63,7 +63,7 @@ export default function Profile() {
       .writeText(userFriendlyAddress)
       .then(() => {
         setIsCopied(true);
-        setTimeout(() => setIsCopied(false), 2000); // Возвращаем иконку через 2 секунды
+        setTimeout(() => setIsCopied(false), 2000);
       })
       .catch((err) => console.error('Ошибка копирования: ', err));
   };
@@ -91,11 +91,11 @@ export default function Profile() {
         <div className="user-wallet">
           {!userFriendlyAddress ? (
             <>
-              <p className="connect-wallet">Подключите ваш кошелек</p>
+              <p className="connect-wallet">{t('connect_wallet')}</p>
 
               <div className="about-connect-p-div">
                 <p className="about-connect-p">
-                  Для ввода/вывода средств подключайте свой TON кошелек
+                  {t('connect_wallet_description')}
                 </p>
               </div>
 
@@ -103,7 +103,7 @@ export default function Profile() {
                 onClick={() => tonConnectUI.openModal()}
                 className="user-wallet-btn"
               >
-                Подключить кошелек TON
+                {t('connect_wallet_button')}
               </button>
             </>
           ) : (
@@ -111,10 +111,10 @@ export default function Profile() {
               <div className="main-open-div">
                 <div className="open-wallet-header">
                   <div className="open-wallet-text">
-                    <p className="open-wallet-p-first">ТОН Кошелек</p>
+                    <p className="open-wallet-p-first">{t('wallet')}</p>
                     <div className="open-p-wallet-flex">
                       <p className="open-wallet-p-second">
-                        Ваш кошелек подключен
+                        {t('wallet_connected')}
                       </p>
                       <img className="open-p-img" src={ok} />
                     </div>
@@ -132,7 +132,7 @@ export default function Profile() {
                     onClick={handleCopyClick}
                     className="adress-copy-img"
                     src={isCopied ? ok : copy}
-                    alt=""
+                    alt="copy"
                   />
                 </div>
               </div>
@@ -142,7 +142,7 @@ export default function Profile() {
                   onClick={() => tonConnectUI.disconnect()}
                   className="untie-wallet"
                 >
-                  Отвязать кошелек
+                  {t('disconnect_wallet')}
                 </button>
               </div>
             </>
@@ -158,16 +158,7 @@ export default function Profile() {
         >
           <img className="review-img" src={telegram} />
           <div className="review-p-div">
-            <p className="review-p">Telegram-чат поддержки</p>
-          </div>
-
-          <span className="review-arrow">&gt;</span>
-        </div>
-
-        <div className="review-div">
-          <img className="review-img" src={help} />
-          <div className="review-p-div">
-            <p className="review-p">Как это работает?</p>
+            <p className="review-p">{t('telegram_chat_support')}</p>
           </div>
 
           <span className="review-arrow">&gt;</span>
@@ -176,7 +167,7 @@ export default function Profile() {
         <div className="review-div">
           <img className="review-img" src={offers} />
           <div className="review-p-div">
-            <p className="review-p">Отзыв и предложения</p>
+            <p className="review-p">{t('feedback_suggestions')}</p>
           </div>
 
           <span className="review-arrow">&gt;</span>
@@ -185,7 +176,8 @@ export default function Profile() {
         <div className="review-div">
           <img className="review-img" src={help} />
           <div className="review-p-div">
-            <p className="review-p">Узнать больше о проекте</p>
+            {/* TODO: открытие модалки AboutModal */}
+            <p className="review-p">{t('learn_more_about_project')}</p>
           </div>
 
           <span className="review-arrow">&gt;</span>

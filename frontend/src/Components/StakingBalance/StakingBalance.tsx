@@ -2,10 +2,7 @@ import RoundGraph from '../RoundGraph/RoundGraph';
 import styles from './StakingBalance.module.css';
 import { useEffect } from 'react';
 import infoIcon from '../../Img/info.svg';
-import {
-  calculateTimeRemainingAndProgress,
-  formatProfit,
-} from './StakingBalanceUtils';
+import { calculateTimeRemainingAndProgress } from './StakingBalanceUtils';
 import LevelDetailInfo from '../LevelDetailsModal/LevelDetailInfo';
 import tonIcon from '../../Img/TonCoin.svg';
 
@@ -20,6 +17,7 @@ import {
 import { RootState, AppDispatch } from '../../store';
 import { formatBalance } from '../../Utils/formatBalance';
 import { stakingApi } from '../../Api/stakingApi';
+import { useTranslation } from 'react-i18next';
 
 const StakingBalance = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,7 +30,7 @@ const StakingBalance = () => {
     isModalOpen,
     isLoading,
   } = useSelector((state: RootState) => state.staking);
-
+  const { t } = useTranslation();
   useEffect(() => {
     dispatch(fetchStakingDetails());
   }, [dispatch]);
@@ -88,12 +86,11 @@ const StakingBalance = () => {
       commissionRate = 5;
     }
     const userConfirmed = window.confirm(
-      `Вы хотите вывести прибыль на баланс? Комиссия: ${commissionRate}%`
+      `${t('confirm_withdraw_profit')} ${commissionRate}%`
     );
 
     if (userConfirmed) {
       try {
-        // Если пользователь нажал OK
         await stakingApi.withdrawStakingProfit();
 
         setTimeout(() => {
@@ -160,7 +157,7 @@ const StakingBalance = () => {
                 fontSize="5"
                 fill="rgba(173, 169, 169, 1)"
               >
-                День {userStakingData?.current_day} из{' '}
+                {t('day')} {userStakingData?.current_day} {t('from')}{' '}
                 {userStakingData?.total_days} ({progress}%)
               </text>
               <text
@@ -191,7 +188,7 @@ const StakingBalance = () => {
                 fontWeight="bold"
                 fill="rgba(9, 216, 78, 1)"
               >
-                Прибыль
+                {t('profit')}
               </text>
               <text
                 x="50%"
@@ -212,7 +209,9 @@ const StakingBalance = () => {
             </RoundGraph>
 
             <div className={styles.BalanceAmount}>
-              <p className={styles.stakingBalanceText}>Staking Balance</p>
+              <p className={styles.stakingBalanceText}>
+                {t('staking_balance')}
+              </p>
               <h1 className={styles?.stakingAmount}>
                 <img
                   src={tonIcon}
@@ -233,14 +232,14 @@ const StakingBalance = () => {
                   {userStakingData?.daily_percentage?.toFixed(2)}%
                 </p>
                 <p className={styles.stakingPeriod}>
-                  • {userStakingData?.current_day} Day
+                  • {userStakingData?.current_day} {t('day')}
                 </p>
               </div>
               <div
                 className={styles.WithdrawProfitBtn}
                 onClick={handleWithdrawProfit}
               >
-                Вывод прибыли
+                {t('withdraw_profit')}
               </div>
             </div>
             {isModalOpen && level && (
@@ -258,7 +257,7 @@ const StakingBalance = () => {
               className={styles.stakingBalanceText}
               style={{ paddingTop: '10px' }}
             >
-              Staking Balance
+              {t('staking_balance')}
             </p>
             <h1 className={styles?.stakingAmount}>
               <img

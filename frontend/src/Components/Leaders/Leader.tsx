@@ -1,5 +1,4 @@
 import { LeadersListResponse } from '../Type';
-import tonIcon from './../../Img/TonCoin.svg';
 import coin from './../../Img/coin.svg';
 import goldMedalIcon from './../../Img/refferal/goldMedal.svg';
 import silverMedalIcon from './../../Img/refferal/silverMedal.svg';
@@ -7,9 +6,11 @@ import bronseMedalIcon from './../../Img/refferal/bronseMedal.svg';
 import { useEffect, useState } from 'react';
 import { usersApi } from '../../Api/usersApi';
 import styles from './Leader.module.css';
+import { useTranslation } from 'react-i18next';
 
 export default function Leaders() {
   const [data, setData] = useState<LeadersListResponse>();
+  const { t } = useTranslation();
 
   const medalImages: { [key in 1 | 2 | 3]: string } = {
     1: goldMedalIcon,
@@ -46,7 +47,7 @@ export default function Leaders() {
             src={data?.user.avatar}
             alt="avatar"
           />
-          <p style={{ fontWeight: '600', width: '130px' }}>Вы</p>
+          <p style={{ fontWeight: '600', width: '130px' }}>{t('you')}</p>
         </div>
         <div className={styles.leaderItemBalance}>
           <img

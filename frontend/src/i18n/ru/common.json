@@ -1,0 +1,75 @@
+{
+  "level_selection_error": "Для смены уровня нужно выбрать уровень выше текущего",
+  "insufficient_balance_error": "Не достаточно средств на балансе",
+  "level_selection": "Выбор уровня",
+  "agreement_text": "Я ознакомился с Соглашением об оказании услуг по размещению ставок и согласен с ним",
+  "choose_button": "Выбрать",
+
+  "level": "Уровень",
+  "level_info_title": "Уровень:",
+  "date_of_bet": "Дата ставки:",
+  "interest_period": "Период начисления процентов:",
+  "end_date_of_interest": "Дата окончания начисления <br /> процентов:",
+  "repayment_term": "Срок погашения:",
+  "repayment_date": "Дата погашения:",
+  "interest_rate": "Процентная ставка:",
+  "day": "день",
+  "days": "дней",
+  "close": "Закрыть",
+
+  "beginner_level": "Начальный",
+  "intermediate_level": "Средний",
+  "advanced_level": "Продвинутый",
+  "expert_level": "Эксперт",
+
+  "confirm_withdraw_profit": "Вы хотите вывести прибыль на баланс? Комиссия:",
+  "profit": "Прибыль",
+  "staking_balance": "Баланс стейкинга",
+  "withdraw_profit": "Вывод прибыли",
+  "from": "из",
+
+  "active_balance": "Активный баланс",
+  "blocked_balance": "Заблокировано",
+
+  "connect_wallet": "Подключите ваш кошелек",
+  "connect_wallet_description": "Для ввода/вывода средств подключайте свой TON кошелек",
+  "connect_ton_wallet": "Подключить кошелек TON",
+
+  "ends_in": "Закончится через:",
+  "prize_pool": "Призовой фонд",
+  "contest_conditions": "Условия конкурса",
+  "entry_fee": "Стоимость входа:",
+  "join_contest": "Принять участие",
+  "contest_joined_success": "Вы приняли участие в конкурсе!",
+
+  "footer_home": "Главная",
+  "footer_staking": "Стейкинг",
+  "footer_referrals": "Рефералы",
+  "footer_contests": "Конкурсы",
+  "footer_farming": "Фарминг",
+
+  "submit": "Подтвердить",
+  "continue": "Продолжить",
+
+  "deposit_amount_range": "Сумма должна быть от {{min}} до {{max}}",
+  "you": "Вы",
+
+  "no_transactions": "Пока нет транзакций",
+  "transacton_history": "История транзакций",
+
+  "status_completed": "Завершено",
+  "status_waiting": "В процессе",
+  "status_canceled": "Отменено",
+
+  "hours": "часов",
+  "minutes": "минут",
+  "seconds": "секунд",
+
+  "farming": "Фарминг",
+  "new_tasks_coming": "Ожидайте появление новых задач",
+
+  "contests": "Конкурсы",
+  "more_details": "Подробнее",
+
+  "task_completed": "✅ Задача выполнена, награда зачислена"
+}

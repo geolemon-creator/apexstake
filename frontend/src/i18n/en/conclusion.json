@@ -1,0 +1,11 @@
+{
+  "withdraw": "Withdraw",
+  "total_balance": "Total Balance",
+  "bonus": "Bonus",
+  "address": "Address",
+  "all": "ALL",
+  "confirm_withdraw": "Confirm withdrawal",
+  "commission": "Commission",
+  "wait_withdraw_approval": "Awaiting withdrawal confirmation!",
+  "withdraw_error": "Error sending transaction"
+}

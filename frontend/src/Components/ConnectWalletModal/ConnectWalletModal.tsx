@@ -1,11 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import close from './../../Img/close.svg';
+import { useTranslation } from 'react-i18next';
 
 interface ConnectWalletModalProps {
   closeModal: () => void;
 }
 
 const ConnectWalletModal = ({ closeModal }: ConnectWalletModalProps) => {
+  const { t } = useTranslation();
   return (
     <div className="modal-overlay">
       <div className="connect-wallet-div">
@@ -18,13 +20,13 @@ const ConnectWalletModal = ({ closeModal }: ConnectWalletModalProps) => {
         </div>
 
         <div className="connect-wallet-text">
-          <p className="connect-w-p">Подключите ваш кошелек</p>
+          <p className="connect-w-p">{t('connect_wallet')}</p>
           <p className="connect-w-conect-p">
-            Для ввода/вывода средств подключайте свой TON кошелек
+            {t('connect_wallet_description')}
           </p>
 
           <NavLink to="/profile">
-            <button className="connect-w-btn">Подключить кошелек TON</button>
+            <button className="connect-w-btn">{t('connect_ton_wallet')}</button>
           </NavLink>
         </div>
       </div>

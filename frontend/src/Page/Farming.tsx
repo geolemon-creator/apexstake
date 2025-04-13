@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import TaskItem from '../Components/TaskItem';
 import { tasksApi } from '../Api/tasks.Api';
 import { Task } from '../Components/Type';
+import { useTranslation } from 'react-i18next';
 
 export default function Farming() {
   const [tasks, setTasks] = useState<Task[]>();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchTasksList = async () => {
@@ -26,7 +28,7 @@ export default function Farming() {
     <div className="farming-countainer">
       <div className="farming-main-div">
         <div className="farming-title">
-          <h1 className="farming-h1">Фарминг</h1>
+          <h1 className="farming-h1">{t('farming')}</h1>
         </div>
 
         <div className="farming-list-div">
@@ -47,7 +49,7 @@ export default function Farming() {
                   textShadow: '0 0 8px rgba(255, 255, 255, 0.7)',
                 }}
               >
-                Ожидайте появление новых задач
+                {t('new_tasks_coming')}
               </p>
             </div>
           )}

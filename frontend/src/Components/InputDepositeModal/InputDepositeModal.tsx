@@ -4,6 +4,7 @@ import styles from './InputDepositeModal.module.css';
 import tonIcon from '../../Img/TonCoin.svg';
 import closeIcon from '../../Img/close.svg';
 import { levelsAdditional } from '../SelectLevelModal/LevelItem/LevelAdditional';
+import { useTranslation } from 'react-i18next';
 
 interface InputDepositeModalProps {
   level: LevelData | undefined; // level теперь имеет тип LevelData
@@ -17,9 +18,9 @@ const InputDepositeModal = ({
   onClose,
 }: InputDepositeModalProps) => {
   if (!level) {
-    return <div>loading</div>;
+    return <div>...</div>;
   }
-
+  const { t } = useTranslation();
   const [amount, setAmount] = useState<number | string>(
     Math.round(level.min_deposite)
   );
@@ -55,11 +56,17 @@ const InputDepositeModal = ({
   const handleSubmit = () => {
     if (amount === '' || typeof amount === 'string') {
       setErrorMessage(
-        `Сумма должна быть от ${level.min_deposite} до ${level.max_deposite}`
+        t('deposit_amount_range', {
+          min: level.min_deposite,
+          max: level.max_deposite,
+        })
       );
     } else if (amount < level.min_deposite || amount > level.max_deposite) {
       setErrorMessage(
-        `Сумма должна быть от ${level.min_deposite} до ${level.max_deposite}`
+        t('deposit_amount_range', {
+          min: level.min_deposite,
+          max: level.max_deposite,
+        })
       );
     } else {
       setErrorMessage('');
@@ -89,7 +96,7 @@ const InputDepositeModal = ({
               color: levelsAdditional[level.level].color,
             }}
           >
-            {levelsAdditional[level.level].title}
+            {t(levelsAdditional[level.level].title)}
           </p>
         </div>
 
@@ -110,7 +117,7 @@ const InputDepositeModal = ({
           className={styles.depositeButton}
           onClick={handleSubmit}
         >
-          Подтвердить
+          {t('submit')}
         </button>
 
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}

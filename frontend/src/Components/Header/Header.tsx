@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import LevelModal from '../SelectLevelModal/LevelModal';
 import LevelDetailModal from '../LevelDetailsModal/LevelDetailModal';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Header.module.css';
 import arrowDownIcon from '../../Img/arrow-down.svg';
 import { LevelData } from '../Type';
@@ -13,6 +13,9 @@ import { AxiosError } from 'axios';
 import { levelsAdditional } from '../SelectLevelModal/LevelItem/LevelAdditional';
 import useAuth from '../../Hooks/useAuth';
 import { useDispatch, useSelector } from 'react-redux';
+import i18n from 'i18next';
+import usaIcon from '../../Img/usa.svg';
+import ruIcon from '../../Img/ru.svg';
 import {
   fetchLevels,
   loadUserFromStorage,
@@ -23,11 +26,14 @@ import {
   setSelectedLevelDetail,
 } from '../../Features/headerUISlice';
 import { RootState, AppDispatch } from '../../store';
-
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
   const { updateUser } = useAuth();
   const dispatch = useDispatch<AppDispatch>();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const currentLanguage = i18n.language;
+  const { t } = useTranslation();
 
   const {
     isLevelsListOpen,
@@ -53,7 +59,7 @@ const Header = () => {
   const handleOpenStakingDeposite = (level: LevelData) => {
     if (user?.selected_level) {
       if (user.selected_level >= level.level) {
-        alert('Для смены уровня нужно выбрать уровень выше текущего');
+        alert(t('level_selection_error'));
       } else {
         dispatch(setSelectedLevelDetail(level));
         dispatch(setIsDetailModalOpen(false));
@@ -61,7 +67,7 @@ const Header = () => {
       }
     } else {
       if (level.min_deposite > user.balance) {
-        alert('Не достаточно средств на балансе');
+        alert(t('insufficient_balance_error'));
       } else {
         dispatch(setSelectedLevelDetail(level));
         dispatch(setIsDetailModalOpen(false));
@@ -91,7 +97,7 @@ const Header = () => {
       } catch (err) {
         const error = err as AxiosError<{ error: string }>;
 
-        const errorMessage = error.response?.data?.error || 'Произошла ошибка';
+        const errorMessage = error.response?.data?.error;
         alert(errorMessage);
       }
     } else {
@@ -106,7 +112,7 @@ const Header = () => {
       } catch (err) {
         const error = err as AxiosError<{ error: string }>;
 
-        const errorMessage = error.response?.data?.error || 'Произошла ошибка';
+        const errorMessage = error.response?.data?.error;
         alert(errorMessage);
       }
     }
@@ -131,6 +137,11 @@ const Header = () => {
       console.error('Failed to parse staking data from localStorage:', e);
     }
   }, []);
+
+  const handleLanguageChange = (lang: string) => {
+    i18n.changeLanguage(lang);
+    setIsMenuOpen(false);
+  };
 
   if (!levels) {
     return <div>...</div>;
@@ -170,7 +181,7 @@ const Header = () => {
             alt="down-arrow"
           />
           <p className="level-p">
-            {levelsAdditional[selectedLevel.level].title}
+            {t(levelsAdditional[selectedLevel.level].title)}
           </p>
           <img src={arrowDownIcon} alt="down-arrow" />
         </div>
@@ -181,10 +192,51 @@ const Header = () => {
           className={styles.headerLevel}
           onClick={() => dispatch(setIsLevelsListOpen(true))}
         >
-          <p className="level-p">Выбор уровня</p>
+          <p className="level-p">{t('level_selection')}</p>
           <img src={arrowDownIcon} alt="down-arrow" />
         </div>
       )}
+
+      <div className={styles.headerLanguages}>
+        <div
+          style={{
+            paddingLeft: '5px',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          <img
+            className={styles.flagIcon}
+            src={currentLanguage === 'ru' ? ruIcon : usaIcon}
+            alt="language"
+          />
+          <img
+            className={styles.languagesArrow}
+            src={arrowDownIcon}
+            alt="down-arrow"
+          />
+        </div>
+
+        {isMenuOpen && (
+          <div className={styles.languageMenu}>
+            <div
+              onClick={() => handleLanguageChange('ru')}
+              className={styles.languageOption}
+            >
+              <img className={styles.flagIcon} src={ruIcon} alt="Russian" />
+              <span>Русский</span>
+            </div>
+            <div
+              onClick={() => handleLanguageChange('en')}
+              className={styles.languageOption}
+            >
+              <img className={styles.flagIcon} src={usaIcon} alt="English" />
+              <span>English</span>
+            </div>
+          </div>
+        )}
+      </div>
 
       {isDetailModalOpen && (
         <LevelDetailModal

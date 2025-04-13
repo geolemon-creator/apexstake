@@ -7,15 +7,16 @@ import { useTonConnectUI } from '@tonconnect/ui-react';
 import { CreateTransactionRequest, Wallet } from '../Components/Type';
 import { transactionsApi } from '../Api/transactionsApi';
 import { stakingApi } from '../Api/stakingApi';
+import { useTranslation } from 'react-i18next';
 
 export default function Deposite() {
   const [amount, setAmount] = useState('');
   const [user, setUser] = useState<any>(null);
   const [wallet, setWallet] = useState<Wallet>();
   const [tonConnectUI] = useTonConnectUI();
+  const { t } = useTranslation('deposite');
 
   useEffect(() => {
-    // Получаем данные из localStorage
     const userString = localStorage.getItem('user');
     if (userString) {
       const user = JSON.parse(userString);
@@ -54,16 +55,15 @@ export default function Deposite() {
       const data: CreateTransactionRequest = {
         user_id: user.id,
         amount: amount,
-        operation_type: 'deposit' as 'deposit', // или 'withdraw' as 'withdraw'
+        operation_type: 'deposit' as 'deposit',
       };
 
       await transactionsApi.createTransaction(data);
 
-      alert('Транзакция отправлена');
+      alert(t('transaction_sent'));
       window.location.reload();
     } catch (error) {
-      console.error('Ошибка при отправке транзакции:', error);
-      alert('Ошибка при отправке транзакции');
+      alert(t('transaction_error'));
     }
   };
 
@@ -83,11 +83,11 @@ export default function Deposite() {
 
   return (
     <div className="withdraw-container">
-      <h1 className="withdraw-title">Пополнение</h1>
+      <h1 className="withdraw-title">{t('deposit')}</h1>
 
       <div className="total-balance">
         <div className="total-price-div">
-          <p className="title-balance">Total Balance</p>
+          <p className="title-balance">{t('total_balance')}</p>
           <p className="title-price">
             <img
               src={tonIcon}
@@ -101,7 +101,7 @@ export default function Deposite() {
         </div>
 
         <div className="balance-bonus">
-          <p className="balance-bonus-title">Bonus</p>
+          <p className="balance-bonus-title">{t('bonus')}</p>
           <img className="balance-bonus-img" src={coin} />
           <p className="bonus-num">{user?.tokens}</p>
         </div>
@@ -140,7 +140,7 @@ export default function Deposite() {
         onClick={() => handleDeposit(Number(amount))}
         className={`conclu-btn ${isButtonDisabled ? 'disabled' : 'active'}`}
       >
-        Подтвердить пополнение
+        {t('confirm_deposit')}
       </button>
     </div>
   );

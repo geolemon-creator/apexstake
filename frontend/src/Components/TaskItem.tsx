@@ -3,6 +3,7 @@ import coin from './../Img/coin.svg';
 import { useState } from 'react';
 import check from './../Img/ok.svg';
 import { tasksApi } from '../Api/tasks.Api';
+import { useTranslation } from 'react-i18next';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -12,6 +13,7 @@ interface TaskItemProps {
 
 export default function TaskItem({ data }: TaskItemProps) {
   const [exam, setExam] = useState(false);
+  const { t } = useTranslation();
 
   const handleTaskComplete = () => {
     window.open(data.link, '_blank');
@@ -25,7 +27,7 @@ export default function TaskItem({ data }: TaskItemProps) {
         setExam(true);
         try {
           await tasksApi.completeTask(data.id);
-          alert('✅ Задача выполнена, награда зачислена');
+          alert(t('task_completed'));
           window.location.reload();
         } catch (err) {
           console.log(err);

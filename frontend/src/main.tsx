@@ -3,6 +3,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { store } from './store'; // путь до твоего store.ts
 import './index.css';
+import './i18n';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 

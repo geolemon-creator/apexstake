@@ -1,0 +1,75 @@
+{
+  "level_selection_error": "To change the level, you need to select a level higher than the current one",
+  "insufficient_balance_error": "Insufficient balance",
+  "level_selection": "Level selection",
+  "agreement_text": "I have read and agree to the Terms of Service for placing bets",
+  "choose_button": "Select",
+
+  "level": "Level",
+  "level_info_title": "Level:",
+  "date_of_bet": "Date of bet:",
+  "interest_period": "Interest accrual period:",
+  "end_date_of_interest": "End date of interest accrual:",
+  "repayment_term": "Repayment term:",
+  "repayment_date": "Repayment date:",
+  "interest_rate": "Interest rate:",
+  "day": "day",
+  "days": "days",
+  "close": "Close",
+
+  "beginner_level": "Beginner",
+  "intermediate_level": "Intermediate",
+  "advanced_level": "Advanced",
+  "expert_level": "Expert",
+
+  "confirm_withdraw_profit": "Do you want to withdraw the profit to your balance? Commission:",
+  "profit": "Profit",
+  "staking_balance": "Staking Balance",
+  "withdraw_profit": "Withdraw Profit",
+  "from": "from",
+
+  "active_balance": "Active Balance",
+  "blocked_balance": "Blocked",
+
+  "connect_wallet": "Connect your wallet",
+  "connect_wallet_description": "To deposit/withdraw funds, connect your TON wallet",
+  "connect_ton_wallet": "Connect TON Wallet",
+
+  "ends_in": "Ends in:",
+  "prize_pool": "Prize Pool",
+  "contest_conditions": "Contest Conditions",
+  "entry_fee": "Entry Fee:",
+  "join_contest": "Join Contest",
+  "contest_joined_success": "You have joined the contest!",
+
+  "footer_home": "Home",
+  "footer_staking": "Staking",
+  "footer_referrals": "Referrals",
+  "footer_contests": "Contests",
+  "footer_farming": "Farming",
+
+  "submit": "Submit",
+  "continue": "Continue",
+
+  "deposit_amount_range": "Amount must be between {{min}} and {{max}}",
+  "you": "You",
+
+  "no_transactions": "No transactions yet",
+  "transacton_history": "Transaction history",
+
+  "status_completed": "Completed",
+  "status_waiting": "In progress",
+  "status_canceled": "Canceled",
+
+  "hours": "hours",
+  "minutes": "minutes",
+  "seconds": "seconds",
+
+  "farming": "Farming",
+  "new_tasks_coming": "New tasks will appear soon",
+
+  "contests": "Contests",
+  "more_details": "More details",
+
+  "task_completed": "✅ Task completed, reward credited"
+}

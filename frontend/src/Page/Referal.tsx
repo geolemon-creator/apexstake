@@ -1,18 +1,17 @@
 import megafon from './../Img/megafon.png';
 import copy from './../Img/copy.png';
 import { useEffect, useState } from 'react';
-import { Frend, leader } from '../Components/Data';
 import Friends from '../Components/Friends';
 import Leaders from '../Components/Leaders/Leader';
 import { GetInvitedUsersResponse, InvitedUser } from '../Components/Type';
 import { usersApi } from '../Api/usersApi';
+import { useTranslation } from 'react-i18next';
 
 export default function Referal() {
   const [user, setUser] = useState<any>(null);
   const [invitedUsers, setInvitedUsers] = useState<InvitedUser[]>([]);
   const [activeTab, setActiveTab] = useState<'friends' | 'leaders'>('friends');
-  const [friends] = useState(Frend);
-  const currentUserId = 2;
+  const { t } = useTranslation('refferals');
 
   const BotUsername = import.meta.env.VITE_BOT_USERNAME;
 
@@ -37,7 +36,6 @@ export default function Referal() {
         setIsLoading(false);
       } catch (err) {
         console.error(err);
-        setIsLoading(false);
       }
     };
 
@@ -51,32 +49,21 @@ export default function Referal() {
   const handleCopyCode = () => {
     const referralLink = `https://t.me/${BotUsername}?start=${user.referral_code}`;
 
-    // Копируем ссылку в буфер обмена
     navigator.clipboard
       .writeText(referralLink)
       .then(() => {
-        // Выводим сообщение или выполняем действия после успешного копирования
-        alert('Реферальная ссылка скопирована!');
+        alert(t('copy_referral_link'));
       })
       .catch((error) => {
         console.error('Не удалось скопировать реферальную ссылку: ', error);
       });
   };
 
-  const sortedFriends = [...friends].sort((a, b) => b.coins - a.coins);
-  const sortedLeader = [...leader].sort((a, b) => b.coins - a.coins);
-
-  const currentUserIndex = sortedLeader.findIndex(
-    (l) => l.id === currentUserId
-  );
-
-  console.log(invitedUsers);
-
   return (
     <div className="ref-countainer">
       {activeTab === 'friends' ? (
         <>
-          <p className="main-title">Рефералы</p>
+          <p className="main-title">{t('referrals')}</p>
           <div className="ref-swith-div">
             <div className="ref-btn-frend-div">
               <p
@@ -85,7 +72,7 @@ export default function Referal() {
                 }`}
                 onClick={() => handleClick('friends')}
               >
-                Приглашенные друзья
+                {t('invited_friends')}
               </p>
             </div>
 
@@ -96,27 +83,27 @@ export default function Referal() {
                 }`}
                 onClick={() => handleClick('leaders')}
               >
-                Лидеры
+                {t('leaders')}
               </p>
             </div>
           </div>
 
-          {sortedFriends.length === 0 ? (
+          {invitedUsers.length === 0 ? (
             <>
               <div>
-                <h1 className="ref-h1">Пригласите друзей!</h1>
-                <h2 className="ref-h2">Вы и ваш друг получите бонусы</h2>
+                <h1 className="ref-h1">{t('no_invited_friends')}</h1>
+                <h2 className="ref-h2">{t('invite_bonus')}</h2>
                 <img className="ref-img" src={megafon} alt="img" />
                 <div className="ref-p-div">
                   <p className="ref-p">
-                    Приглашенные друзья: 0 <br />
-                    Здесь вы увидите список друзей и сможете получить награды.
+                    {t('no_invited_friends_count')} <br />
+                    {t('no_invited_friends_message')}
                   </p>
                 </div>
               </div>
 
               <div className="ref-button">
-                <button className="ref-btn-invit">Пригласи друга</button>
+                <button className="ref-btn-invit">{t('invite_friend')}</button>
                 <div className="ref-copy-btn">
                   <img className="ref-copy-img" src={copy} alt="copy" />
                 </div>
@@ -131,7 +118,7 @@ export default function Referal() {
               </div>
 
               <div className="ref-button" onClick={handleCopyCode}>
-                <button className="ref-btn-invit">Пригласи друга</button>
+                <button className="ref-btn-invit">{t('invite_friend')}</button>
                 <div className="ref-copy-btn">
                   <img className="ref-copy-img" src={copy} alt="copy" />
                 </div>
@@ -141,7 +128,7 @@ export default function Referal() {
         </>
       ) : (
         <div>
-          <h1 className="leader-h1">Лидеры</h1>
+          <h1 className="leader-h1">{t('leaders')}</h1>
           <div className="leader-array">
             <Leaders />
           </div>

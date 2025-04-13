@@ -1,0 +1,13 @@
+{
+  "connect_wallet": "Подключите ваш кошелек",
+  "connect_wallet_description": "Для ввода/вывода средств подключайте свой TON кошелек",
+  "connect_wallet_button": "Подключить кошелек TON",
+  "wallet_connected": "Ваш кошелек подключен",
+  "wallet": "ТОН Кошелек",
+  "wallet_address": "Адрес кошелька",
+  "copy_address": "Скопировать адрес",
+  "disconnect_wallet": "Отвязать кошелек",
+  "telegram_chat_support": "Telegram-чат поддержки",
+  "feedback_suggestions": "Отзыв и предложения",
+  "learn_more_about_project": "Узнать больше о проекте"
+}

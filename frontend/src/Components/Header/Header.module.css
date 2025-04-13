@@ -3,7 +3,7 @@
 }
 
 .headerUser {
-  width: 50%;
+  width: 43%;
   font-size: 14px;
   color: white;
   background: #232425;
@@ -17,7 +17,7 @@
 .headerLevel {
   color: #ffde45;
   background: #232425;
-  width: 50%;
+  width: 43%;
   height: 42px;
   border-radius: 12px;
   text-align: center;
@@ -26,4 +26,48 @@
   justify-content: space-around;
   font-size: 14px;
   cursor: pointer;
+}
+
+.headerLanguages {
+  display: flex;
+  align-items: center;
+  width: 14%;
+}
+
+.flagIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+}
+
+.languagesArrow {
+  width: 15px;
+  height: 15px;
+  padding-left: 2px;
+}
+
+.languageMenu {
+  position: absolute;
+  top: 55px;
+  z-index: 9999;
+}
+
+.languageOption {
+  background: #232425;
+  display: flex;
+  border-radius: 8px;
+  margin-bottom: 2px;
+  align-items: center;
+  padding: 5px;
+  color: white;
+  position: relative;
+  right: 40px;
+}
+
+.languageOption span {
+  margin-left: 3px;
+}
+
+.languageOption:hover {
+  box-shadow: 0 0 4px 1px rgba(255, 222, 69, 0.8);
 }

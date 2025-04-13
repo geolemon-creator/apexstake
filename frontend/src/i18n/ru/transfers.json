@@ -1,0 +1,10 @@
+{
+  "staking": "Стайкинг",
+  "main_balance": "Основной баланс",
+  "usdt": "USDT",
+  "max": "Макс",
+  "balance": "Баланс",
+  "all": "ВСЕ",
+  "commission": "Комиссия 10%={{amount}} USDT",
+  "confirm_withdraw": "Подтвердить вывод"
+}

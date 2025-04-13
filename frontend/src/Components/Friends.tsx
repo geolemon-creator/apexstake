@@ -1,5 +1,3 @@
-import { FrendID } from './Type';
-import tonIcon from './../Img/TonCoin.svg';
 import { InvitedUser } from './Type';
 import coin from './../Img/coin.svg';
 

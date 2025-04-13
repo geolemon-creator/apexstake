@@ -1,0 +1,8 @@
+{
+  "deposit": "Deposit",
+  "total_balance": "Total Balance",
+  "bonus": "Bonus",
+  "confirm_deposit": "Confirm deposit",
+  "transaction_sent": "Transaction sent",
+  "transaction_error": "Error while sending transaction"
+}

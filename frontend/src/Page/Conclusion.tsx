@@ -9,12 +9,14 @@ import { CreateTransactionRequest } from '../Components/Type';
 import { Commission } from '../Components/Type';
 import { stakingApi } from '../Api/stakingApi';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function Withdraw() {
   const [amount, setAmount] = useState('');
   const [user, setUser] = useState<any>(null);
   const [commission, setCommission] = useState<Commission | null>(null);
   const navigate = useNavigate();
+  const { t } = useTranslation('conclusion');
 
   const userFriendlyAddress = useTonAddress();
   const commissionAmount =
@@ -32,7 +34,6 @@ export default function Withdraw() {
   };
 
   useEffect(() => {
-    // Получаем данные из localStorage
     const userString = localStorage.getItem('user');
     if (userString) {
       const user = JSON.parse(userString);
@@ -47,26 +48,24 @@ export default function Withdraw() {
       const data: CreateTransactionRequest = {
         user_id: user.id,
         amount: amount,
-        operation_type: 'withdraw' as 'withdraw', // или 'withdraw' as 'withdraw'
+        operation_type: 'withdraw' as 'withdraw',
       };
 
       await transactionsApi.createTransaction(data);
 
-      alert('Ожидайте подтверждение вывода!');
+      alert(t('wait_withdraw_approval'));
       navigate('/staking');
       window.location.reload();
     } catch (error) {
-      console.error('Ошибка при отправке транзакции:', error);
-      alert('Ошибка при отправке транзакции');
+      alert(t('withdraw_error'));
     }
   };
 
   const shortenAddress = (address: string) => {
-    // Проверим, что адрес длиннее 10 символов
     if (address.length > 10) {
       return `${address.slice(0, 12)}...${address.slice(-6)}`;
     }
-    return address; // Если адрес короткий, не обрезаем
+    return address;
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +81,7 @@ export default function Withdraw() {
   };
   const handleSetMaxValue = () => {
     if (user && user.balance) {
-      setAmount(user.balance.toString()); // Преобразуем в строку при установке
+      setAmount(user.balance.toString());
     }
   };
 
@@ -90,11 +89,11 @@ export default function Withdraw() {
 
   return (
     <div className="withdraw-container">
-      <h1 className="withdraw-title">Вывод</h1>
+      <h1 className="withdraw-title">{t('withdraw')}</h1>
 
       <div className="total-balance">
         <div className="total-price-div">
-          <p className="title-balance">Total Balance</p>
+          <p className="title-balance">{t('total_balance')}</p>
           <p className="title-price">
             <img
               src={tonIcon}
@@ -108,7 +107,7 @@ export default function Withdraw() {
         </div>
 
         <div className="balance-bonus">
-          <p className="balance-bonus-title">Bonus</p>
+          <p className="balance-bonus-title">{t('bonus')}</p>
           <img className="balance-bonus-img" src={coin} />
           <p className="bonus-num">{user?.tokens}</p>
         </div>
@@ -124,7 +123,7 @@ export default function Withdraw() {
           <input
             className="conclu-input-adres"
             type="text"
-            placeholder="Адрес"
+            placeholder={t('address')}
             disabled
             value={shortenAddress(userFriendlyAddress)}
           />
@@ -147,7 +146,7 @@ export default function Withdraw() {
             />
             <p className="USDT-p">TON</p>
             <p className="ВСЕ-p" onClick={handleSetMaxValue}>
-              ВСЕ
+              {t('all')}
             </p>
           </div>
         </div>
@@ -158,7 +157,7 @@ export default function Withdraw() {
       ) : (
         <div className="commission-div-p">
           <p className="commission-p">
-            Комиссия {commission?.percent} = {commissionAmount} TON
+            {t('commission')} {commission?.percent}% = {commissionAmount} TON
           </p>
         </div>
       )}
@@ -168,7 +167,7 @@ export default function Withdraw() {
         onClick={() => handleWithdraw(Number(amount))}
         className={`conclu-btn ${isButtonDisabled ? 'disabled' : 'active'}`}
       >
-        Подтвердить вывод
+        {t('confirm_withdraw')}
       </button>
     </div>
   );

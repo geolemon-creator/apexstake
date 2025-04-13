@@ -7,8 +7,8 @@ export const levelsAdditional: Record<
   number,
   { title: string; icon: string; color: string }
 > = {
-  1: { title: 'Начальный', icon: primaryDiamondIcon, color: '#DEDEDE' },
-  2: { title: 'Средний', icon: mediumDiamondIcon, color: '#FFDE45' },
-  3: { title: 'Продвинутый', icon: advancedDiamondIcon, color: '#0C9AFF' },
-  4: { title: 'Эксперт', icon: expertDiamondIcon, color: '#AC5FFF' },
+  1: { title: 'beginner_level', icon: primaryDiamondIcon, color: '#DEDEDE' },
+  2: { title: 'intermediate_level', icon: mediumDiamondIcon, color: '#FFDE45' },
+  3: { title: 'advanced_level', icon: advancedDiamondIcon, color: '#0C9AFF' },
+  4: { title: 'expert_level', icon: expertDiamondIcon, color: '#AC5FFF' },
 };

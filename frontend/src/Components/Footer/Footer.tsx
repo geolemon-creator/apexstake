@@ -8,9 +8,11 @@ import styles from './Footer.module.css';
 
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
   const [activeButton, setActiveButton] = useState<number | null>(null);
+  const { t } = useTranslation();
 
   const handleButtonClick = (index: number) => {
     setActiveButton(index);
@@ -25,7 +27,7 @@ export default function Footer() {
             onClick={() => handleButtonClick(0)}
           >
             <img src={home} alt="home" />
-            <p>Главная</p>
+            <p>{t('footer_home')}</p>
           </li>
         </NavLink>
 
@@ -35,7 +37,7 @@ export default function Footer() {
             onClick={() => handleButtonClick(1)}
           >
             <img src={coins} alt="staking" />
-            <p>Стейкинг</p>
+            <p>{t('footer_staking')}</p>
           </li>
         </NavLink>
 
@@ -45,7 +47,7 @@ export default function Footer() {
             onClick={() => handleButtonClick(2)}
           >
             <img src={referrals} alt="referrals" />
-            <p>Рефералы</p>
+            <p>{t('footer_referrals')}</p>
           </li>
         </NavLink>
 
@@ -55,7 +57,7 @@ export default function Footer() {
             onClick={() => handleButtonClick(3)}
           >
             <img src={awards} alt="awards" />
-            <p>Конкурсы</p>
+            <p>{t('footer_contests')}</p>
           </li>
         </NavLink>
 
@@ -65,7 +67,7 @@ export default function Footer() {
             onClick={() => handleButtonClick(4)}
           >
             <img src={gold} alt="contest" />
-            <p>Фарминг</p>
+            <p>{t('footer_farming')}</p>
           </li>
         </NavLink>
       </ul>
