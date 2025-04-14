@@ -42,7 +42,7 @@ const ContestModal = ({ contest_id, onClose }: ContestModalProps) => {
 
       const errorMessage =
         (axiosError.response?.data as any)?.detail || axiosError.message;
-      alert(errorMessage);
+      alert(t(errorMessage));
     }
   };
 

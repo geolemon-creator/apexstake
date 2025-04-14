@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { usersApi } from '../../Api/usersApi';
 import styles from './Leader.module.css';
 import { useTranslation } from 'react-i18next';
+import ImageLoader from '../ImageLoader/ImageLoader';
 
 export default function Leaders() {
   const [data, setData] = useState<LeadersListResponse>();
@@ -41,10 +42,10 @@ export default function Leaders() {
       >
         <div className={styles.leaderItemInfo}>
           <p style={{ marginRight: '8px' }}>{data?.user?.position}</p>
-          <img
+          <ImageLoader
             style={{ marginRight: '8px' }}
             className={styles.userAvatar}
-            src={data?.user.avatar}
+            src={data?.user.avatar || '/default-avatar.png'}
             alt="avatar"
           />
           <p style={{ fontWeight: '600', width: '130px' }}>{t('you')}</p>
@@ -103,7 +104,7 @@ export default function Leaders() {
                 <p style={{ marginRight: '8px' }}>{medalPosition}</p>
               )}
 
-              <img
+              <ImageLoader
                 style={{ marginRight: '8px' }}
                 className={styles.userAvatar}
                 src={leader.avatar}

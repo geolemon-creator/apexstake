@@ -48,7 +48,13 @@ export default function TaskItem({ data }: TaskItemProps) {
       className={`media-div ${exam ? 'exam-good' : ''}`}
     >
       <div className="media-img-div">
-        <img className="media-img" src={`${baseUrl}${data.icon}`} alt="task" />
+        <img
+          className="media-img"
+          src={
+            data.icon.startsWith('http') ? data.icon : `${baseUrl}${data.icon}`
+          }
+          alt="task"
+        />
       </div>
 
       <div className="media-title-div">

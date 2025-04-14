@@ -20,6 +20,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './../store';
 import AboutModal from '../Components/AboutModal/AboutModal';
 import { useTranslation } from 'react-i18next';
+import ImageLoader from '../Components/ImageLoader/ImageLoader';
 
 export default function Home() {
   const { profit } = useSelector((state: RootState) => state.staking);
@@ -123,7 +124,11 @@ export default function Home() {
                   <h1 className="reward-h1">{banner.title}</h1>
                   <p className="reward-p">{banner.description}</p>
                 </div>
-                <img className="reward-img" src={banner.img} alt="img" />
+                <ImageLoader
+                  className="reward-img"
+                  src={banner.img}
+                  alt="img"
+                />
               </div>
             </div>
           ))}

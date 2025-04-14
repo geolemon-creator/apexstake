@@ -1,6 +1,7 @@
 export const calculateTimeRemainingAndProgress = (
   startDate?: string,
-  endDate?: string
+  endDate?: string,
+  t?: (key: string, options?: any) => string
 ) => {
   if (!startDate || !endDate)
     return { timeRemaining: 'Нет данных', progress: 0 }; // Проверяем наличие данных
@@ -28,7 +29,9 @@ export const calculateTimeRemainingAndProgress = (
   const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
 
   return {
-    timeRemaining: `${days} д: ${hours} ч: ${minutes} м`,
+    timeRemaining:
+      t?.('remaining_time_format', { days, hours, minutes }) ??
+      `${days} д: ${hours} ч: ${minutes} м`,
     progress: progress.toFixed(2), // округляем до двух знаков после запятой
   };
 };

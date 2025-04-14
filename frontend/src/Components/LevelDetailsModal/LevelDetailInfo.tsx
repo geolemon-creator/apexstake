@@ -14,12 +14,14 @@ const LevelDetailInfo = ({ level, onClose }: LevelDetailInfoProps) => {
 
   return (
     <div className="basic-lvl-div">
-      <img
-        src={closeIcon}
-        alt="close"
-        onClick={onClose}
-        className="close-detail-icon"
-      />
+      <div className="close-btn-wrapper">
+        <img
+          src={closeIcon}
+          alt="close"
+          onClick={onClose}
+          className="close-icon"
+        />
+      </div>
       <div className="bas-nor-block">
         <div className="title-lvl-div">
           <p className="basic-lvl-p">{t('level_info_title')}</p>
@@ -61,7 +63,8 @@ const LevelDetailInfo = ({ level, onClose }: LevelDetailInfoProps) => {
           <p className="data-lvl-first-p">{t('interest_period')}</p>
           <p className="data-lvl-second-p">
             {/* TODO: Указать значения */}
-            {10} {1 === 1 ? t('day') : t('days')}
+            {level.stage.staking_time}{' '}
+            {level.stage.staking_time === 1 ? t('day') : t('days')}
           </p>
         </div>
 

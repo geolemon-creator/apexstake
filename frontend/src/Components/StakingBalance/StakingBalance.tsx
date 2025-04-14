@@ -40,7 +40,8 @@ const StakingBalance = () => {
       const interval = setInterval(() => {
         const { timeRemaining, progress } = calculateTimeRemainingAndProgress(
           userStakingData.start_date,
-          userStakingData.end_date
+          userStakingData.end_date,
+          t
         );
 
         localStorage.setItem(

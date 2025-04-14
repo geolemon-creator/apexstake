@@ -27,6 +27,7 @@ import {
 } from '../../Features/headerUISlice';
 import { RootState, AppDispatch } from '../../store';
 import { useTranslation } from 'react-i18next';
+import ImageLoader from '../ImageLoader/ImageLoader';
 
 const Header = () => {
   const { updateUser } = useAuth();
@@ -44,7 +45,7 @@ const Header = () => {
     levels,
     user,
   } = useSelector((state: RootState) => state.headerUI);
-
+  console.log(currentLanguage, 'currentLanguage');
   useEffect(() => {
     dispatch(fetchLevels());
     dispatch(loadUserFromStorage());
@@ -141,9 +142,10 @@ const Header = () => {
   const handleLanguageChange = (lang: string) => {
     i18n.changeLanguage(lang);
     setIsMenuOpen(false);
+    window.location.reload();
   };
 
-  if (!levels) {
+  if (!levels && currentLanguage) {
     return <div>...</div>;
   }
 
@@ -160,14 +162,18 @@ const Header = () => {
         style={{ marginRight: '5px' }}
         to="/profile"
       >
-        <img
-          width={32}
-          height={32}
-          style={{ borderRadius: '100%' }}
+        <ImageLoader
+          style={{ borderRadius: '100%', width: '32px', height: '32px' }}
           src={avatarUrl}
           alt="right-arrow"
         />
-        <p>{user?.username}</p>
+        <p>
+          {user?.username
+            ? `${user.username.slice(0, 10)}${
+                user.username.length > 10 ? '...' : ''
+              }`
+            : ''}
+        </p>
         <img src={rightArrow} alt="right-arrow" />
       </NavLink>
 
@@ -208,13 +214,8 @@ const Header = () => {
         >
           <img
             className={styles.flagIcon}
-            src={currentLanguage === 'ru' ? ruIcon : usaIcon}
+            src={currentLanguage.startsWith('ru') ? ruIcon : usaIcon}
             alt="language"
-          />
-          <img
-            className={styles.languagesArrow}
-            src={arrowDownIcon}
-            alt="down-arrow"
           />
         </div>
 

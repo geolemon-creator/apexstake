@@ -62,7 +62,7 @@ i18n
         conclusion: ruConclusion,
       },
       detection: {
-        order: ['localStorage', 'navigator'],
+        order: ['localStorage'],
         caches: ['localStorage'],
         lookupLocalStorage: 'language',
       },

@@ -62,6 +62,7 @@ const LevelDetailModal = ({
           style={{
             margin: '0 auto',
             maxWidth: '420px',
+            width: '100vw',
             display: 'flex',
             justifyContent: 'center',
           }}
@@ -82,7 +83,12 @@ const LevelDetailModal = ({
             >
               {levels.map((level, index) => (
                 <SwiperSlide key={level.level}>
-                  <div style={{ width: '335px', margin: '0 auto ' }}>
+                  <div
+                    style={{
+                      maxWidth: '335px',
+                      margin: '0 auto',
+                    }}
+                  >
                     <LevelDetailInfo
                       key={index}
                       level={level}

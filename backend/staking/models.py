@@ -57,6 +57,7 @@ class UserStaking(models.Model):
     withdrawn_amount = models.DecimalField(default=0, max_digits=10, decimal_places=2, verbose_name='Выведенная сумма')
     start_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата начала')
     end_date = models.DateTimeField(verbose_name='Дата окончания')
+    task_scheduled_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Стейкинг пользователя'

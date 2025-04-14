@@ -37,7 +37,6 @@ def create_transaction(user, operation_type, amount):
         else:
             raise ValidationError("Unsupported operation type")
 
-
     return txn
 
 

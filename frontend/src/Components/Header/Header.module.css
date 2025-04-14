@@ -3,7 +3,7 @@
 }
 
 .headerUser {
-  width: 43%;
+  width: 45%;
   font-size: 14px;
   color: white;
   background: #232425;
@@ -17,7 +17,7 @@
 .headerLevel {
   color: #ffde45;
   background: #232425;
-  width: 43%;
+  width: 45%;
   height: 42px;
   border-radius: 12px;
   text-align: center;
@@ -31,7 +31,7 @@
 .headerLanguages {
   display: flex;
   align-items: center;
-  width: 14%;
+  width: 10%;
 }
 
 .flagIcon {
@@ -61,7 +61,7 @@
   padding: 5px;
   color: white;
   position: relative;
-  right: 40px;
+  right: 65px;
 }
 
 .languageOption span {

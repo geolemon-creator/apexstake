@@ -11,13 +11,19 @@ import { useTonAddress } from '@tonconnect/ui-react';
 import { usersApi } from '../Api/usersApi';
 import { UpdateUserRequest } from '../Components/Type';
 import { useTranslation } from 'react-i18next';
+import arrow from '../Img/arrow-right.svg';
+import { useNavigate } from 'react-router-dom';
+import AboutModal from '../Components/AboutModal/AboutModal';
+import ImageLoader from '../Components/ImageLoader/ImageLoader';
 
 export default function Profile() {
   const [user, setUser] = useState<any>(null);
   const [tonConnectUI, setOptions] = useTonConnectUI();
   const [isCopied, setIsCopied] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const userFriendlyAddress = useTonAddress();
   const { t } = useTranslation('profile');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userString = localStorage.getItem('user');
@@ -76,11 +82,17 @@ export default function Profile() {
 
   return (
     <div className="profile-countainer">
-      <div className="data-user">
+      <div style={{ width: '336px', margin: '0 auto' }}>
         <img
-          width={48}
-          height={48}
-          style={{ borderRadius: '100%' }}
+          src={arrow}
+          alt="arrow"
+          style={{ transform: 'rotate(180deg)' }}
+          onClick={() => navigate(-1)}
+        />
+      </div>
+      <div className="data-user">
+        <ImageLoader
+          style={{ borderRadius: '100%', width: '48px', height: '48px' }}
           src={avatarUrl}
           alt="avatar"
         />
@@ -173,7 +185,7 @@ export default function Profile() {
           <span className="review-arrow">&gt;</span>
         </div>
 
-        <div className="review-div">
+        <div className="review-div" onClick={() => setIsModalOpen(true)}>
           <img className="review-img" src={help} />
           <div className="review-p-div">
             {/* TODO: открытие модалки AboutModal */}
@@ -183,6 +195,7 @@ export default function Profile() {
           <span className="review-arrow">&gt;</span>
         </div>
       </div>
+      {isModalOpen && <AboutModal onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 }

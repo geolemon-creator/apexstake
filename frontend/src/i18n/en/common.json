@@ -71,5 +71,11 @@
   "contests": "Contests",
   "more_details": "More details",
 
-  "task_completed": "✅ Task completed, reward credited"
+  "task_completed": "✅ Task completed, reward credited",
+
+  "remaining_time_format": "{{days}} d: {{hours}} h: {{minutes}} m",
+
+  "you_already_participating": "You are already participating in this contest",
+  "contest_not_found": "Contest not found",
+  "not_enough_staking": "You must have at least 5000 TON in staking"
 }

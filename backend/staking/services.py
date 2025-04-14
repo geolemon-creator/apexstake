@@ -1,6 +1,7 @@
 from django.db import transaction
 from django.utils import timezone
 from decimal import Decimal, ROUND_DOWN
+from transactions.models import Transactions
 import logging
 
 logger = logging.getLogger(__name__)
@@ -32,16 +33,17 @@ def close_user_staking(staking):
         # Получаем данные пользователя и стейкинга
         user = staking.user
         amount = staking.amount
-        withdrawn_amount = staking.withdrawn_amount
-        percentage = staking.staking_level.percentage
-        result_amount = amount * (1 + percentage / 100)
-        
-        result_amount_commission = result_amount - withdrawn_amount
+        logger.info(f'AMOUNT STAKING CLOSE: {amount}')
+        result_amount = amount + Decimal(str(staking.get_profit()))
+        logger.info(f'RESULT AMOUNT STAKING CLOSE: {amount}')
+
+        result_amount_total = result_amount - staking.withdrawn_amount
+        logger.info(f'RESULT AMOUNT TOTAL STAKING CLOSE: {amount}')
 
         # Начинаем транзакцию для атомарных операций
         with transaction.atomic():
             user.decrease_blocked_balance(amount)
-            user.increase_balance(result_amount)
+            user.increase_balance(result_amount_total)
             user.increase_tokens(amount / 2)
 
             increase_user_stage(user)
@@ -53,12 +55,12 @@ def close_user_staking(staking):
             Transactions.objects.create(
                 user=user,
                 wallet=user.wallet,
-                amount=result_amount_commission,
+                amount=result_amount_total,
                 operation_type='deposit',
                 status='completed'
             )
             UserStakingReward.objects.create(
-                amount=result_amount_commission,
+                amount=result_amount_total,
                 tokens=(amount / 2),
                 user_staking=staking
             )
@@ -94,12 +96,8 @@ def calculate_staking_balance(user_staking):
     delta = timezone.now() - user_staking.start_date
     days_staked = delta.total_seconds() / 60
 
-    daily_percentage = Decimal(user_staking.staking_level.percentage) / Decimal('100')
-
     if days_staked > user_staking.staking_level.stage.days_for_change:
-        profit = user_staking.amount * daily_percentage * Decimal(days_staked)
-
-        profit_after_deduction = profit * Decimal('0.75')
+        profit_after_deduction = user_staking.get_profit() * Decimal('0.75')
         
         new_amount = user_staking.amount + profit_after_deduction
 
@@ -138,6 +136,14 @@ def change_staking_level(user, amount, level):
         remainder = amount - staking_balance
         if remainder > 0:
             user.decrease_balance(remainder)
+
+        Transactions.objects.create(
+            user=user,
+            operation_type='withdraw',
+            wallet=user.wallet,
+            amount=amount,
+            status='completed'
+        )
 
         current_staking.amount = amount
         current_staking.staking_level = new_level

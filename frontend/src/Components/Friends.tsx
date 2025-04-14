@@ -1,5 +1,6 @@
 import { InvitedUser } from './Type';
 import coin from './../Img/coin.svg';
+import ImageLoader from './ImageLoader/ImageLoader';
 
 interface FrendProps {
   data: InvitedUser;
@@ -8,7 +9,7 @@ interface FrendProps {
 export default function Friends(props: FrendProps) {
   return (
     <div className="frend-countainer">
-      <img
+      <ImageLoader
         className="img-frend"
         style={{ borderRadius: '100%' }}
         src={props.data.avatar}

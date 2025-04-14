@@ -26,9 +26,11 @@
   animation-delay: 2s;
 }
 
-.LoadingContent img {
-  opacity: 0;
-  animation: fadeIn 2s forwards;
+.LoadingContent video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover; /* Главное: обрезает лишнее, не деформирует */
+  object-position: center;
 }
 
 @keyframes fadeIn {

@@ -71,5 +71,11 @@
   "contests": "Конкурсы",
   "more_details": "Подробнее",
 
-  "task_completed": "✅ Задача выполнена, награда зачислена"
+  "task_completed": "✅ Задача выполнена, награда зачислена",
+
+  "remaining_time_format": "{{days}} д: {{hours}} ч: {{minutes}} м",
+
+  "you_already_participating": "Вы уже участвуете в конкурсе",
+  "contest_not_found": "Конкурс не найден",
+  "not_enough_staking": "Вы должны иметь не менее 5000 TON в стекинге"
 }
