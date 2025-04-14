@@ -9,18 +9,18 @@ from .utils import generate_referral_code, generate_custom_id
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     from staking.models import StakingStage
 
-    id = models.CharField(max_length=13, unique=True, primary_key=True, editable=False)
-    username = models.CharField(max_length=50, unique=True)
-    avatar = models.URLField()
-    wallet = models.CharField(max_length=48, null=True, blank=True)
-    staking_stage = models.ForeignKey(StakingStage, null=True, blank=True, on_delete=models.CASCADE)
-    telegram_id = models.IntegerField()
-    balance = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    blocked_balance = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    tokens = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    referred_by = models.ForeignKey('CustomUser', on_delete=models.CASCADE, null=True, blank=True)
-    referral_code = models.CharField(max_length=8)
-    created_at = models.DateTimeField(auto_now_add=True)
+    id = models.CharField("ID пользователя", max_length=13, unique=True, primary_key=True, editable=False)
+    username = models.CharField("Имя пользователя", max_length=50, unique=True)
+    avatar = models.URLField("Ссылка на аватар")
+    wallet = models.CharField("Кошелек", max_length=48, null=True, blank=True)
+    staking_stage = models.ForeignKey(StakingStage, null=True, blank=True, on_delete=models.CASCADE, verbose_name="Этап стекинга")
+    telegram_id = models.IntegerField("Telegram ID")
+    balance = models.DecimalField("Баланс", default=0, max_digits=10, decimal_places=2)
+    blocked_balance = models.DecimalField("Заблокированный баланс", default=0, max_digits=10, decimal_places=2)
+    tokens = models.DecimalField("Токены", default=0, max_digits=10, decimal_places=2)
+    referred_by = models.ForeignKey('CustomUser', on_delete=models.CASCADE, null=True, blank=True, related_name="referrals", verbose_name="Пригласивший пользователь")
+    referral_code = models.CharField("Реферальный код", max_length=8)
+    created_at = models.DateTimeField("Дата создания", auto_now_add=True)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -33,6 +33,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['avatar', 'telegram_id']
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
 
     def save(self, *args, **kwargs):
         if not self.id:  # Generate custom ID if it doesn't already exist
@@ -101,11 +106,36 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         self.save()
 
 class UserReferralReward(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='referral_rewards')
-    referral = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='referred_rewards')
-    first_deposite = models.BooleanField(default=False)
-    reward = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(
+        CustomUser, 
+        on_delete=models.CASCADE, 
+        related_name='referral_rewards', 
+        verbose_name="Пользователь, получивший награду"
+    )
+    referral = models.ForeignKey(
+        CustomUser, 
+        on_delete=models.CASCADE, 
+        related_name='referred_rewards', 
+        verbose_name="Пользователь, пригласивший"
+    )
+    first_deposite = models.BooleanField(
+        default=False, 
+        verbose_name="Первый депозит"
+    )
+    reward = models.DecimalField(
+        default=0, 
+        max_digits=10, 
+        decimal_places=2, 
+        verbose_name="Награда"
+    )
+    timestamp = models.DateTimeField(
+        auto_now_add=True, 
+        verbose_name="Дата получения награды"
+    )
 
     def __str__(self):
         return f'User: {self.user.username} | Referral: {self.referral.username} | Reward: {self.reward}'
+    
+    class Meta:
+        verbose_name = "Реферальная награда"
+        verbose_name_plural = "Реферальные награды"

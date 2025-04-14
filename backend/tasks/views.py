@@ -23,7 +23,7 @@ class TasksAPIView(APIView):
         # Фильтруем задачи, исключая те, которые уже выполнены
         tasks = FarmingTask.objects.exclude(id__in=completed_task_ids)
         
-        serializer = FarmingTaskSerializer(tasks, many=True)
+        serializer = FarmingTaskSerializer(tasks, many=True, context={'request': request})
         
         return Response(serializer.data, status=status.HTTP_200_OK)
 

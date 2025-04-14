@@ -1,5 +1,6 @@
 import random
 from django.shortcuts import render
+from django.utils.translation import gettext as _
 
 from rest_framework import status
 from rest_framework.views import APIView
@@ -23,8 +24,8 @@ class ContestDetailsAPIView(APIView):
             contest = Contest.objects.get(id=contest_id)
             contest_info = ContestInfo.objects.filter(contest=contest)
 
-            contest_data = ContestSerializer(contest).data
-            contest_info_data = ContestInfoSerializer(contest_info, many=True).data
+            contest_data = ContestSerializer(contest, context={'request': request}).data
+            contest_info_data = ContestInfoSerializer(contest_info, many=True, context={'request': request}).data
 
             return Response({'data': {'contest': contest_data, 'contest_info': contest_info_data}}, status=status.HTTP_200_OK)
 
@@ -39,10 +40,10 @@ class EnterContestAPIView(APIView):
         try:
             contest = Contest.objects.get(id=contest_id)
         except Contest.DoesNotExist:
-            return Response({'detail': 'Конкурс не найден'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'detail': 'contest_not_found'}, status=status.HTTP_404_NOT_FOUND)
 
         if UserContest.objects.filter(user=request.user, contest=contest).exists():
-            return Response({'detail': 'Вы уже участвуете в этом конкурсе'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': 'you_already_participating'}, status=status.HTTP_400_BAD_REQUEST)
 
         if contest.condition == 'referral_bonuses':
             pass
@@ -50,10 +51,10 @@ class EnterContestAPIView(APIView):
         elif contest.condition == 'dubai_party':
             has_staking = UserStaking.objects.filter(user=request.user, amount__gte=5000).exists()
             if not has_staking:
-                return Response({'detail': 'Вы должны открыть стекинг на 5000 TON'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'detail': 'not_enough_staking'}, status=status.HTTP_400_BAD_REQUEST)
 
         UserContest.objects.create(user=request.user, contest=contest)
-        return Response({'detail': 'Вы успешно зарегистрировались на конкурс'}, status=status.HTTP_201_CREATED)
+        return Response({'detail': 'You have successfully registered for the contest'}, status=status.HTTP_201_CREATED)
 
 class RandomWalletAPIView(GenericAPIView):
     """Возвращает случайный кошелек на который будут приходить средства от пополнений"""
@@ -67,12 +68,15 @@ class RandomWalletAPIView(GenericAPIView):
             'wallet': wallet.wallet
         }, status=status.HTTP_200_OK)
 
-
 class BannerListView(ListAPIView):
     """Возвращает список баннеров, настраиваемых через админ-панель"""
     queryset = Banner.objects.all()
     serializer_class = BannerSerializer
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
 
 class CommissionAPIView(APIView):
     """Возвращает процент комиссии, взимаемой при выводе средств."""

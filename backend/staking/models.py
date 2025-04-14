@@ -6,47 +6,64 @@ from datetime import timedelta
 
 
 class StakingLevel(models.Model):
-    stage = models.ForeignKey('StakingStage', on_delete=models.CASCADE)
-    level = models.IntegerField()
-    min_deposite = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    max_deposite = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    percentage = models.DecimalField(max_digits=5, decimal_places=2)
+    stage = models.ForeignKey('StakingStage', on_delete=models.CASCADE, verbose_name='Этап стейкинга')
+    level = models.IntegerField(verbose_name='Уровень')
+    min_deposite = models.DecimalField(default=0, max_digits=10, decimal_places=2, verbose_name='Минимальный депозит')
+    max_deposite = models.DecimalField(default=0, max_digits=10, decimal_places=2, verbose_name='Максимальный депозит')
+    percentage = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Процент')
+
+    class Meta:
+        verbose_name = 'Уровень стейкинга'
+        verbose_name_plural = 'Уровни стейкинга'
 
     def __str__(self):
-        return f'Level: {self.level} | Stage: {self.stage}'
+        return f'Уровень {self.level} | {self.percentage}%'
 
 class StakingStage(models.Model):
     STAGE_CHOICES = [
-        (1, 'Stage 1'),
-        (2, 'Stage 2'),
-        (3, 'Stage 3'),
+        (1, 'Этап 1'),
+        (2, 'Этап 2'),
+        (3, 'Этап 3'),
     ]
-    stage = models.IntegerField(choices=STAGE_CHOICES, unique=True)
-    days_for_change = models.IntegerField(default=60)
-    staking_time = models.IntegerField()
+    stage = models.IntegerField("Этап", choices=STAGE_CHOICES, unique=True)
+    days_for_change = models.IntegerField("Дней для смены уровня", default=60)
+    staking_time = models.IntegerField("Длительность (дни)")
+
+    class Meta:
+        verbose_name = 'Этап стейкинга'
+        verbose_name_plural = 'Этапы стейкинга'
 
     def __str__(self):
-        return f'Stage: {self.stage}'
+        return f'{dict(self.STAGE_CHOICES).get(self.stage)}' 
     
 
 class UserStaking(models.Model):
     from users.models import CustomUser
     STATUS_CHOICES = [
-        ('in_progress', 'In Progress'),
-        ('completed', 'Completed'),
-        ('closed_prematurely', 'Closed Prematurely'),
+        ('in_progress', 'В процессе'),
+        ('completed', 'Завершено'),
+        ('closed_prematurely', 'Закрыто досрочно'),
     ]
     
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    staking_level = models.ForeignKey(StakingLevel, on_delete=models.CASCADE)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='in_progress')
-    amount = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    withdrawn_amount = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    start_date = models.DateTimeField(auto_now_add=True)
-    end_date = models.DateTimeField()
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Пользователь')
+    staking_level = models.ForeignKey(StakingLevel, on_delete=models.CASCADE, verbose_name='Уровень стейкинга')
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='in_progress',
+        verbose_name='Статус'
+    )
+    amount = models.DecimalField(default=0, max_digits=10, decimal_places=2, verbose_name='Сумма')
+    withdrawn_amount = models.DecimalField(default=0, max_digits=10, decimal_places=2, verbose_name='Выведенная сумма')
+    start_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата начала')
+    end_date = models.DateTimeField(verbose_name='Дата окончания')
+
+    class Meta:
+        verbose_name = 'Стейкинг пользователя'
+        verbose_name_plural = 'Стейкинги пользователей'
 
     def __str__(self):
-        return f'User: {self.user.username} | Lvl: {self.staking_level.level}'
+        return f'User: {self.user.username} | Статус: {self.get_status_display()} | Сумма: {self.amount}'
     
     def get_profit(self) -> float:
         if self.status != 'in_progress':
@@ -96,10 +113,14 @@ class UserStaking(models.Model):
         super().save(*args, **kwargs)
     
 class UserStakingReward(models.Model):
-    user_staking = models.ForeignKey(UserStaking, on_delete=models.CASCADE)
-    amount = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    tokens = models.DecimalField(default=0, max_digits=10, decimal_places=2)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    user_staking = models.ForeignKey(UserStaking, on_delete=models.CASCADE, verbose_name="Стейкинг пользователя")
+    amount = models.DecimalField(default=0, max_digits=10, decimal_places=2, verbose_name="Сумма (в TON)")
+    tokens = models.DecimalField(default=0, max_digits=10, decimal_places=2, verbose_name="Токены")
+    timestamp = models.DateTimeField(auto_now_add=True, verbose_name="Дата и время")
+
+    class Meta:
+        verbose_name = "Награда за стейкинг"
+        verbose_name_plural = "Награды за стейкинг"
 
     def __str__(self):
         return f'User: {self.user_staking.user.username} | Amount: {self.amount} | Tokens: {self.tokens}'

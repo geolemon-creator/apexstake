@@ -23,9 +23,11 @@ class Contest(models.Model):
     }
     
     title = models.CharField("Название конкурса", max_length=28)
+    en_title = models.CharField("Англ. Название конкурса", max_length=28)
     condition = models.CharField(max_length=20, choices=CONTEST_CONDITIONS, verbose_name='Условие конкурса')
     prize_amount = models.DecimalField("Призовой фонд", default=0, max_digits=10, decimal_places=2)
     badge_content = models.CharField("Бейдж", max_length=12, null=True, blank=True)
+    en_badge_content = models.CharField("Англ. Бейдж", max_length=12, null=True, blank=True)
     img = models.ImageField("Изображение")
     end_date = models.DateTimeField("Дата окончания")
 
@@ -38,8 +40,10 @@ class Contest(models.Model):
 
 class ContestInfo(models.Model):
     title = models.CharField("Название блока", max_length=28)
+    en_title = models.CharField("Англ. Название блока", max_length=28)
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE, verbose_name='Конкурс')
     content = models.TextField("Содержимое блока")
+    en_content = models.TextField("Англ. Содержимое блока")
     amount = models.DecimalField("Стоимость входа (TON)", default=0, max_digits=10, decimal_places=2)
 
     class Meta:
@@ -71,6 +75,8 @@ class UserContest(models.Model):
 class Banner(models.Model):
     title = models.CharField("Заголовок", max_length=18)
     description = models.CharField("Описание", max_length=18)
+    en_title = models.CharField("Англ. Заголовок", max_length=18)
+    en_description = models.CharField("Англ. Описание", max_length=18)
     img = models.ImageField("Изображение")
     link = models.URLField("Ссылка")
 

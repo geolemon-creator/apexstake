@@ -37,4 +37,15 @@ class CustomUserAdmin(admin.ModelAdmin):
         return refferals_with_deposite
     refferrals_with_deposite.short_description = 'Рефералы с депозитом'
 
-admin.site.register(UserReferralReward)
+
+class UserReferralRewardAdmin(admin.ModelAdmin):
+    model = UserReferralReward
+    
+    list_display = ('user', 'referral', 'first_deposite', 'reward', 'timestamp')
+    list_filter = ('first_deposite', 'timestamp', 'reward')
+    search_fields = ('user__username', 'referral__username', 'reward')
+    
+    ordering = ('-timestamp',)
+    exclude = ('timestamp',)
+
+admin.site.register(UserReferralReward, UserReferralRewardAdmin)
