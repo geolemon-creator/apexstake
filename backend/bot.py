@@ -5,8 +5,8 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.types import WebAppInfo, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.filters import Command
 
-API_TOKEN = "7491473745:AAFnW9YSI8fufwI0IJHvwY0wgYcnaWPzSDA"
-WEB_APP_URL = "https://admin.adminbottle.ru/" #"https://work.lnx-usr.xyz/"
+API_TOKEN = "7787369340:AAFJUOZYNKvI8k5sIxwNV411Yd4IB97Qe3k"
+WEB_APP_URL = "https://adminbottle.ru" #"https://work.lnx-usr.xyz/"
 BACKEND_URL = "https://api.adminbottle.ru/api"
 API_URL = "https://api.adminbottle.ru/api/register/"
 
@@ -51,7 +51,7 @@ async def start(message: types.Message):
         inline_keyboard=[
             [
                 InlineKeyboardButton(
-                    text="Открыть сайт Apexstake",
+                    text="Открыть сайт BottleGame",
                     web_app=WebAppInfo(url=WEB_APP_URL)  # Указываем URL Mini App
                 )
             ]

@@ -55,7 +55,7 @@ const StakingBalance = () => {
 
         dispatch(setTimeRemaining(timeRemaining));
         dispatch(setProgress(Number(progress)));
-      }, 600); // 60 сек
+      }, 6000); // 60 сек
 
       return () => clearInterval(interval);
     }
@@ -76,16 +76,27 @@ const StakingBalance = () => {
     if (!userStakingData?.start_date || !userStakingData?.end_date) return;
 
     const startDate = new Date(userStakingData.start_date);
+    const endDate = new Date(userStakingData.end_date);
     const now = new Date();
 
-    const minutesPassed = (now.getTime() - startDate.getTime()) / 1000 / 60;
+    // Получаем кол-во полных прошедших дней
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const daysPassed = Math.floor(
+      (now.getTime() - startDate.getTime()) / msPerDay
+    );
+    const totalDays = Math.floor(
+      (endDate.getTime() - startDate.getTime()) / msPerDay
+    );
 
     let commissionRate;
-    if (minutesPassed < 5) {
+    if (daysPassed < 30) {
       commissionRate = 10;
-    } else {
+    } else if (daysPassed < totalDays) {
       commissionRate = 5;
+    } else {
+      commissionRate = 0;
     }
+
     const userConfirmed = window.confirm(
       `${t('confirm_withdraw_profit')} ${commissionRate}%`
     );

@@ -97,7 +97,7 @@ def calculate_staking_balance(user_staking):
     days_staked = delta.total_seconds() / 60
 
     if days_staked > user_staking.staking_level.stage.days_for_change:
-        profit_after_deduction = user_staking.get_profit() * Decimal('0.75')
+        profit_after_deduction = Decimal(str(user_staking.get_profit())) * Decimal('0.75')
         
         new_amount = user_staking.amount + profit_after_deduction
 
@@ -158,14 +158,14 @@ def change_staking_level(user, amount, level):
 
 # Staking Serializer Logic
 def calculate_current_profit(amount, percentage, start, end):
-    total_minutes = (end - start).total_seconds() / 60
-    elapsed_minutes = (timezone.now() - start).total_seconds() / 60
+    total_days = (end - start).total_seconds() / (60 * 60 * 24)
+    elapsed_days = (timezone.now() - start).total_seconds() / (60 * 60 * 24)
 
-    if total_minutes <= 0 or elapsed_minutes <= 0:
+    if total_days <= 0 or elapsed_days <= 0:
         return Decimal("0.00")
 
-    elapsed_minutes = min(elapsed_minutes, total_minutes)
-    profit = (amount * percentage / 100) * Decimal(elapsed_minutes / total_minutes)
+    elapsed_days = min(elapsed_days, total_days)
+    profit = (amount * percentage / 100) * Decimal(elapsed_days / total_days)
 
     return profit
 
@@ -179,13 +179,13 @@ def calculate_daily_earning(amount, daily_percentage):
 
 def calculate_withdrawal_commission(start_date, end_date):
     now = timezone.now()
-    days_passed = (now - start_date).total_seconds() / 60
-    total_days = (end_date - start_date).total_seconds() / 60
+    # days_passed = (now - start_date).total_seconds() / 60
+    # total_days = (end_date - start_date).total_seconds() / 60
 
-    #days_passed = (now - start_date).days # TODO: DAYS на проде
-    #total_days = (end_date - start_date).days # TODO: DAYS на проде
+    days_passed = (now - start_date).days # TODO: DAYS на проде
+    total_days = (end_date - start_date).days # TODO: DAYS на проде
 
-    if days_passed < 5: # 30 дней на проде
+    if days_passed < 30: # 30 дней на проде
         return Decimal('0.90')  # 10% комиссия
     elif days_passed < total_days:
         return Decimal('0.95')  # 5% комиссия

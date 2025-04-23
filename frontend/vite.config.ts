@@ -15,7 +15,7 @@ export default defineConfig({
     allowedHosts: [
       'admin.adminbottle.ru',
       'localhost',
-      '6d9d-2a02-3037-305-3bdf-1504-1e99-38e6-768e.ngrok-free.app',
+      'ea54-2a02-3037-20c-59cc-50dd-3b4f-fd74-5fcc.ngrok-free.app',
     ],
   },
 });

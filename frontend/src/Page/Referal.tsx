@@ -141,7 +141,7 @@ export default function Referal() {
               </div>
             </div>
 
-            <div className="ref-button">
+            <div className="ref-button" onClick={handleCopyCode}>
               <button className="ref-btn-invit">{t('invite_friend')}</button>
               <div className="ref-copy-btn">
                 <img className="ref-copy-img" src={copy} alt="copy" />

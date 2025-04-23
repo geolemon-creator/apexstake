@@ -1,9 +1,9 @@
 .LoadingPageContainer {
-  background: #111118;
   height: 100vh;
   display: flex; /* Используем Flexbox для центрирования */
   justify-content: center; /* Центрируем по вертикали */
   align-items: center; /* Центрируем по горизонтали */
+  background: #424242;
 }
 
 .LoadingContent {

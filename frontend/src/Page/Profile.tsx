@@ -188,7 +188,6 @@ export default function Profile() {
         <div className="review-div" onClick={() => setIsModalOpen(true)}>
           <img className="review-img" src={help} />
           <div className="review-p-div">
-            {/* TODO: открытие модалки AboutModal */}
             <p className="review-p">{t('learn_more_about_project')}</p>
           </div>
 

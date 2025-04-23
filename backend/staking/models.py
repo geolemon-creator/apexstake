@@ -108,7 +108,7 @@ class UserStaking(models.Model):
 
         if self.end_date is None and self.staking_level and self.staking_level.stage:
             # Вычисляем end_date - start_date + staking_time в днях
-            self.end_date = self.start_date + timedelta(minutes=self.staking_level.stage.staking_time)
+            self.end_date = self.start_date + timedelta(days=self.staking_level.stage.staking_time)
         self.clean()
 
         super().save(*args, **kwargs)

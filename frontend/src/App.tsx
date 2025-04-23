@@ -52,7 +52,7 @@ function App() {
 
       const interval = setInterval(() => {
         dispatch(fetchProfitPercentage());
-      }, 600); // TODO: Таймер для обновления процентов
+      }, 6000); // TODO: Таймер для обновления процентов
 
       return () => clearInterval(interval);
     } else {
@@ -63,7 +63,7 @@ function App() {
 
   useEffect(() => {
     //if (window.Telegram && window.Telegram.WebApp) {
-    //const data = window.Telegram.WebApp.initData;
+    //  const data = window.Telegram.WebApp.initData;
 
     // TEST
     const data =

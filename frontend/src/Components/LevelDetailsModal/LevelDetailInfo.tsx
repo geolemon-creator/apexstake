@@ -62,7 +62,6 @@ const LevelDetailInfo = ({ level, onClose }: LevelDetailInfoProps) => {
         <div className="data-lvl-text">
           <p className="data-lvl-first-p">{t('interest_period')}</p>
           <p className="data-lvl-second-p">
-            {/* TODO: Указать значения */}
             {level.stage.staking_time}{' '}
             {level.stage.staking_time === 1 ? t('day') : t('days')}
           </p>

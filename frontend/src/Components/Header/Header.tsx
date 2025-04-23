@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import LevelModal from '../SelectLevelModal/LevelModal';
 import LevelDetailModal from '../LevelDetailsModal/LevelDetailModal';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Header.module.css';
 import arrowDownIcon from '../../Img/arrow-down.svg';
 import { LevelData } from '../Type';
@@ -34,6 +34,7 @@ const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const currentLanguage = i18n.language;
+  const menuRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
 
   const {
@@ -76,6 +77,22 @@ const Header = () => {
       }
     }
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen, setIsMenuOpen]);
 
   const handleCloseLevelsList = () => {
     dispatch(setIsLevelsListOpen(false));
@@ -220,7 +237,7 @@ const Header = () => {
         </div>
 
         {isMenuOpen && (
-          <div className={styles.languageMenu}>
+          <div ref={menuRef} className={styles.languageMenu}>
             <div
               onClick={() => handleLanguageChange('ru')}
               className={styles.languageOption}

@@ -40,7 +40,6 @@
   align-items: center;
   justify-content: center;
 }
-
 .inputContainer input {
   background: none;
   border: none;
@@ -62,6 +61,9 @@
   -webkit-appearance: none;
   -moz-appearance: textfield;
   appearance: none;
+
+  text-align: center;
+  vertical-align: middle;
 }
 
 .inputContainer input::-webkit-outer-spin-button,
